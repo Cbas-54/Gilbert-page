@@ -23,7 +23,7 @@ const Hero = () => {
           <span className="text-sm font-bold tracking-wider text-dark-950 uppercase">Tradición & Precisión</span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-dark-950 leading-tight mb-6 animate-in slide-in-from-bottom-8 fade-in duration-700 delay-300">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-dark-950 leading-tight mb-6 animate-in slide-in-from-bottom-8 fade-in duration-700 delay-300 font-serif">
           Revive <br className="hidden md:block"/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
             Tus Pasos

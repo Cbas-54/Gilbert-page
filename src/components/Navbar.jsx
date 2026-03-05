@@ -22,7 +22,7 @@ const Navbar = () => {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center group cursor-pointer border-l-4 border-primary-600 pl-3 transition-all duration-300 hover:border-dark-950">
             <Link to="/" className="flex flex-col">
-              <span className="text-xl md:text-2xl font-black text-dark-950 uppercase tracking-wider group-hover:text-primary-600 transition-colors">
+              <span className="text-xl md:text-2xl font-black text-dark-950 uppercase tracking-wider group-hover:text-primary-600 transition-colors font-serif">
                 Composturas
               </span>
               <span className="text-sm md:text-base font-bold text-primary-600 uppercase tracking-widest group-hover:text-dark-950 transition-colors">

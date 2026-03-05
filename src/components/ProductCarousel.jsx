@@ -48,7 +48,7 @@ const ProductCarousel = () => {
               <span className="w-8 h-px bg-primary-600 mr-3"></span>
               Nuestra Especialidad
             </h2>
-            <h3 className="text-3xl md:text-5xl font-black text-dark-950">Servicios <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">Recomendados</span></h3>
+            <h3 className="text-3xl md:text-5xl font-black text-dark-950 font-serif">Servicios <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">Recomendados</span></h3>
           </div>
           
           {/* Navigation Controls Desktop */}
