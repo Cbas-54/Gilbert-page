@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import heroImage from '../assets/hero-workshop.png';
 
 const Hero = () => {
   return (
@@ -38,7 +39,7 @@ const Hero = () => {
           {/* Right: Image Side */}
           <div className="lg:w-1/2 relative bg-neutral-100 overflow-hidden">
             <img 
-              src="/src/assets/hero-workshop.png" 
+              src={heroImage} 
               alt="Artesano reparando calzado en su taller" 
               className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100"
             />
