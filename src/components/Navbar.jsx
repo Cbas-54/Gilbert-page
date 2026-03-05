@@ -107,21 +107,21 @@ const Navbar = () => {
 
       {/* COMPACT RECTANGLE MEGAMENU - DROPDOWN STYLE */}
       <div className={`
-        absolute left-1/2 -translate-x-1/2 mt-4 
-        w-[calc(100%-3rem)] max-w-sm lg:max-w-md
+        absolute right-6 md:right-12 lg:right-20 mt-4 
+        w-[280px] md:w-[320px]
         bg-white rounded-[2rem] border border-neutral-200 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] 
-        transition-all duration-500 origin-top
+        transition-all duration-500 origin-top-right
         ${isOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
       `}>
-        <div className="p-8">
-          <div className="grid grid-cols-1 gap-2">
+        <div className="p-6">
+          <div className="grid grid-cols-1 gap-1">
             {categories.map((cat, idx) => (
               <a 
                 key={idx} 
                 href="#" 
                 className={`
-                  group flex items-center justify-between p-4 rounded-2xl hover:bg-neutral-50 transition-all
-                  ${cat === 'Catálogo Completo' ? 'border-t border-neutral-100 mt-2 bg-primary-50/50 text-primary-600' : 'text-neutral-500'}
+                  group flex items-center justify-between p-3.5 rounded-2xl hover:bg-neutral-50 transition-all
+                  ${cat === 'Catálogo Completo' ? 'border-t border-neutral-100 mt-2 pt-5 bg-primary-50/50 text-primary-600' : 'text-neutral-500'}
                 `}
               >
                 <span className="text-xs font-black uppercase tracking-[0.1em] group-hover:text-dark-deep transition-colors">
@@ -133,28 +133,21 @@ const Navbar = () => {
           </div>
 
           {/* Mobile NavLinks in Menu */}
-          <div className="lg:hidden mt-6 pt-6 border-t border-neutral-100 grid grid-cols-3 gap-2">
+          <div className="lg:hidden mt-4 pt-4 border-t border-neutral-100 flex flex-col gap-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-[10px] font-black uppercase tracking-widest text-dark-deep py-3 bg-neutral-100 rounded-xl text-center"
+                className="text-[10px] font-black uppercase tracking-widest text-dark-deep py-3 px-4 bg-neutral-100 rounded-xl text-left flex justify-between items-center group"
               >
                 {link.name}
+                <ChevronRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Backdrop for closing */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-dark-deep/5 z-[-1] backdrop-blur-[2px]"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
     </nav>
   );
 };
