@@ -134,7 +134,8 @@ const ProductCarousel = () => {
   }, [direction]);
 
   return (
-    <section id="servicios" className="relative bg-neutral-beige pb-20 md:pb-32 overflow-hidden">
+    <section id="servicios" className="relative bg-neutral-warm pb-20 md:pb-32 overflow-hidden">
+      <div className="bg-grain"></div>
       
       {/* CREATIVE TRANSITION DIVIDER */}
       <div className="relative h-24 md:h-32 bg-dark-rich overflow-hidden">

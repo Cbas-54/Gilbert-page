@@ -5,10 +5,11 @@ const LocationSection = () => {
   const officialEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.74507025883!2d-57.95475148421071!3d-34.92215288220038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bd8e08d6c7c00f%3A0x6b82b9e1e0a2d3b2!2sAGP%20C.%2046%20392%2C%20B1900%20La%20Plata%2C%20Provincia%20de%20Buenos%20Aires%2C%20Argentina!5e0!3m2!1sen!2sus!4v1678886400000!5m2!1sen!2sus";
 
   return (
-    <section id="ubicacion" className="bg-neutral-beige relative overflow-hidden flex flex-col lg:flex-row min-h-[600px] border-y border-neutral-200">
+    <section id="ubicacion" className="bg-neutral-warm relative overflow-hidden flex flex-col lg:flex-row min-h-[600px] border-y border-neutral-200/50">
+      <div className="bg-grain"></div>
       
       {/* Information Block - Left/Top (40%) */}
-      <div className="lg:w-[40%] p-12 md:p-20 flex flex-col justify-center relative bg-grain">
+      <div className="lg:w-[40%] p-12 md:p-20 flex flex-col justify-center relative">
         {/* Technical Watermark */}
         <div className="absolute top-10 left-10 text-[100px] font-black text-dark-deep/[0.03] select-none pointer-events-none">
           LOC.
