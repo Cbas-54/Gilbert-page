@@ -5,8 +5,8 @@ const Hero = () => {
   return (
     <div id="home" className="relative w-full min-h-screen bg-dark-rich flex flex-col lg:flex-row overflow-hidden">
       
-      {/* Left side: Content (Cinematic Dark) */}
-      <div className="lg:w-1/2 flex flex-col justify-center p-8 md:p-20 relative z-10 bg-dark-rich">
+      {/* Left side: Content (Cinematic Dark) - Added pt-24 for mobile to avoid Navbar overlap */}
+      <div className="lg:w-1/2 flex flex-col justify-center p-8 pt-32 md:p-20 md:pt-40 lg:pt-20 relative z-10 bg-dark-rich">
         {/* Decorative Technical Line */}
         <div className="absolute left-0 top-1/4 w-1 h-32 bg-primary-600 hidden lg:block"></div>
         
@@ -66,10 +66,13 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-dark-rich via-transparent to-transparent hidden lg:block"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-dark-rich via-transparent to-transparent lg:hidden"></div>
         
-        {/* Studio Identifier */}
-        <div className="absolute bottom-12 right-12 border-l border-neutral-500 pl-6 hidden md:block">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50 mb-1">C_LOCATION / 01</p>
-          <p className="text-sm font-black text-white uppercase tracking-tighter">Boutique de Composturas</p>
+        {/* Decorative Element: Technical Trace */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 border border-white/5 pointer-events-none hidden lg:block"></div>
+        <div className="absolute bottom-12 right-12 hidden md:block">
+          <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm p-4 border border-white/10 rounded-2xl">
+            <div className="w-2 h-2 bg-primary-600 rounded-full animate-pulse"></div>
+            <p className="text-[10px] font-black text-white/70 uppercase tracking-[0.2em]">Crafting Excellence</p>
+          </div>
         </div>
       </div>
     </div>

@@ -134,10 +134,19 @@ const ProductCarousel = () => {
   }, [direction]);
 
   return (
-    <section id="servicios" className="py-20 md:py-32 bg-neutral-warm relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neutral-300 to-transparent opacity-30"></div>
+    <section id="servicios" className="relative bg-neutral-beige pb-20 md:pb-32 overflow-hidden">
       
-      <div className="boutique-container relative">
+      {/* CREATIVE TRANSITION DIVIDER */}
+      <div className="relative h-24 md:h-32 bg-dark-rich overflow-hidden">
+        <div className="absolute inset-0 opacity-10 flex items-center justify-around whitespace-nowrap select-none pointer-events-none">
+          {Array(10).fill('RESTAURACIÓN TÉCNICA • PRECISIÓN ARTESANAL • ').map((text, i) => (
+            <span key={i} className="text-white text-[10px] font-black uppercase tracking-[0.5em]">{text}</span>
+          ))}
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-600 to-transparent"></div>
+      </div>
+
+      <div className="boutique-container relative mt-20">
         <div className="text-center mb-16 md:mb-20">
           <h2 className="text-3xl md:text-5xl font-black text-dark-deep uppercase tracking-[0.2em] leading-none mb-4">
             SERVICIOS
