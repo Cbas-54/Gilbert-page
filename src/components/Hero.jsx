@@ -5,8 +5,8 @@ const Hero = () => {
   return (
     <div id="home" className="relative w-full min-h-screen bg-dark-rich flex flex-col lg:flex-row overflow-hidden">
       
-      {/* Left side: Content (Cinematic Dark) - Added pt-24 for mobile to avoid Navbar overlap */}
-      <div className="lg:w-1/2 flex flex-col justify-center p-8 pt-32 md:p-20 md:pt-40 lg:pt-20 relative z-10 bg-dark-rich">
+      {/* Left side: Content (Cinematic Dark) - Increased padding to ensure visibility below Navbar */}
+      <div className="lg:w-1/2 flex flex-col justify-center p-8 pt-44 md:p-20 md:pt-52 lg:pt-32 relative z-10 bg-dark-rich">
         {/* Decorative Technical Line */}
         <div className="absolute left-0 top-1/4 w-1 h-32 bg-primary-600 hidden lg:block"></div>
         
@@ -18,16 +18,16 @@ const Hero = () => {
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] text-white uppercase tracking-tighter mb-8">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] text-white uppercase tracking-tighter mb-8 transition-all duration-700 hover:tracking-normal cursor-default animate-in fade-in slide-in-from-left-8 duration-1000">
             REVIVE TU <br/>
             <span className="text-primary-600">PASIÓN</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-neutral-400 font-bold leading-snug max-w-md mb-12">
+          <p className="text-lg md:text-xl text-neutral-400 font-bold leading-snug max-w-md mb-12 animate-in fade-in slide-in-from-left-12 duration-1000 delay-200 fill-mode-both">
             Transformamos el desgaste del tiempo en durabilidad eterna. Especialistas en reparación de calzado y artículos de cuero.
           </p>
           
-          <div className="flex flex-wrap gap-6 items-center">
+          <div className="flex flex-wrap gap-6 items-center animate-in fade-in slide-in-from-left-16 duration-1000 delay-300 fill-mode-both">
             <a 
               href="https://wa.me/542211234567" 
               target="_blank" 
