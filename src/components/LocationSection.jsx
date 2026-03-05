@@ -5,7 +5,7 @@ const LocationSection = () => {
   const officialEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.74507025883!2d-57.95475148421071!3d-34.92215288220038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bd8e08d6c7c00f%3A0x6b82b9e1e0a2d3b2!2sAGP%20C.%2046%20392%2C%20B1900%20La%20Plata%2C%20Provincia%20de%20Buenos%20Aires%2C%20Argentina!5e0!3m2!1sen!2sus!4v1678886400000!5m2!1sen!2sus";
 
   return (
-    <section id="ubicacion" className="py-20 bg-neutral-soft">
+    <section id="ubicacion" className="py-20 bg-neutral-beige">
       <div className="boutique-container">
         <div className="bg-white rounded-[3rem] overflow-hidden border border-neutral-200 shadow-xl flex flex-col lg:flex-row min-h-[500px]">
           

@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <div id="home" className="relative w-full pt-32 pb-20 bg-neutral-soft">
+    <div id="home" className="relative w-full pt-32 pb-20 bg-neutral-beige">
       <div className="boutique-container">
         <div className="relative bg-white rounded-[3rem] overflow-hidden border border-neutral-200 shadow-2xl flex flex-col lg:flex-row min-h-[600px]">
           

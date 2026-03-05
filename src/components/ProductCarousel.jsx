@@ -69,7 +69,8 @@ const ProductCarousel = () => {
   }, [direction]);
 
   return (
-    <section id="servicios" className="py-20 md:py-32 bg-neutral-soft overflow-hidden">
+    <section id="servicios" className="py-20 md:py-32 bg-neutral-warm relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neutral-300 to-transparent opacity-30"></div>
       <div className="boutique-container relative">
         
         <div className="text-center mb-20">

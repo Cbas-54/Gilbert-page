@@ -14,9 +14,13 @@
   --color-primary-900: #7f1d1d;
   --color-primary-950: #450a0a;
 
-  /* Softer Absolute Colors for Clean Feel */
-  --color-neutral-soft: #fcfcfc;
   --color-dark-deep: #0a0a0a;
+  --color-dark-rich: #171717;
+  
+  /* Studio Aesthetic: Warm Neutrals */
+  --color-neutral-soft: #fcfaf7;
+  --color-neutral-beige: #f5f2ed;
+  --color-neutral-warm: #efede7;
   
   --font-sans: "Montserrat", sans-serif;
   
