@@ -1,155 +1,198 @@
-import { useReducer, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Star, ArrowRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, CornerDownRight } from 'lucide-react';
 
 const products = [
-  { id: 1, name: 'Zapatos de Vestir', category: 'Reparación Premium', price: 'Consultar', isHot: true },
-  { id: 2, name: 'Botines de Trabajo', category: 'Suela Reforzada', price: 'Consultar' },
-  { id: 3, name: 'Guantes de Box', category: 'Costura y Relleno', price: 'Consultar', isHot: true },
-  { id: 4, name: 'Mochilas Escolares', category: 'Cambio de Cierres', price: 'Consultar' },
-  { id: 5, name: 'Pelotas de Fútbol', category: 'Parche y Válvula', price: 'Consultar' },
-  { id: 6, name: 'Zapatillas Deportivas', category: 'Pegado y Limpieza', price: 'Consultar', isHot: true },
-  { id: 7, name: 'Carteras de Cuero', category: 'Limpieza y Teñido', price: 'Consultar' },
-  { id: 8, name: 'Cinturones', category: 'Ajuste y Hebillas', price: 'Consultar' },
+  { id: 1, name: 'Reparación de Botines', category: 'DEPORTE', price: 'Dsd $15k', icon: '⚽' },
+  { id: 2, name: 'Cambio de Suelas', category: 'CLÁSICO', price: 'Dsd $25k', icon: '👞' },
+  { id: 3, name: 'Restauración de Guantes', category: 'BOXEO', price: 'Dsd $12k', icon: '🥊' },
+  { id: 4, name: 'Costura de Mochilas', category: 'ACCESORIOS', price: 'Dsd $10k', icon: '🎒' },
+  { id: 5, name: 'Mantenimiento de Pelotas', category: 'DEPORTE', price: 'Dsd $8k', icon: '🥎' },
+  { id: 6, name: 'Teñido de Cuero', category: 'CLÁSICO', price: 'Dsd $20k', icon: '🎨' },
+  { id: 7, name: 'Cambio de Cierres', category: 'ACCESORIOS', price: 'Dsd $9k', icon: '🤐' },
+  { id: 8, name: 'Limpieza Premium', category: 'ESTÉTICA', price: 'Dsd $15k', icon: '✨' },
 ];
 
-const cardsToShow = 4;
-
-const carouselReducer = (state, action) => {
-  switch (action.type) {
-    case 'NEXT':
-      return { currentIndex: (state.currentIndex + 1) % (products.length - cardsToShow + 1) };
-    case 'PREV':
-      return { 
-        currentIndex: state.currentIndex === 0 
-          ? products.length - cardsToShow 
-          : state.currentIndex - 1 
-      };
-    default:
-      return state;
-  }
-};
-
 const ProductCarousel = () => {
-  const [state, dispatch] = useReducer(carouselReducer, { currentIndex: 0 });
+  const itemsToShow = 4;
+  const extendedProducts = [
+    ...products.slice(-itemsToShow),
+    ...products,
+    ...products.slice(0, itemsToShow),
+  ];
 
-  const handleNext = useCallback(() => dispatch({ type: 'NEXT' }), []);
-  const handlePrev = useCallback(() => dispatch({ type: 'PREV' }), []);
+  const [currentIndex, setCurrentIndex] = useState(itemsToShow);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [direction, setDirection] = useState(null);
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+  const containerRef = useRef(null);
+
+  const handleNext = () => {
+    if (direction) return;
+    setDirection('next');
+    setCurrentIndex(prev => prev + 1);
+  };
+
+  const handlePrev = () => {
+    if (direction) return;
+    setDirection('prev');
+    setCurrentIndex(prev => prev - 1);
+  };
+
+  useEffect(() => {
+    if (currentIndex === extendedProducts.length - itemsToShow) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(itemsToShow);
+      }, 700);
+    } else if (currentIndex === 0) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(products.length);
+      }, 700);
+    }
+  }, [currentIndex, extendedProducts.length, itemsToShow, products.length]);
+
+  useEffect(() => {
+    if (!isTransitioning) {
+      setTimeout(() => {
+        setIsTransitioning(true);
+        setDirection(null);
+      }, 50);
+    }
+  }, [isTransitioning]);
+
+  useEffect(() => {
+    if (direction) {
+      const timer = setTimeout(() => setDirection(null), 700);
+      return () => clearTimeout(timer);
+    }
+  }, [direction]);
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      
-      {/* Background decoration */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary-50 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-sm font-bold text-primary-600 uppercase tracking-widest mb-2 flex items-center">
-              <span className="w-8 h-px bg-primary-600 mr-3"></span>
-              Nuestra Especialidad
-            </h2>
-            <h3 className="text-3xl md:text-5xl font-black text-dark-950 font-serif">Servicios <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">Recomendados</span></h3>
-          </div>
-          
-          {/* Navigation Controls Desktop */}
-          <div className="hidden md:flex space-x-3">
-            <button 
-              onClick={handlePrev}
-              disabled={state.currentIndex === 0}
-              className={`p-3 rounded-full border transition-all ${
-                state.currentIndex === 0 
-                  ? 'border-neutral-200 text-neutral-400 cursor-not-allowed bg-neutral-50' 
-                  : 'border-neutral-300 text-dark-950 bg-white hover:bg-primary-50 hover:border-primary-500 hover:text-primary-600 active:scale-95 shadow-sm'
-              }`}
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button 
-              onClick={handleNext}
-              disabled={state.currentIndex === products.length - cardsToShow}
-              className={`p-3 rounded-full border transition-all ${
-                state.currentIndex === products.length - cardsToShow 
-                  ? 'border-neutral-200 text-neutral-400 cursor-not-allowed bg-neutral-50' 
-                  : 'border-neutral-300 text-dark-950 bg-white hover:bg-primary-50 hover:border-primary-500 hover:text-primary-600 active:scale-95 shadow-sm'
-              }`}
-            >
-              <ChevronRight size={24} />
-            </button>
-          </div>
-        </div>
-
-        {/* Carousel Container */}
-        <div className="overflow-hidden bg-neutral-50/50 border border-neutral-200 rounded-3xl p-6 shadow-xl shadow-neutral-200/50">
-          <div 
-            className="flex transition-transform duration-500 ease-out"
-            style={{ 
-              transform: `translateX(-${state.currentIndex * (100 / cardsToShow)}%)` 
-            }}
-          >
-            {products.map((product) => (
-              <div 
-                key={product.id} 
-                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 px-3"
-              >
-                <div className="group h-full bg-white border border-neutral-200 rounded-2xl overflow-hidden hover:border-primary-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-neutral-300/50 hover:-translate-y-1 relative flex flex-col">
-                  
-                  {/* Card Header Pattern (No Image) */}
-                  <div className="h-48 bg-neutral-100 relative overflow-hidden flex items-center justify-center border-b border-neutral-100">
-                    <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-100 to-white"></div>
-                    <div className="w-16 h-16 rounded-full border border-neutral-300 flex items-center justify-center text-dark-950 group-hover:scale-110 transition-transform bg-white shadow-sm group-hover:shadow-md group-hover:text-primary-600 group-hover:border-primary-200">
-                      <span className="font-bold text-2xl">{product.name.charAt(0)}</span>
-                    </div>
-                    {product.isHot && (
-                      <div className="absolute top-3 right-3 bg-dark-950 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase flex items-center shadow-md">
-                        <Star size={12} className="mr-1.5 fill-primary-500 text-primary-500" />
-                        Destacado
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-6 flex-grow flex flex-col">
-                    <div className="text-xs font-bold text-primary-600 uppercase tracking-wider mb-2">{product.category}</div>
-                    <h4 className="text-lg font-black text-dark-950 mb-4 group-hover:text-primary-600 transition-colors leading-tight">{product.name}</h4>
-                    
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-neutral-100">
-                      <span className="text-sm font-bold text-neutral-500">{product.price}</span>
-                      <button className="text-dark-950 hover:text-white transition-colors p-2 bg-neutral-100 rounded-full group-hover:bg-primary-600">
-                        <ArrowRight size={18} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <section id="servicios" className="py-20 md:py-32 bg-neutral-soft overflow-hidden">
+      <div className="boutique-container relative">
         
-        {/* Mobile Navigation Controls */}
-        <div className="flex justify-center mt-8 space-x-4 md:hidden">
-            <button 
-              onClick={handlePrev}
-              disabled={state.currentIndex === 0}
-              className={`p-4 rounded-full border transition-all ${
-                state.currentIndex === 0 
-                  ? 'border-neutral-200 text-neutral-400 cursor-not-allowed bg-neutral-50' 
-                  : 'border-neutral-300 text-dark-950 bg-white active:scale-95 shadow-sm'
-              }`}
+        <div className="text-center mb-20">
+          <h2 className="text-3xl md:text-5xl font-black text-dark-deep uppercase tracking-[0.2em] leading-none mb-4">
+            SERVICIOS
+          </h2>
+          <div className="w-16 h-1.5 bg-primary-600 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="relative group mx-auto max-w-[1400px]">
+          
+          <button 
+            onClick={handlePrev}
+            disabled={!!direction}
+            className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-30 w-16 h-16 bg-white border border-neutral-200 rounded-full flex items-center justify-center text-dark-deep hover:bg-dark-deep hover:text-white transition-all shadow-xl active:scale-95 disabled:opacity-50"
+          >
+            <ChevronLeft size={28} />
+          </button>
+          
+          <button 
+            onClick={handleNext}
+            disabled={!!direction}
+            className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-30 w-16 h-16 bg-white border border-neutral-200 rounded-full flex items-center justify-center text-dark-deep hover:bg-dark-deep hover:text-white transition-all shadow-xl active:scale-95 disabled:opacity-50"
+          >
+            <ChevronRight size={28} />
+          </button>
+
+          <div className="overflow-hidden p-6 -m-6">
+            <div 
+              ref={containerRef}
+              className={`flex ${isTransitioning ? 'transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]' : ''}`}
+              style={{ 
+                transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
+              }}
             >
-              <ChevronLeft size={24} />
-            </button>
-            <button 
-              onClick={handleNext}
-              disabled={state.currentIndex === products.length - cardsToShow}
-              className={`p-4 rounded-full border transition-all ${
-                state.currentIndex === products.length - cardsToShow 
-                  ? 'border-neutral-200 text-neutral-400 cursor-not-allowed bg-neutral-50' 
-                  : 'border-neutral-300 text-dark-950 bg-white active:scale-95 shadow-sm'
-              }`}
-            >
-              <ChevronRight size={24} />
-            </button>
+              {extendedProducts.map((product, idx) => {
+                const isLeaving = (direction === 'next' && idx === currentIndex - 1) || (direction === 'prev' && idx === currentIndex + itemsToShow);
+                const isEntering = (direction === 'next' && idx === currentIndex + itemsToShow - 1) || (direction === 'prev' && idx === currentIndex);
+                
+                const isHovered = hoveredCardId === `${product.id}-${idx}`;
+                const anyCardHovered = hoveredCardId !== null;
+
+                return (
+                  <div 
+                    key={`${product.id}-${idx}`} 
+                    onMouseEnter={() => setHoveredCardId(`${product.id}-${idx}`)}
+                    onMouseLeave={() => setHoveredCardId(null)}
+                    className={`min-w-full sm:min-w-[50%] lg:min-w-[25%] px-4 py-8 transition-all duration-700
+                      ${isLeaving ? 'scale-50 opacity-0 blur-lg transition-all' : 'scale-100 opacity-100 blur-0'}
+                      ${isEntering ? 'animate-in fade-in zoom-in-50 duration-700' : ''}
+                      ${anyCardHovered && !isHovered ? 'opacity-30 scale-[0.95] blur-[2px]' : 'opacity-100 scale-100 blur-0'}
+                    `}
+                  >
+                    <div className={`
+                      bg-white h-full rounded-[3rem] p-10 border border-neutral-100 shadow-sm 
+                      transition-all duration-500 group cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[340px]
+                      ${isHovered ? 'shadow-[0_20px_60px_-15px_rgba(220,38,38,0.2)] border-primary-100 -translate-y-4' : ''}
+                    `}>
+                      {/* Premium Decorative Elements */}
+                      <div className={`
+                        absolute -right-6 -bottom-6 w-32 h-32 bg-neutral-50 rounded-full 
+                        transition-all duration-700 blur-3xl group-hover:bg-primary-50 group-hover:scale-150
+                      `}></div>
+                      
+                      {/* Floating Ghost Icon on Hover */}
+                      <div className={`
+                        absolute right-6 top-8 text-7xl opacity-0 transition-all duration-700 pointer-events-none rotate-12
+                        ${isHovered ? 'opacity-5 translate-y-4 -rotate-12 scale-150' : ''}
+                      `}>
+                        {product.icon}
+                      </div>
+
+                      <div className="space-y-8 relative z-10">
+                        {/* Icon Container with Glassmorphism */}
+                        <div className={`
+                          w-16 h-16 bg-neutral-50 rounded-2xl flex items-center justify-center text-3xl 
+                          transition-all duration-500 shadow-inner group-hover:bg-white group-hover:shadow-lg group-hover:rotate-12 group-hover:scale-110
+                          ${isHovered ? 'text-primary-600' : ''}
+                        `}>
+                          {product.icon}
+                        </div>
+                        
+                        <div>
+                          <div className="inline-block px-3 py-1 bg-neutral-50 rounded-full mb-3 group-hover:bg-primary-50 transition-colors">
+                            <span className="text-[9px] font-black text-primary-600 tracking-[0.2em] uppercase opacity-70">
+                              {product.category}
+                            </span>
+                          </div>
+                          <h4 className="text-2xl font-black text-dark-deep leading-[1.1] uppercase tracking-tighter group-hover:text-primary-600 transition-colors">
+                            {product.name}
+                          </h4>
+                        </div>
+                      </div>
+
+                      <div className="pt-8 border-t border-neutral-50 flex items-center justify-between mt-auto">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-black text-neutral-400 uppercase tracking-widest mb-1">Precio base</span>
+                          <span className="text-sm font-black text-dark-deep uppercase tracking-tighter">{product.price}</span>
+                        </div>
+                        <div className={`
+                          w-12 h-12 rounded-2xl bg-dark-deep text-white flex items-center justify-center 
+                          transition-all duration-500 transform
+                          ${isHovered ? 'scale-110 bg-primary-600 rotate-0' : 'scale-50 opacity-0 -rotate-45'}
+                        `}>
+                          <CornerDownRight size={22} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
+        </div>
+
+        <div className="mt-20 text-center">
+          <button className="text-[11px] font-black uppercase tracking-[0.5em] text-neutral-400 hover:text-primary-600 transition-all hover:tracking-[0.6em] group">
+            <span className="relative">
+              Ver catálogo completo
+              <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-primary-600 transition-all group-hover:w-full"></span>
+            </span>
+          </button>
+        </div>
       </div>
     </section>
   );

@@ -1,9 +1,10 @@
-import { Search, Menu, X, ShoppingBag } from 'lucide-react';
-import { useState } from 'react';
+import { Search, Menu, X } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const categories = [
     { name: 'Zapatos', href: '#' },
@@ -14,115 +15,146 @@ const Navbar = () => {
     { name: 'Otros Accesorios', href: '#' },
   ];
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const scrollToSection = (id) => {
+    setIsMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 120; // Clearance for floating navbar
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-neutral-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl">
+      <div className="bg-white/80 backdrop-blur-xl border border-neutral-200 rounded-[2rem] shadow-lg px-6 md:px-10 h-20 flex items-center justify-between relative">
+        
+        {/* Compact Logo */}
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3 group text-left">
+          <div className="w-10 h-10 bg-dark-deep flex items-center justify-center text-white font-black text-xl rounded-xl transition-all group-hover:bg-primary-600 group-hover:rotate-12">
+            G
+          </div>
+          <div className="flex flex-col -space-y-1">
+            <span className="text-xl font-black text-dark-deep uppercase tracking-tighter">
+              Gilbert
+            </span>
+            <span className="text-[9px] font-black text-primary-600 uppercase tracking-widest">
+              Composturas
+            </span>
+          </div>
+        </button>
+
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center gap-10">
+          <nav className="flex items-center gap-8">
+            <button 
+              onClick={() => scrollToSection('servicios')} 
+              className="text-[11px] font-black uppercase tracking-widest text-dark-deep hover:text-primary-600 transition-colors"
+            >
+              Servicios
+            </button>
+            <button 
+              onClick={() => scrollToSection('ubicacion')} 
+              className="text-[11px] font-black uppercase tracking-widest text-dark-deep hover:text-primary-600 transition-colors"
+            >
+              Ubicación
+            </button>
+            <button 
+              onClick={() => scrollToSection('contacto')} 
+              className="text-[11px] font-black uppercase tracking-widest text-dark-deep hover:text-primary-600 transition-colors"
+            >
+              Contacto
+            </button>
+          </nav>
           
-          {/* Logo Section */}
-          <div className="flex-shrink-0 flex items-center group cursor-pointer border-l-4 border-primary-600 pl-3 transition-all duration-300 hover:border-dark-950">
-            <Link to="/" className="flex flex-col">
-              <span className="text-xl md:text-2xl font-black text-dark-950 uppercase tracking-wider group-hover:text-primary-600 transition-colors font-serif">
-                Composturas
-              </span>
-              <span className="text-sm md:text-base font-bold text-primary-600 uppercase tracking-widest group-hover:text-dark-950 transition-colors">
-                Gilbert
-              </span>
-            </Link>
+          <div className="w-px h-6 bg-neutral-200"></div>
+
+          {/* Search */}
+          <div className="relative group">
+            <input 
+              type="text" 
+              placeholder="BUSCAR..." 
+              className="w-32 bg-neutral-50 border border-neutral-200 rounded-full py-2 px-4 text-[10px] font-black uppercase tracking-widest outline-none transition-all focus:w-48 focus:border-primary-500/50"
+            />
+            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary-600 transition-colors" />
           </div>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-md items-center mx-8">
-            <div className="relative w-full group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-primary-600 transition-colors">
-                <Search size={18} />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Buscar zapatos, mochilas..." 
-                className="block w-full pl-10 pr-3 py-2 border border-neutral-300 rounded-full bg-neutral-100 text-neutral-900 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300"
-              />
-            </div>
-          </div>
-
-          {/* Actions - Desktop */}
-          <div className="hidden md:flex items-center space-x-6 relative">
-            
-            {/* Hamburger Menu Trigger */}
+          {/* Hamburger Menu Trigger for Dropdown */}
+          <div className="relative" ref={menuRef}>
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex items-center space-x-2 text-neutral-700 hover:text-dark-950 transition-colors p-2 rounded-lg hover:bg-neutral-100 active:scale-95 duration-200"
+              className="w-12 h-12 bg-dark-deep text-white rounded-2xl flex items-center justify-center hover:bg-primary-600 transition-all duration-300 relative overflow-hidden"
             >
-              <span className="font-semibold tracking-wide">Categorías</span>
-              <div className="p-1.5 bg-dark-950 text-white rounded-md transition-colors hover:bg-primary-600">
-                 {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+              <div className={`transition-all duration-500 ${isMenuOpen ? '-translate-y-10 rotate-180 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                <Menu size={20} />
+              </div>
+              <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${isMenuOpen ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-10 rotate-180 opacity-0'}`}>
+                <X size={20} />
               </div>
             </button>
 
-             {/* Mega Menu Dropdown */}
+            {/* Compact Dropdown Rectangle */}
             {isMenuOpen && (
-              <div className="absolute right-0 top-full mt-4 w-64 bg-white border border-neutral-200 rounded-xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
-                <div className="p-4 border-b border-neutral-100 flex items-center space-x-2 text-dark-950 bg-neutral-50">
-                  <ShoppingBag size={18} className="text-primary-600" />
-                  <span className="font-black uppercase text-sm tracking-wider">Productos</span>
-                </div>
-                <div className="py-2">
-                  {categories.map((category) => (
-                    <a
-                      key={category.name}
-                      href={category.href}
-                      className="block px-6 py-3 text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-primary-600 transition-colors relative group"
+              <div className="absolute top-14 right-0 w-64 bg-white border border-neutral-200 rounded-2xl shadow-2xl py-4 animate-in fade-in zoom-in-95 duration-200 origin-top-right z-[60]">
+                <nav className="flex flex-col">
+                  {categories.map((cat, idx) => (
+                    <a 
+                      key={idx} 
+                      href={cat.href} 
+                      className="px-6 py-3 text-[11px] font-black text-dark-deep hover:text-primary-600 hover:bg-neutral-50 transition-all uppercase tracking-widest flex items-center gap-3 group"
                     >
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-4 bg-primary-600 rounded-r transition-all duration-300 group-hover:w-1"></span>
-                      {category.name}
+                      <span className="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-primary-600 transition-colors shrink-0"></span>
+                      {cat.name}
                     </a>
                   ))}
-                </div>
+                </nav>
               </div>
             )}
           </div>
+        </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-neutral-800 hover:text-primary-600 p-2"
-            >
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+        {/* Mobile Toggle */}
+        <div className="lg:hidden">
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-3 bg-neutral-50 rounded-xl text-dark-deep"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Panel */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-neutral-200 bg-white absolute w-full left-0 animate-in slide-in-from-top-2 duration-200 shadow-xl">
-          <div className="px-4 pt-4 pb-6 space-y-4">
-             <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
-                <Search size={18} />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Buscar..." 
-                className="block w-full pl-10 pr-3 py-3 border border-neutral-300 rounded-lg bg-neutral-50 text-neutral-900 focus:outline-none focus:border-primary-500"
-              />
-            </div>
-            <div className="pt-2">
-              <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-3 px-2">Categorías</h3>
-              <div className="space-y-1">
-                {categories.map((category) => (
-                  <a
-                    key={category.name}
-                    href={category.href}
-                    className="block px-3 py-3 text-base font-semibold text-neutral-700 hover:bg-neutral-100 hover:text-primary-600 rounded-lg transition-colors border-l-2 border-transparent hover:border-primary-600"
-                  >
-                    {category.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="lg:hidden absolute top-24 left-0 w-full bg-white/95 backdrop-blur-2xl rounded-3xl border border-neutral-200 shadow-2xl p-6 animate-in slide-in-from-top-10 duration-500">
+          <nav className="flex flex-col gap-2">
+            {categories.map((cat, idx) => (
+              <a 
+                key={idx} 
+                href={cat.href} 
+                className="text-[11px] font-black text-dark-deep hover:text-primary-600 transition-all uppercase tracking-widest flex items-center gap-4 group bg-neutral-50 p-4 rounded-xl border border-transparent hover:border-neutral-200"
+              >
+                <span className="w-1.5 h-1.5 bg-neutral-300 rounded-full group-hover:bg-primary-600 transition-colors"></span>
+                {cat.name}
+              </a>
+            ))}
+          </nav>
         </div>
       )}
     </header>

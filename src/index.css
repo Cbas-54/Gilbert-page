@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme {
   --color-primary-50: #fef2f2;
@@ -14,38 +14,59 @@
   --color-primary-900: #7f1d1d;
   --color-primary-950: #450a0a;
 
-  /* Redefined dark colors for contrast on light theme */
-  --color-dark-800: #262626;
-  --color-dark-900: #171717;
-  --color-dark-950: #0a0a0a;
-
-  /* Custom Font Families */
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Lato", sans-serif;
+  /* Softer Absolute Colors for Clean Feel */
+  --color-neutral-soft: #fcfcfc;
+  --color-dark-deep: #0a0a0a;
+  
+  --font-sans: "Montserrat", sans-serif;
+  
+  /* Global border radius to match "Glowshoes" feel */
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
 }
 
 @layer base {
   body {
-    /* Changed to light background and dark text */
-    @apply bg-neutral-50 text-neutral-900 antialiased font-sans;
+    @apply bg-neutral-soft text-dark-deep antialiased font-sans overflow-x-hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-sans font-black tracking-tighter;
   }
 }
 
-/* Custom scrollbar to match aesthetic */
+@layer utilities {
+  .animate-infinite-scroll {
+    animation: scroll-vertical 2s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+  }
+  
+  .boutique-card {
+    @apply bg-white rounded-3xl border border-neutral-200 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary-500/30;
+  }
+}
+
+@keyframes scroll-vertical {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(0%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Compact layout utilities */
+.boutique-container {
+  @apply max-w-[1300px] mx-auto px-6 md:px-10;
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f5f5f5; 
+  background: #fdfdfd; 
 }
 ::-webkit-scrollbar-thumb {
-  background: #dc2626; 
-  border-radius: 4px;
+  @apply bg-neutral-300 rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ef4444; 
+  @apply bg-primary-500; 
 }
