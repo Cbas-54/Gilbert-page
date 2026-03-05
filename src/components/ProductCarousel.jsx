@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, CornerDownRight } from 'lucide-react';
 
 const products = [
-  { id: 1, name: 'Reparación de Botines', category: 'DEPORTE', price: 'Dsd $15k', icon: '⚽' },
-  { id: 2, name: 'Cambio de Suelas', category: 'CLÁSICO', price: 'Dsd $25k', icon: '👞' },
-  { id: 3, name: 'Restauración de Guantes', category: 'BOXEO', price: 'Dsd $12k', icon: '🥊' },
-  { id: 4, name: 'Costura de Mochilas', category: 'ACCESORIOS', price: 'Dsd $10k', icon: '🎒' },
-  { id: 5, name: 'Mantenimiento de Pelotas', category: 'DEPORTE', price: 'Dsd $8k', icon: '🥎' },
-  { id: 6, name: 'Teñido de Cuero', category: 'CLÁSICO', price: 'Dsd $20k', icon: '🎨' },
-  { id: 7, name: 'Cambio de Cierres', category: 'ACCESORIOS', price: 'Dsd $9k', icon: '🤐' },
-  { id: 8, name: 'Limpieza Premium', category: 'ESTÉTICA', price: 'Dsd $15k', icon: '✨' },
+  { id: 1, name: 'Reparación de Botines', category: 'DEPORTE', price: 'Desde $15k', icon: '⚽' },
+  { id: 2, name: 'Cambio de Suelas', category: 'CLÁSICO', price: 'Desde $25k', icon: '👞' },
+  { id: 3, name: 'Restauración de Guantes', category: 'BOXEO', price: 'Desde $12k', icon: '🥊' },
+  { id: 4, name: 'Costura de Mochilas', category: 'ACCESORIOS', price: 'Desde $10k', icon: '🎒' },
+  { id: 5, name: 'Mantenimiento de Pelotas', category: 'DEPORTE', price: 'Desde $8k', icon: '🥎' },
+  { id: 6, name: 'Teñido de Cuero', category: 'CLÁSICO', price: 'Desde $20k', icon: '🎨' },
+  { id: 7, name: 'Cambio de Cierres', category: 'ACCESORIOS', price: 'Desde $9k', icon: '🤐' },
+  { id: 8, name: 'Limpieza Premium', category: 'ESTÉTICA', price: 'Desde $15k', icon: '✨' },
 ];
 
 const ProductCarousel = () => {
@@ -119,9 +119,9 @@ const ProductCarousel = () => {
                     onMouseEnter={() => setHoveredCardId(`${product.id}-${idx}`)}
                     onMouseLeave={() => setHoveredCardId(null)}
                     className={`min-w-full sm:min-w-[50%] lg:min-w-[25%] px-4 py-8 transition-all duration-700
-                      ${isLeaving ? 'scale-50 opacity-0 blur-lg transition-all' : 'scale-100 opacity-100 blur-0'}
+                      ${isLeaving ? 'scale-50 opacity-0 blur-lg transition-all' : 'scale-100 opacity-100'}
                       ${isEntering ? 'animate-in fade-in zoom-in-50 duration-700' : ''}
-                      ${anyCardHovered && !isHovered ? 'opacity-30 scale-[0.95] blur-[2px]' : 'opacity-100 scale-100 blur-0'}
+                      ${anyCardHovered && !isHovered ? 'opacity-30 scale-[0.95]' : 'opacity-100 scale-100'}
                     `}
                   >
                     <div className={`
@@ -184,15 +184,6 @@ const ProductCarousel = () => {
               })}
             </div>
           </div>
-        </div>
-
-        <div className="mt-20 text-center">
-          <button className="text-[11px] font-black uppercase tracking-[0.5em] text-neutral-400 hover:text-primary-600 transition-all hover:tracking-[0.6em] group">
-            <span className="relative">
-              Ver catálogo completo
-              <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-primary-600 transition-all group-hover:w-full"></span>
-            </span>
-          </button>
         </div>
       </div>
     </section>

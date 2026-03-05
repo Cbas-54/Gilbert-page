@@ -1,163 +1,161 @@
-import { Search, Menu, X } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Menu, X, Search, ChevronRight } from 'lucide-react';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const categories = [
-    { name: 'Zapatos', href: '#' },
-    { name: 'Botines', href: '#' },
-    { name: 'Guantes de Box', href: '#' },
-    { name: 'Mochilas', href: '#' },
-    { name: 'Pelotas', href: '#' },
-    { name: 'Otros Accesorios', href: '#' },
-  ];
-
-  // Close menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
-      }
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id) => {
-    setIsMenuOpen(false);
-    const element = document.getElementById(id);
+  const navLinks = [
+    { name: 'Servicios', href: '#servicios' },
+    { name: 'Ubicación', href: '#ubicacion' },
+    { name: 'Contacto', href: '#contacto' },
+  ];
+
+  const categories = [
+    'Reparación Calzado',
+    'Cuidado Cuero',
+    'Accesorios',
+    'Teñido',
+    'Bolsos y Maletas',
+    'Catálogo Completo'
+  ];
+
+  const scrollToSection = (e, href) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
     if (element) {
-      const offset = 120; // Clearance for floating navbar
+      const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: 'smooth'
       });
+      setIsOpen(false);
     }
   };
 
   return (
-    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl">
-      <div className="bg-white/80 backdrop-blur-xl border border-neutral-200 rounded-[2rem] shadow-lg px-6 md:px-10 h-20 flex items-center justify-between relative">
-        
-        {/* Compact Logo */}
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3 group text-left">
-          <div className="w-10 h-10 bg-dark-deep flex items-center justify-center text-white font-black text-xl rounded-xl transition-all group-hover:bg-primary-600 group-hover:rotate-12">
-            G
-          </div>
-          <div className="flex flex-col -space-y-1">
-            <span className="text-xl font-black text-dark-deep uppercase tracking-tighter">
-              Gilbert
-            </span>
-            <span className="text-[9px] font-black text-primary-600 uppercase tracking-widest">
-              Composturas
-            </span>
-          </div>
-        </button>
-
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-10">
-          <nav className="flex items-center gap-8">
-            <button 
-              onClick={() => scrollToSection('servicios')} 
-              className="text-[11px] font-black uppercase tracking-widest text-dark-deep hover:text-primary-600 transition-colors"
-            >
-              Servicios
-            </button>
-            <button 
-              onClick={() => scrollToSection('ubicacion')} 
-              className="text-[11px] font-black uppercase tracking-widest text-dark-deep hover:text-primary-600 transition-colors"
-            >
-              Ubicación
-            </button>
-            <button 
-              onClick={() => scrollToSection('contacto')} 
-              className="text-[11px] font-black uppercase tracking-widest text-dark-deep hover:text-primary-600 transition-colors"
-            >
-              Contacto
-            </button>
-          </nav>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 px-6 py-4 ${isScrolled ? 'md:px-12 lg:px-20' : ''}`}>
+      <div className={`mx-auto bg-white/80 backdrop-blur-xl border border-neutral-200 shadow-lg rounded-full transition-all duration-500 ${isScrolled ? 'px-8 py-3' : 'px-10 py-5'}`}>
+        <div className="flex items-center justify-between">
           
-          <div className="w-px h-6 bg-neutral-200"></div>
-
-          {/* Search */}
-          <div className="relative group">
-            <input 
-              type="text" 
-              placeholder="BUSCAR..." 
-              className="w-32 bg-neutral-50 border border-neutral-200 rounded-full py-2 px-4 text-[10px] font-black uppercase tracking-widest outline-none transition-all focus:w-48 focus:border-primary-500/50"
-            />
-            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary-600 transition-colors" />
+          {/* Brand Logo */}
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={(e) => scrollToSection(e, '#home')}>
+            <div className="w-10 h-10 bg-dark-deep rounded-2xl flex items-center justify-center text-white font-black text-xl group-hover:rotate-12 transition-transform duration-500">
+              G
+            </div>
+            <div className="flex flex-col -space-y-1">
+              <span className="text-xl font-black uppercase tracking-tighter text-dark-deep">Gilbert</span>
+              <span className="text-[8px] font-black text-primary-600 uppercase tracking-widest leading-none">Composturas</span>
+            </div>
           </div>
 
-          {/* Hamburger Menu Trigger for Dropdown */}
-          <div className="relative" ref={menuRef}>
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="w-12 h-12 bg-dark-deep text-white rounded-2xl flex items-center justify-center hover:bg-primary-600 transition-all duration-300 relative overflow-hidden"
-            >
-              <div className={`transition-all duration-500 ${isMenuOpen ? '-translate-y-10 rotate-180 opacity-0' : 'translate-y-0 opacity-100'}`}>
-                <Menu size={20} />
-              </div>
-              <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${isMenuOpen ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-10 rotate-180 opacity-0'}`}>
-                <X size={20} />
-              </div>
-            </button>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-12">
+            <div className="flex items-center gap-8">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => scrollToSection(e, link.href)}
+                  className="text-[11px] font-black uppercase tracking-[0.2em] text-dark-deep hover:text-primary-600 transition-colors"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
 
-            {/* Compact Dropdown Rectangle */}
-            {isMenuOpen && (
-              <div className="absolute top-14 right-0 w-64 bg-white border border-neutral-200 rounded-2xl shadow-2xl py-4 animate-in fade-in zoom-in-95 duration-200 origin-top-right z-[60]">
-                <nav className="flex flex-col">
-                  {categories.map((cat, idx) => (
-                    <a 
-                      key={idx} 
-                      href={cat.href} 
-                      className="px-6 py-3 text-[11px] font-black text-dark-deep hover:text-primary-600 hover:bg-neutral-50 transition-all uppercase tracking-widest flex items-center gap-3 group"
-                    >
-                      <span className="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-primary-600 transition-colors shrink-0"></span>
-                      {cat.name}
-                    </a>
-                  ))}
-                </nav>
+            {/* Action Bar */}
+            <div className="flex items-center gap-4 pl-8 border-l border-neutral-200">
+              <div className="relative group/search">
+                <input 
+                  type="text" 
+                  placeholder="BUSCAR..." 
+                  className="bg-neutral-100 border-none rounded-full px-5 py-2 text-[10px] font-black tracking-widest focus:ring-1 focus:ring-primary-600 w-32 focus:w-48 transition-all"
+                />
+                <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within/search:text-primary-600 transition-colors pointer-events-none" />
               </div>
-            )}
+              
+              <button 
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-10 h-10 bg-dark-deep text-white rounded-full flex items-center justify-center hover:bg-primary-600 hover:rotate-90 transition-all duration-500 shadow-md group"
+              >
+                {isOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Mobile Toggle */}
-        <div className="lg:hidden">
+          {/* Mobile Menu Trigger */}
           <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-3 bg-neutral-50 rounded-xl text-dark-deep"
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden w-10 h-10 bg-dark-deep text-white rounded-full flex items-center justify-center"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="lg:hidden absolute top-24 left-0 w-full bg-white/95 backdrop-blur-2xl rounded-3xl border border-neutral-200 shadow-2xl p-6 animate-in slide-in-from-top-10 duration-500">
-          <nav className="flex flex-col gap-2">
+      {/* COMPACT RECTANGLE MEGAMENU - DROPDOWN STYLE */}
+      <div className={`
+        absolute left-1/2 -translate-x-1/2 mt-4 
+        w-[calc(100%-3rem)] max-w-sm lg:max-w-md
+        bg-white rounded-[2rem] border border-neutral-200 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] 
+        transition-all duration-500 origin-top
+        ${isOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
+      `}>
+        <div className="p-8">
+          <div className="grid grid-cols-1 gap-2">
             {categories.map((cat, idx) => (
               <a 
                 key={idx} 
-                href={cat.href} 
-                className="text-[11px] font-black text-dark-deep hover:text-primary-600 transition-all uppercase tracking-widest flex items-center gap-4 group bg-neutral-50 p-4 rounded-xl border border-transparent hover:border-neutral-200"
+                href="#" 
+                className={`
+                  group flex items-center justify-between p-4 rounded-2xl hover:bg-neutral-50 transition-all
+                  ${cat === 'Catálogo Completo' ? 'border-t border-neutral-100 mt-2 bg-primary-50/50 text-primary-600' : 'text-neutral-500'}
+                `}
               >
-                <span className="w-1.5 h-1.5 bg-neutral-300 rounded-full group-hover:bg-primary-600 transition-colors"></span>
-                {cat.name}
+                <span className="text-xs font-black uppercase tracking-[0.1em] group-hover:text-dark-deep transition-colors">
+                  {cat}
+                </span>
+                <ChevronRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-600" />
               </a>
             ))}
-          </nav>
+          </div>
+
+          {/* Mobile NavLinks in Menu */}
+          <div className="lg:hidden mt-6 pt-6 border-t border-neutral-100 grid grid-cols-3 gap-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
+                className="text-[10px] font-black uppercase tracking-widest text-dark-deep py-3 bg-neutral-100 rounded-xl text-center"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
         </div>
+      </div>
+
+      {/* Backdrop for closing */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-dark-deep/5 z-[-1] backdrop-blur-[2px]"
+          onClick={() => setIsOpen(false)}
+        ></div>
       )}
-    </header>
+    </nav>
   );
 };
 
