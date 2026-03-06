@@ -12,70 +12,76 @@ const products = [
   { id: 8, name: 'Limpieza Premium', category: 'ESTÉTICA', price: 'Desde $15k', icon: '✨' },
 ];
 
-const ProductCard = ({ product, isHovered, onHover, onLeave, anyCardHovered, isEntering, isLeaving }) => (
-  <div 
-    onMouseEnter={onHover}
-    onMouseLeave={onLeave}
-    className={`h-full transition-all duration-700
-      ${isLeaving ? 'scale-50 opacity-0 blur-lg' : 'scale-100 opacity-100'}
-      ${isEntering ? 'animate-in fade-in zoom-in-50 duration-700' : ''}
-      ${anyCardHovered && !isHovered ? 'opacity-30 scale-[0.95]' : 'opacity-100 scale-100'}
-    `}
-  >
-    <div className={`
-      bg-white h-full rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 border border-neutral-100 shadow-sm 
-      transition-all duration-500 group cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[280px] md:min-h-[340px]
-      ${isHovered ? 'shadow-[0_20px_60px_-15px_rgba(220,38,38,0.2)] border-primary-100 -translate-y-2 md:-translate-y-4' : ''}
-    `}>
+const DEFAULT_ICON = '👞';
+
+const ProductCard = ({ product, isHovered, onHover, onLeave, anyCardHovered, isEntering, isLeaving }) => {
+  const icon = product.icon ? product.icon : DEFAULT_ICON;
+  
+  return (
+    <div 
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      className={`h-full transition-all duration-700
+        ${isLeaving ? 'scale-50 opacity-0 blur-lg' : 'scale-100 opacity-100'}
+        ${isEntering ? 'animate-in fade-in zoom-in-50 duration-700' : ''}
+        ${anyCardHovered && !isHovered ? 'opacity-30 scale-[0.95]' : 'opacity-100 scale-100'}
+      `}
+    >
       <div className={`
-        absolute -right-6 -bottom-6 w-32 h-32 bg-neutral-50 rounded-full 
-        transition-all duration-700 blur-3xl group-hover:bg-primary-50 group-hover:scale-150
-      `}></div>
-      
-      <div className={`
-        absolute right-4 md:right-6 top-6 md:top-8 text-5xl md:text-7xl opacity-0 transition-all duration-700 pointer-events-none rotate-12
-        ${isHovered ? 'opacity-5 translate-y-4 -rotate-12 scale-150' : ''}
+        bg-white h-full rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 border border-neutral-100 shadow-sm 
+        transition-all duration-500 group cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[280px] md:min-h-[340px]
+        ${isHovered ? 'shadow-[0_20px_60px_-15px_rgba(220,38,38,0.2)] border-primary-100 -translate-y-2 md:-translate-y-4' : ''}
       `}>
-        {product.icon}
-      </div>
-
-      <div className="space-y-4 md:space-y-8 relative z-10">
         <div className={`
-          w-12 h-12 md:w-16 md:h-16 bg-neutral-50 rounded-2xl flex items-center justify-center text-2xl md:text-3xl 
-          transition-all duration-500 shadow-inner group-hover:bg-white group-hover:shadow-lg group-hover:rotate-12 group-hover:scale-110
-          ${isHovered ? 'text-primary-600' : ''}
-        `}>
-          {product.icon}
-        </div>
+          absolute -right-6 -bottom-6 w-32 h-32 bg-neutral-50 rounded-full 
+          transition-all duration-700 blur-3xl group-hover:bg-primary-50 group-hover:scale-150
+        `}></div>
         
-        <div>
-          <div className="inline-block px-2 py-0.5 md:px-3 md:py-1 bg-neutral-50 rounded-full mb-2 md:mb-3 group-hover:bg-primary-50 transition-colors">
-            <span className="text-[8px] md:text-[9px] font-black text-primary-600 tracking-[0.2em] uppercase opacity-70">
-              {product.category}
-            </span>
-          </div>
-          <h4 className="text-lg md:text-2xl font-black text-dark-deep leading-[1.1] uppercase tracking-tighter group-hover:text-primary-600 transition-colors">
-            {product.name}
-          </h4>
-        </div>
-      </div>
-
-      <div className="pt-4 md:pt-8 border-t border-neutral-50 flex items-center justify-between mt-auto">
-        <div className="flex flex-col">
-          <span className="text-[8px] md:text-[9px] font-black text-neutral-400 uppercase tracking-widest mb-1">Precio base</span>
-          <span className="text-[10px] md:text-sm font-black text-dark-deep uppercase tracking-tighter">{product.price}</span>
-        </div>
         <div className={`
-          w-8 h-8 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-dark-deep text-white flex items-center justify-center 
-          transition-all duration-500 transform
-          ${isHovered ? 'scale-110 bg-primary-600 rotate-0' : 'scale-50 opacity-0 -rotate-45'}
+          absolute right-4 md:right-6 top-6 md:top-8 text-5xl md:text-7xl opacity-0 transition-all duration-700 pointer-events-none rotate-12
+          ${isHovered ? 'opacity-5 translate-y-4 -rotate-12 scale-150' : ''}
         `}>
-          <CornerDownRight size={18} className="md:w-6 md:h-6" />
+          {icon}
+        </div>
+
+        <div className="space-y-4 md:space-y-8 relative z-10">
+          <div className={`
+            w-12 h-12 md:w-16 md:h-16 bg-neutral-50 rounded-2xl flex items-center justify-center text-2xl md:text-3xl 
+            transition-all duration-500 shadow-inner group-hover:bg-white group-hover:shadow-lg group-hover:rotate-12 group-hover:scale-110
+            ${isHovered ? 'text-primary-600' : ''}
+          `}>
+            {icon}
+          </div>
+          
+          <div>
+            <div className="inline-block px-2 py-0.5 md:px-3 md:py-1 bg-neutral-50 rounded-full mb-2 md:mb-3 group-hover:bg-primary-50 transition-colors">
+              <span className="text-[8px] md:text-[9px] font-black text-primary-600 tracking-[0.2em] uppercase opacity-70">
+                {product.category}
+              </span>
+            </div>
+            <h4 className="text-lg md:text-2xl font-black text-dark-deep leading-[1.1] uppercase tracking-tighter group-hover:text-primary-600 transition-colors">
+              {product.name}
+            </h4>
+          </div>
+        </div>
+
+        <div className="pt-4 md:pt-8 border-t border-neutral-50 flex items-center justify-between mt-auto">
+          <div className="flex flex-col">
+            <span className="text-[8px] md:text-[9px] font-black text-neutral-400 uppercase tracking-widest mb-1">Precio base</span>
+            <span className="text-[10px] md:text-sm font-black text-dark-deep uppercase tracking-tighter">{product.price}</span>
+          </div>
+          <div className={`
+            w-8 h-8 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-dark-deep text-white flex items-center justify-center 
+            transition-all duration-500 transform
+            ${isHovered ? 'scale-110 bg-primary-600 rotate-0' : 'scale-50 opacity-0 -rotate-45'}
+          `}>
+            <CornerDownRight size={18} className="md:w-6 md:h-6" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ProductCarousel = () => {
   const itemsToShow = 4;

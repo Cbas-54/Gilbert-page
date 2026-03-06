@@ -60,6 +60,9 @@ const Hero = () => {
         <img 
           src={heroImage} 
           alt="Artesano reparando calzado en su taller" 
+          fetchpriority="high"
+          width="1920"
+          height="1080"
           className="absolute inset-0 w-full h-full object-cover object-center grayscale brightness-75 contrast-125 transition-all duration-1000"
         />
         {/* Dramatic Shadow Overlay */}
