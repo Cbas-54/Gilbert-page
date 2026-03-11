@@ -1,28 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #fef2f2;
-  --color-primary-100: #fee2e2;
-  --color-primary-200: #fecaca;
-  --color-primary-300: #fca5a5;
-  --color-primary-400: #f87171;
-  --color-primary-500: #ef4444; /* Base vibrant red */
-  --color-primary-600: #dc2626; /* Darker red, for hover */
-  --color-primary-700: #b91c1c;
-  --color-primary-800: #991b1b;
-  --color-primary-900: #7f1d1d;
-  --color-primary-950: #450a0a;
+  --color-primary-50: #fdf2f4;
+  --color-primary-100: #fbe5e9;
+  --color-primary-200: #f5c4ce;
+  --color-primary-300: #eba3b3;
+  --color-primary-400: #da6b83;
+  --color-primary-500: #c63a56; /* Rich Burgundy base */
+  --color-primary-600: #a52640; /* Deep Burgundy hover */
+  --color-primary-700: #8a1d33;
+  --color-primary-800: #731b2d;
+  --color-primary-900: #621a28;
+  --color-primary-950: #360a13;
 
-  --color-dark-deep: #0a0a0a;
-  --color-dark-rich: #171717;
+  --color-dark-deep: #1a1a1a; /* Warm black */
+  --color-dark-rich: #262626;
   
   /* Studio Aesthetic: Enhanced Warm Neutrals */
-  --color-neutral-soft: #faf9f6;
-  --color-neutral-beige: #f2ede4;
-  --color-neutral-warm: #e8e2d5;
+  --color-neutral-soft: #fcfbfa; /* Very light warm white */
+  --color-neutral-beige: #f9f6f0; /* Parchment Vellum */
+  --color-neutral-warm: #f0ebe1; /* Darker parchment */
   
-  --font-sans: "Montserrat", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
   
   /* Global border radius to match "Glowshoes" feel */
   --radius-xl: 1.5rem;

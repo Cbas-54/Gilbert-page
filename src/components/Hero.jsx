@@ -3,80 +3,69 @@ import heroImage from '../assets/hero-workshop.png';
 
 const Hero = () => {
   return (
-    <div id="home" className="relative w-full min-h-screen bg-dark-rich flex flex-col lg:flex-row overflow-hidden">
+    <div id="home" className="relative w-full min-h-screen flex items-center justify-center lg:justify-start lg:pl-[10%] xl:pl-[15%] overflow-hidden bg-dark-rich">
       
-      {/* Left side: Content (Cinematic Dark) - Increased padding to ensure visibility below Navbar */}
-      <div className="lg:w-1/2 flex flex-col justify-center p-8 pt-44 md:p-20 md:pt-52 lg:pt-32 relative z-10 bg-dark-rich">
-        {/* Decorative Technical Line */}
-        <div className="absolute left-0 top-1/4 w-1 h-32 bg-primary-600 hidden lg:block"></div>
-        
-        <div className="max-w-xl mx-auto lg:mx-0">
-          <div className="inline-flex items-center gap-3 mb-8">
-            <div className="w-10 h-[2px] bg-primary-600"></div>
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-500">
-              Establecimiento La Plata
-            </span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] text-white uppercase tracking-tighter mb-8 transition-all duration-700 hover:tracking-normal cursor-default animate-in fade-in slide-in-from-left-8 duration-1000">
-            REVIVE TU <br/>
-            <span className="text-primary-600">PASIÓN</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-neutral-400 font-bold leading-snug max-w-md mb-12 animate-in fade-in slide-in-from-left-12 duration-1000 delay-200 fill-mode-both">
-            Transformamos el desgaste del tiempo en durabilidad eterna. Especialistas en reparación de calzado y artículos de cuero.
-          </p>
-          
-          <div className="flex flex-wrap gap-6 items-center animate-in fade-in slide-in-from-left-16 duration-1000 delay-300 fill-mode-both">
-            <a 
-              href="https://wa.me/542211234567" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group px-12 py-6 bg-primary-600 text-white font-black text-sm uppercase tracking-widest rounded-full hover:bg-white hover:text-dark-deep transition-all duration-500 flex items-center gap-4 shadow-2xl shadow-primary-600/20"
-            >
-              Consultar Ahora
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </a>
-            
-            <div className="hidden sm:flex items-center gap-4 text-neutral-500">
-              <div className="w-12 h-12 rounded-full border border-neutral-800 flex items-center justify-center">
-                <span className="text-[10px] font-black">2026</span>
-              </div>
-              <p className="text-[9px] font-black uppercase tracking-widest leading-none">
-                CALIDAD <br/> CERTIFICADA
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Ambient watermark */}
-        <div className="absolute bottom-10 left-10 opacity-5 pointer-events-none hidden lg:block">
-          <p className="text-[120px] font-black leading-none text-white select-none translate-y-20">GILBERT</p>
-        </div>
-      </div>
-
-      {/* Right side: Visual (Full-bleed) */}
-      <div className="lg:w-1/2 relative min-h-[50vh] lg:min-h-screen">
+      {/* Full Background Image */}
+      <div className="absolute inset-0 w-full h-full">
         <img 
           src={heroImage} 
-          alt="Artesano reparando calzado en su taller" 
+          alt="Taller artesanal de reparación de calzado" 
           fetchpriority="high"
           width="1920"
           height="1080"
-          className="absolute inset-0 w-full h-full object-cover object-center grayscale brightness-75 contrast-125 transition-all duration-1000"
+          className="w-full h-full object-cover object-center grayscale-[20%] brightness-[0.7] contrast-125 transition-transform duration-[20s] ease-out hover:scale-105"
         />
-        {/* Dramatic Shadow Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-rich via-transparent to-transparent hidden lg:block"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-rich via-transparent to-transparent lg:hidden"></div>
+        {/* Subtle overlay to ensure text legibility if card was transparent, and add mood */}
+        <div className="absolute inset-0 bg-dark-deep/20 mix-blend-multiply"></div>
+      </div>
+
+      {/* Floating Editorial Card (Floom Inspired) */}
+      <div className="relative z-20 w-[90%] max-w-lg lg:max-w-xl bg-neutral-beige p-10 sm:p-12 md:p-16 mt-24 lg:mt-0 shadow-2xl border border-white/50 animate-in fade-in slide-in-from-bottom-8 duration-1000">
         
-        {/* Decorative Element: Technical Trace */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 border border-white/5 pointer-events-none hidden lg:block"></div>
-        <div className="absolute bottom-12 right-12 hidden md:block">
-          <div className="flex items-center gap-3 bg-white/5 backdrop-blur-sm p-4 border border-white/10 rounded-2xl">
-            <div className="w-2 h-2 bg-primary-600 rounded-full animate-pulse"></div>
-            <p className="text-[10px] font-black text-white/70 uppercase tracking-[0.2em]">Crafting Excellence</p>
+        <div className="inline-flex items-center gap-4 mb-8">
+          <div className="w-12 h-[1px] bg-primary-600"></div>
+          <span className="font-sans text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 opacity-90">
+            Establecimiento La Plata
+          </span>
+        </div>
+
+        {/* Serif Typography for Editorial Feel */}
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-dark-deep mb-6">
+          Revive tu <br className="hidden sm:block" />
+          <span className="italic text-primary-600 font-medium">pasión</span>
+        </h1>
+
+        <p className="font-sans text-neutral-600 text-sm md:text-base leading-relaxed mb-12 max-w-sm tracking-wide">
+          Transformamos el desgaste del tiempo en durabilidad eterna. Especialistas en reparación técnica de calzado y artículos de cuero.
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+          <a 
+            href="https://wa.me/542211234567" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group inline-flex items-center justify-center gap-4 bg-primary-600 text-neutral-soft px-8 py-5 rounded-sm font-sans text-[10px] md:text-xs font-black uppercase tracking-[0.25em] transition-all duration-500 hover:bg-dark-deep w-full sm:w-auto"
+          >
+            Consultar Ahora
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+          
+          <div className="hidden sm:flex flex-col items-start px-2">
+            <span className="font-sans text-[9px] font-black uppercase tracking-widest text-neutral-400">Desde</span>
+            <span className="font-serif text-lg italic text-dark-rich leading-none">2026</span>
           </div>
         </div>
+      </div>
+
+      {/* Decorative Technical Trace / Signature */}
+      <div className="absolute bottom-12 right-10 z-10 hidden lg:flex flex-col items-center gap-4 animate-in fade-in duration-1000 delay-500">
+        <div className="w-[1px] h-24 bg-white/20"></div>
+        <span 
+          className="font-sans text-[8px] font-bold text-white/40 tracking-[0.5em] uppercase" 
+          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        >
+          Artisanal Trace // 01
+        </span>
       </div>
     </div>
   );

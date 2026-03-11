@@ -45,30 +45,34 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 px-6 py-4 ${isScrolled ? 'md:px-12 lg:px-20' : ''}`}>
-      <div className={`mx-auto bg-white/80 backdrop-blur-xl border border-neutral-200 shadow-lg rounded-full transition-all duration-500 ${isScrolled ? 'px-8 py-3' : 'px-10 py-5'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out ${isScrolled ? 'bg-neutral-beige/95 backdrop-blur-md border-b border-dark-deep/5 py-4 shadow-sm' : 'bg-transparent py-8 md:py-10'}`}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo */}
-          <div className="flex items-center gap-3 cursor-pointer group" onClick={(e) => scrollToSection(e, '#home')}>
-            <div className="w-10 h-10 bg-dark-deep rounded-2xl flex items-center justify-center text-white font-black text-xl group-hover:rotate-12 transition-transform duration-500">
-              G
+          {/* Brand Logo - Editorial Style */}
+          <div className="flex items-center gap-4 cursor-pointer group" onClick={(e) => scrollToSection(e, '#home')}>
+            <div className={`w-10 h-10 flex items-center justify-center font-serif text-2xl italic transition-colors duration-500 ${isScrolled ? 'text-dark-deep' : 'text-white'}`}>
+              G.
             </div>
-            <div className="flex flex-col -space-y-1">
-              <span className="text-xl font-black uppercase tracking-tighter text-dark-deep">Gilbert</span>
-              <span className="text-[8px] font-black text-primary-600 uppercase tracking-widest leading-none">Composturas</span>
+            <div className="flex flex-col -space-y-0.5 mt-1">
+              <span className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-500 ${isScrolled ? 'text-dark-deep' : 'text-white'}`}>Gilbert</span>
+              <span className={`text-[8px] font-sans font-bold uppercase tracking-[0.3em] leading-none transition-colors duration-500 ${isScrolled ? 'text-primary-600' : 'text-white/70'}`}>Composturas</span>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-12">
-            <div className="flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-16">
+            <div className="flex items-center gap-10">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="text-[11px] font-black uppercase tracking-[0.2em] text-dark-deep hover:text-primary-600 transition-colors"
+                  className={`text-[10px] font-sans font-bold uppercase tracking-[0.2em] transition-colors duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:transition-all after:duration-300 hover:after:w-full
+                    ${isScrolled 
+                      ? 'text-dark-deep/80 hover:text-dark-deep after:bg-primary-600' 
+                      : 'text-white/80 hover:text-white after:bg-white'}
+                  `}
                 >
                   {link.name}
                 </a>
@@ -76,19 +80,16 @@ const Navbar = () => {
             </div>
 
             {/* Action Bar */}
-            <div className="flex items-center gap-4 pl-8 border-l border-neutral-200">
-              <div className="relative group/search">
-                <input 
-                  type="text" 
-                  placeholder="BUSCAR..." 
-                  className="bg-neutral-100 border-none rounded-full px-5 py-2 text-[10px] font-black tracking-widest focus:ring-1 focus:ring-primary-600 w-32 focus:w-48 transition-all"
-                />
-                <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within/search:text-primary-600 transition-colors pointer-events-none" />
+            <div className={`flex items-center gap-6 pl-10 border-l transition-colors duration-500 ${isScrolled ? 'border-dark-deep/10' : 'border-white/20'}`}>
+              <div className="relative group/search cursor-pointer">
+                <Search size={16} className={`transition-colors duration-300 hover:scale-110 ${isScrolled ? 'text-dark-deep' : 'text-white'}`} />
               </div>
               
               <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-10 h-10 bg-dark-deep text-white rounded-full flex items-center justify-center hover:bg-primary-600 hover:rotate-90 transition-all duration-500 shadow-md group"
+                className={`w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-500 group
+                  ${isScrolled ? 'bg-dark-deep text-white hover:bg-primary-600' : 'bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-dark-deep border border-white/20'}
+                `}
               >
                 {isOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -98,7 +99,9 @@ const Navbar = () => {
           {/* Mobile Menu Trigger */}
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden w-10 h-10 bg-dark-deep text-white rounded-full flex items-center justify-center"
+            className={`lg:hidden w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-500
+              ${isScrolled ? 'bg-dark-deep text-white' : 'bg-white/10 backdrop-blur-sm text-white border border-white/20'}
+            `}
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
