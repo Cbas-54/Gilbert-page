@@ -12,45 +12,46 @@ export const CATEGORIES = [
   'Cuidado'
 ];
 
-/**
- * Simple CSV parser to avoid adding heavy dependencies
- */
 const parseCSV = (csv) => {
   const lines = csv.split('\n');
+  if (lines.length < 2) return [];
+
   const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
   
+  // Robust CSV Regex: matches commas ONLY outside of quotes
+  const csvRegex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
+
   return lines.slice(1).filter(line => line.trim() !== '').map(line => {
-    // Handling basic commas within quotes isn't needed here for simple Gilbert data, 
-    // but we'll use a slightly safer split for common cases
-    const values = line.split(',');
+    const values = line.split(csvRegex);
     const entry = {};
+    
     headers.forEach((header, i) => {
       let val = values[i] ? values[i].trim() : '';
       
-      // Clean up common CSV quirks
+      // Remove surrounding quotes if present
       if (val.startsWith('"') && val.endsWith('"')) {
         val = val.substring(1, val.length - 1);
       }
       
-      // Type conversions
+      // Clean up internal double quotes (CSV standard)
+      val = val.replace(/""/g, '"');
+
       if (header === 'precio') {
         entry[header] = parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
-      } else if (header === 'id') {
-        entry[header] = val;
       } else if (header === 'categoria') {
-        // Normalize: Capital First Letter + lowercase rest
         entry[header] = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase().trim();
       } else {
         entry[header] = val;
       }
     });
+
     return {
       id: entry.id || Math.random().toString(36).substr(2, 9),
       name: entry.nombre || 'Producto sin nombre',
       category: entry.categoria || 'Varios',
       price: entry.precio || 0,
       tag: entry.tag || '',
-      image: entry.imagenurl || null
+      image: entry.imagenurl && entry.imagenurl.startsWith('http') ? entry.imagenurl : null
     };
   });
 };

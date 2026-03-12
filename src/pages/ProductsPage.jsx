@@ -2,6 +2,27 @@ import { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, ChevronRight, Loader2 } from 'lucide-react';
 import { CATEGORIES, fetchProducts } from '../services/productService';
 
+const ProductImage = ({ product }) => {
+  const [hasError, setHasError] = useState(false);
+
+  if (!product.image || hasError) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.3em] text-dark-deep/10 p-6 text-center">
+        {product.name}
+      </div>
+    );
+  }
+
+  return (
+    <img 
+      src={product.image} 
+      alt={product.name}
+      onError={() => setHasError(true)}
+      className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+    />
+  );
+};
+
 const ProductsPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -97,17 +118,7 @@ const ProductsPage = () => {
                 {filteredProducts.map((product) => (
                   <div key={product.id} className="group flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="aspect-[3/4] bg-dark-deep/5 rounded-sm overflow-hidden relative border border-dark-deep/5">
-                      {product.image ? (
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.3em] text-dark-deep/10 p-6 text-center">
-                          {product.name}
-                        </div>
-                      )}
+                      <ProductImage product={product} />
                       
                       <div className="absolute inset-0 bg-dark-deep/0 transition-all duration-500 group-hover:bg-dark-deep/40 flex items-center justify-center">
                         <button className="opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 bg-white text-dark-deep px-6 py-3 text-[9px] font-black uppercase tracking-widest transition-all duration-500 hover:bg-primary-600 hover:text-white">
