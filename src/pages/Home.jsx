@@ -1,6 +1,6 @@
-import Hero from '../components/Hero';
-import ProductCarousel from '../components/ProductCarousel';
-import LocationSection from '../components/LocationSection';
+import Hero from '../components/features/home/Hero';
+import ProductCarousel from '../components/features/products/ProductCarousel';
+import LocationSection from '../components/features/location/LocationSection';
 
 const Home = () => {
   return (

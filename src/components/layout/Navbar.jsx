@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
-import { fetchProducts, CATEGORIES } from '../services/productService';
+import { fetchProducts, CATEGORIES } from '../../services/productService';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

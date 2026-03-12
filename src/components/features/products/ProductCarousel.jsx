@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { ArrowRight, CornerDownRight, Tag, Zap } from 'lucide-react';
 
 // Specialized Assets
-import imgClassic from '../assets/service-classic.png';
-import imgBoots from '../assets/service-boots.png';
-import imgRestoration from '../assets/service-restoration.png';
-import imgAccessories from '../assets/service-accessories.png';
+import imgClassic from '../../../assets/service-classic.png';
+import imgBoots from '../../../assets/service-boots.png';
+import imgRestoration from '../../../assets/service-restoration.png';
+import imgAccessories from '../../../assets/service-accessories.png';
 
 const services = [
   {
