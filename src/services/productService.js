@@ -1,11 +1,11 @@
 // Google Sheets CSV URL (Exported as CSV)
-// Example: https://docs.google.com/spreadsheets/d/e/2PACX-1v.../pub?output=csv
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5q0Yy0-Q-A9X-J8r5y-3N9k6vP-m-m-m-m-m-m-m-m-m-m-m-m/pub?output=csv'; // This is a placeholder
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQeI1T9_MeQ5YqkFbBgb2QNJjTvC-U0GaEXyREMimSuGE73tn_DVj2JNmVHNNdco9Ncp5PPaHQrv_o-/pub?output=csv';
 
 export const CATEGORIES = [
   'Todos',
   'Zapatillas',
   'Botines',
+  'Calzado',
   'Pelotas',
   'Mochilas',
   'Accesorios',
@@ -37,6 +37,9 @@ const parseCSV = (csv) => {
         entry[header] = parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
       } else if (header === 'id') {
         entry[header] = val;
+      } else if (header === 'categoria') {
+        // Normalize: Capital First Letter + lowercase rest
+        entry[header] = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase().trim();
       } else {
         entry[header] = val;
       }
