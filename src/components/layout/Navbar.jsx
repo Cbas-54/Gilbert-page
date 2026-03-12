@@ -26,8 +26,6 @@ const Navbar = () => {
           isSidebar: true,
           items: [
             { name: 'Ver Todos los Productos', href: '/productos', bold: true },
-            { name: 'Lo Más Vendido', href: '/productos', bold: false },
-            { name: 'Nuevos Ingresos', href: '/productos', bold: false },
           ]
         },
         {

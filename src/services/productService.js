@@ -3,11 +3,9 @@ const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQeI1T9_MeQ5Y
 
 export const CATEGORIES = [
   'Todos',
-  'Zapatillas',
-  'Botines',
   'Calzado',
-  'Pelotas',
   'Mochilas',
+  'Deportes',
   'Accesorios',
   'Cuidado'
 ];
@@ -76,10 +74,10 @@ export const fetchProducts = async () => {
 };
 
 const getBackupProducts = () => [
-  { id: 1, name: 'Zapatillas Running Pro', category: 'Zapatillas', price: 18500, tag: 'Nueva Temporada', image: null },
-  { id: 2, name: 'Botines Fútbol 5', category: 'Botines', price: 15200, tag: 'Más Vendido', image: null },
-  { id: 3, name: 'Pelota de Fútbol N5', category: 'Pelotas', price: 9800, tag: 'Calidad Barrio', image: null },
+  { id: 1, name: 'Zapatillas Running Pro', category: 'Calzado', price: 18500, tag: 'Nueva Temporada', image: null },
+  { id: 2, name: 'Botines Fútbol 5', category: 'Calzado', price: 15200, tag: 'Más Vendido', image: null },
+  { id: 3, name: 'Pelota de Fútbol N5', category: 'Deportes', price: 9800, tag: 'Calidad Barrio', image: null },
   { id: 4, name: 'Mochila Deportiva XL', category: 'Mochilas', price: 12500, tag: 'Estructural', image: null },
-  { id: 5, name: 'Medias de Compresión', category: 'Accesorios', price: 4500, tag: 'Esencial', image: null },
+  { id: 5, name: 'Medias de Compresión', category: 'Deportes', price: 4500, tag: 'Esencial', image: null },
   { id: 6, name: 'Pomada Renovadora', category: 'Cuidado', price: 3200, tag: 'Taller Guilberth', image: null }
 ];

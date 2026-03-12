@@ -1,14 +1,25 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search, Loader2 } from 'lucide-react';
-import { fetchProducts } from '../services/productService';
+import { fetchProducts, CATEGORIES } from '../services/productService';
 import ProductCard from '../components/features/products/ProductCard';
 import ProductSidebar from '../components/features/products/ProductSidebar';
 
 const ProductsPage = () => {
+  const [searchParams] = useSearchParams();
+  const urlCategory = searchParams.get('categoria');
+  
   const [allProducts, setAllProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (urlCategory) {
+      const match = CATEGORIES.find(c => c.toLowerCase() === urlCategory.toLowerCase());
+      if (match) setActiveCategory(match);
+    }
+  }, [urlCategory]);
 
   useEffect(() => {
     const loadData = async () => {
