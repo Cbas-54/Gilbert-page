@@ -12,7 +12,7 @@ const ProductImage = ({ product }) => {
   }
 
   return (
-    <div className="w-full h-full p-6 flex items-center justify-center">
+    <div className="w-full h-full p-2 flex items-center justify-center">
       <img 
         src={product.image} 
         alt={product.name}
