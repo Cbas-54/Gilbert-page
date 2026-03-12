@@ -14,12 +14,14 @@ const ProductImage = ({ product }) => {
   }
 
   return (
-    <img 
-      src={product.image} 
-      alt={product.name}
-      onError={() => setHasError(true)}
-      className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-    />
+    <div className="w-full h-full p-6 flex items-center justify-center">
+      <img 
+        src={product.image} 
+        alt={product.name}
+        onError={() => setHasError(true)}
+        className="max-w-full max-h-full object-contain grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+      />
+    </div>
   );
 };
 
