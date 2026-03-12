@@ -11,8 +11,8 @@ export const CATEGORIES = [
 ];
 
 export const SUBCATEGORIES = {
-  'Calzado': ['Mujer', 'Hombre', 'Niño', 'Deportes', 'Vestir'],
-  'Mochilas': ['Deportes', 'Escolares', 'Urbanas'],
+  'Calzado': ['Mujer', 'Hombre', 'Niño', 'Deportivas', 'Botines', 'Vestir'],
+  'Mochilas': ['Niños', 'Urbanas'],
   'Deportes': ['Pelotas', 'Guantes', 'Peras', 'Accesorios']
 };
 
@@ -42,7 +42,7 @@ const parseCSV = (csv) => {
 
       if (header === 'precio') {
         entry[header] = parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
-      } else if (header === 'categoria' || header === 'subcategoria') {
+      } else if (header === 'categoria' || header === 'subcategoria' || header === 'subcategorias') {
         entry[header] = val ? val.charAt(0).toUpperCase() + val.slice(1).toLowerCase().trim() : '';
       } else {
         entry[header] = val;
@@ -53,7 +53,7 @@ const parseCSV = (csv) => {
       id: entry.id || Math.random().toString(36).substr(2, 9),
       name: entry.nombre || 'Producto sin nombre',
       category: entry.categoria || 'Varios',
-      subcategory: entry.subcategoria || '',
+      subcategory: entry.subcategoria || entry.subcategorias || '',
       price: entry.precio || 0,
       tag: entry.tag || '',
       image: entry.imagenurl && entry.imagenurl.startsWith('http') ? entry.imagenurl : null

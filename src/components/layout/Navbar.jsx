@@ -34,15 +34,15 @@ const Navbar = () => {
             { name: 'Mujer', href: '/productos?categoria=calzado&sub=mujer' },
             { name: 'Hombre', href: '/productos?categoria=calzado&sub=hombre' },
             { name: 'Niño', href: '/productos?categoria=calzado&sub=nino' },
-            { name: 'Deportes', href: '/productos?categoria=calzado&sub=deportes' },
+            { name: 'Deportivas', href: '/productos?categoria=calzado&sub=deportivas' },
+            { name: 'Botines', href: '/productos?categoria=calzado&sub=botines' },
             { name: 'Vestir', href: '/productos?categoria=calzado&sub=vestir' },
           ]
         },
         {
           title: 'Mochilas',
           items: [
-            { name: 'Deportes', href: '/productos?categoria=mochilas&sub=deportes' },
-            { name: 'Escolares', href: '/productos?categoria=mochilas&sub=escolares' },
+            { name: 'Niños', href: '/productos?categoria=mochilas&sub=niños' },
             { name: 'Urbanas', href: '/productos?categoria=mochilas&sub=urbanas' },
           ]
         },
