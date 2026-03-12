@@ -3,7 +3,7 @@ import heroImage from '../assets/hero-workshop.png';
 
 const Hero = () => {
   return (
-    <div id="home" className="relative w-full min-h-screen flex items-center justify-center lg:justify-start lg:pl-[10%] xl:pl-[15%] overflow-hidden bg-dark-rich">
+    <div id="home" className="relative w-full min-h-screen flex flex-col items-center lg:items-start justify-center pt-32 sm:pt-40 lg:pt-28 lg:pb-8 lg:pl-[10%] xl:pl-[15%] overflow-hidden bg-dark-rich">
       
       {/* Full Background Image */}
       <div className="absolute inset-0 w-full h-full">
@@ -20,7 +20,7 @@ const Hero = () => {
       </div>
 
       {/* Floating Editorial Card (Floom Inspired) */}
-      <div className="relative z-20 w-[90%] max-w-lg lg:max-w-xl bg-neutral-beige p-10 sm:p-12 md:p-16 mt-24 lg:mt-0 shadow-2xl border border-white/50 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+      <div className="relative z-20 w-[95%] sm:w-[90%] max-w-lg lg:max-w-xl bg-neutral-beige p-8 sm:p-10 md:p-14 lg:mt-0 shadow-2xl border border-white/50 animate-in fade-in slide-in-from-bottom-8 duration-1000">
         
         <div className="inline-flex items-center gap-4 mb-8">
           <div className="w-12 h-[1px] bg-primary-600"></div>

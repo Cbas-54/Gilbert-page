@@ -1,44 +1,47 @@
-import { Facebook, Instagram, Twitter, Phone, Mail, Clock, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Phone, Mail, Clock, MapPin, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer id="contacto" className="bg-dark-deep text-white pt-24 pb-12 relative overflow-hidden">
-      {/* Massive Background Watermark */}
-      <div className="absolute -bottom-10 -left-10 text-[20vw] font-black text-white/[0.02] leading-none select-none pointer-events-none tracking-tighter">
-        GILBERT
+    <footer id="contacto" className="relative bg-[#1A0F0D] text-parchment pt-24 pb-12 overflow-hidden">
+      {/* Decorative Branding */}
+      <div className="absolute top-0 right-0 p-20 opacity-[0.02] pointer-events-none select-none">
+        <span className="font-serif italic text-[30vw] leading-none">G.</span>
       </div>
 
-      <div className="boutique-container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-24">
           
-          {/* Brand & Mission - 5 Columns */}
-          <div className="lg:col-span-5 space-y-10">
-            <div className="flex items-center gap-5 group">
-              <div className="w-14 h-14 bg-white flex items-center justify-center text-dark-deep font-black text-3xl rounded-2xl transition-transform duration-500 group-hover:rotate-[360deg] shadow-xl">
-                G
+          {/* Brand Identity - 5 Columns */}
+          <div className="lg:col-span-5 space-y-12">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 border border-primary-600/30 flex items-center justify-center font-serif text-2xl italic text-primary-600">
+                G.
               </div>
-              <div className="flex flex-col -space-y-1">
-                <span className="text-3xl font-black uppercase tracking-tighter">Gilbert</span>
-                <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.4em]">Est. 1990</span>
+              <div className="flex flex-col">
+                <span className="text-2xl font-serif tracking-tight text-white/90">Gilbert</span>
+                <span className="text-[8px] font-sans font-black uppercase tracking-[0.4em] text-primary-600">Establecimiento</span>
               </div>
             </div>
             
-            <p className="text-xl md:text-2xl text-neutral-400 font-bold leading-tight max-w-md">
-              Elevando el estándar de la compostura artesanal. 
-              Donde cada puntada cuenta una historia de durabilidad.
-            </p>
+            <h2 className="font-serif text-4xl md:text-5xl italic text-white/80 leading-tight max-w-md">
+              Donde cada puntada es un compromiso con la <span className="text-primary-600">perdurabilidad</span>.
+            </h2>
 
-            <div className="flex gap-4">
+            <div className="flex items-center gap-6">
               {[
-                { icon: <Instagram size={22} />, label: 'Instagram' },
-                { icon: <Facebook size={22} />, label: 'Facebook' },
-                { icon: <Twitter size={22} />, label: 'Twitter' }
+                { icon: <Instagram size={20} />, label: 'Instagram' },
+                { icon: <Facebook size={20} />, label: 'Facebook' },
+                { icon: <Twitter size={20} />, label: 'Twitter' }
               ].map((social, idx) => (
                 <a 
                   key={idx} 
                   href="#" 
                   aria-label={social.label}
-                  className="w-14 h-14 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-primary-600 hover:border-primary-600 hover:-translate-y-2 transition-all duration-300"
+                  className="text-white/40 hover:text-primary-600 transition-colors duration-500"
                 >
                   {social.icon}
                 </a>
@@ -46,90 +49,71 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Info Grid - 7 Columns */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {/* Contact Details - 7 Columns */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 pt-4">
             
-            {/* Contact Col */}
+            {/* Direct Line */}
             <div className="space-y-8">
-              <h4 className="text-xs font-black text-primary-600 tracking-[0.3em] uppercase">Contacto</h4>
-              <ul className="space-y-6">
-                <li className="group">
-                  <a href="tel:+542211234567" className="flex items-start gap-4">
-                    <div className="w-10 h-10 border border-white/5 rounded-xl flex items-center justify-center group-hover:bg-white/10 transition-colors">
-                      <Phone size={16} />
-                    </div>
-                    <div>
-                      <span className="text-[10px] uppercase font-black opacity-30 block mb-1">Teléfono</span>
-                      <span className="text-sm font-bold block">+54 221 123-4567</span>
-                    </div>
-                  </a>
-                </li>
-                <li className="group">
-                  <a href="mailto:info@composturasgilbert.com" className="flex items-start gap-4">
-                    <div className="w-10 h-10 border border-white/5 rounded-xl flex items-center justify-center group-hover:bg-white/10 transition-colors">
-                      <Mail size={16} />
-                    </div>
-                    <div>
-                      <span className="text-[10px] uppercase font-black opacity-30 block mb-1">Email</span>
-                      <span className="text-sm font-bold block">info@gilbert.com</span>
-                    </div>
-                  </a>
-                </li>
-              </ul>
+              <span className="block font-sans text-[9px] font-black uppercase tracking-[0.3em] text-primary-600">Atención</span>
+              <div className="space-y-6">
+                <a href="tel:+542211234567" className="group block">
+                  <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">WhatsApp</span>
+                  <span className="font-serif text-lg italic text-white/80 group-hover:text-primary-600 transition-colors">+54 221 123-4567</span>
+                </a>
+                <a href="mailto:info@gilbert.com" className="group block">
+                  <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">Email</span>
+                  <span className="font-serif text-lg italic text-white/80 group-hover:text-primary-600 transition-colors">info@gilbert.com</span>
+                </a>
+              </div>
             </div>
 
-            {/* Hours Col */}
+            {/* Practical Info */}
             <div className="space-y-8">
-              <h4 className="text-xs font-black text-primary-600 tracking-[0.3em] uppercase">Taller</h4>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 border border-white/5 rounded-xl flex items-center justify-center">
-                  <Clock size={16} />
-                </div>
+              <span className="block font-sans text-[9px] font-black uppercase tracking-[0.3em] text-primary-600">El Taller</span>
+              <div className="space-y-6">
                 <div>
-                  <span className="text-[10px] uppercase font-black opacity-30 block mb-1">Horarios</span>
-                  <div className="space-y-2">
-                    <p className="text-sm font-bold whitespace-nowrap">LUN — VIE</p>
-                    <p className="text-xs font-black opacity-50 tracking-widest">09:00 — 18:00 HS</p>
-                  </div>
+                  <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">Horarios</span>
+                  <p className="font-serif text-lg italic text-white/80 leading-relaxed">
+                    Lunes a Viernes <br/>
+                    09:00 — 18:00 HS
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Address Col */}
-            <div className="space-y-8">
-              <h4 className="text-xs font-black text-primary-600 tracking-[0.3em] uppercase">Ubicación</h4>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 border border-white/5 rounded-xl flex items-center justify-center">
-                  <MapPin size={16} />
-                </div>
-                <div>
-                  <span className="text-[10px] uppercase font-black opacity-30 block mb-1">Dirección</span>
-                  <p className="text-sm font-bold leading-tight">
-                    CALLE 46 392 <br/>
-                    LA PLATA, ARG.
-                  </p>
-                </div>
+            {/* Visit Us */}
+            <div className="space-y-8 text-right lg:text-left">
+              <span className="block font-sans text-[9px] font-black uppercase tracking-[0.3em] text-primary-600">Presencia</span>
+              <div>
+                <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">Ubicación</span>
+                <p className="font-serif text-lg italic text-white/80 leading-relaxed">
+                  Calle 46 392 <br/>
+                  La Plata, Arg.
+                </p>
               </div>
             </div>
 
           </div>
         </div>
 
-        {/* Footer Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <p className="text-[10px] font-black tracking-[0.3em] uppercase opacity-20">
-              &copy; {new Date().getFullYear()} COMPOSTURAS GILBERT
+        {/* Footer Bottom */}
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <p className="text-[8px] font-sans font-bold tracking-[0.4em] uppercase text-white/20">
+              © {new Date().getFullYear()} GILBERT ARTESANAL
             </p>
-            <div className="w-1 h-1 bg-white/10 rounded-full hidden md:block"></div>
-            <p className="text-[10px] font-black tracking-[0.3em] uppercase opacity-20 hover:opacity-100 transition-opacity cursor-pointer">
-              Hecho con Pasión en Argentina
-            </p>
+            <div className="hidden md:block w-px h-4 bg-white/5"></div>
+            <button 
+              onClick={scrollToTop}
+              className="flex items-center gap-3 text-[8px] font-sans font-bold tracking-[0.4em] uppercase text-white/20 hover:text-primary-600 transition-colors"
+            >
+              Volver al inicio <ArrowUp size={10} />
+            </button>
           </div>
           
-          <div className="flex gap-8 text-[10px] font-black uppercase tracking-[0.3em] opacity-20">
-            <a href="#" className="hover:text-primary-600 hover:opacity-100 transition-all">Privacidad</a>
-            <a href="#" className="hover:text-primary-600 hover:opacity-100 transition-all">Términos</a>
+          <div className="flex gap-8 text-[8px] font-sans font-bold uppercase tracking-[0.4em] text-white/10">
+            <a href="#" className="hover:text-white transition-colors">Privacidad</a>
+            <a href="#" className="hover:text-white transition-colors">Legal</a>
           </div>
         </div>
       </div>

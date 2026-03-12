@@ -1,227 +1,196 @@
-import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, CornerDownRight } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, CornerDownRight, Tag, Zap } from 'lucide-react';
 
-const products = [
-  { id: 1, name: 'Reparación de Botines', category: 'DEPORTE', price: 'Desde $15k', icon: '⚽' },
-  { id: 2, name: 'Cambio de Suelas', category: 'CLÁSICO', price: 'Desde $25k', icon: '👞' },
-  { id: 3, name: 'Restauración de Guantes', category: 'BOXEO', price: 'Desde $12k', icon: '🥊' },
-  { id: 4, name: 'Costura de Mochilas', category: 'ACCESORIOS', price: 'Desde $10k', icon: '🎒' },
-  { id: 5, name: 'Mantenimiento de Pelotas', category: 'DEPORTE', price: 'Desde $8k', icon: '🥎' },
-  { id: 6, name: 'Teñido de Cuero', category: 'CLÁSICO', price: 'Desde $20k', icon: '🎨' },
-  { id: 7, name: 'Cambio de Cierres', category: 'ACCESORIOS', price: 'Desde $9k', icon: '🤐' },
-  { id: 8, name: 'Limpieza Premium', category: 'ESTÉTICA', price: 'Desde $15k', icon: '✨' },
+// Specialized Assets
+import imgClassic from '../assets/service-classic.png';
+import imgBoots from '../assets/service-boots.png';
+import imgRestoration from '../assets/service-restoration.png';
+import imgAccessories from '../assets/service-accessories.png';
+
+const services = [
+  {
+    id: '01',
+    shortTitle: 'Clásicos',
+    title: 'Clásicos Oxford',
+    category: 'Reparación Premium',
+    price: '$12.500',
+    image: imgClassic,
+    description: 'Restauración integral de calzado formal. Suelas de cuero, tapas y lustrado artesanal.'
+  },
+  {
+    id: '02',
+    shortTitle: 'Botas',
+    title: 'Botas & Borceguíes',
+    category: 'Restauración Técnica',
+    price: '$15.800',
+    image: imgBoots,
+    description: 'Tratamiento especializado para cueros pesados y calzado de montaña o trabajo.'
+  },
+  {
+    id: '03',
+    shortTitle: 'Accesorios',
+    title: 'Guantes & Detalles',
+    category: 'Cuidado Especializado',
+    price: '$8.200',
+    image: imgRestoration,
+    description: 'Costura invisible y nutrición de cueros finos para accesorios de alta gama.'
+  },
+  {
+    id: '04',
+    shortTitle: 'Equipaje',
+    title: 'Mochilas & Bolsos',
+    category: 'Mantenimiento Industrial',
+    price: '$18.500',
+    image: imgAccessories,
+    description: 'Reparación de herrajes, cierres y refuerzos estructurales en piezas de viaje.'
+  }
 ];
 
-const DEFAULT_ICON = '👞';
-
-const ProductCard = ({ product, isHovered, onHover, onLeave, anyCardHovered, isEntering, isLeaving }) => {
-  const icon = product.icon ? product.icon : DEFAULT_ICON;
-  
-  return (
-    <div 
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      className={`h-full transition-all duration-700
-        ${isLeaving ? 'scale-90 opacity-0' : 'scale-100 opacity-100'}
-        ${isEntering ? 'animate-in fade-in zoom-in-[0.98] duration-700' : ''}
-        ${anyCardHovered && !isHovered ? 'opacity-40 scale-[0.98]' : 'opacity-100 scale-100'}
-      `}
-    >
-      <div className={`
-        bg-white h-full rounded-sm p-8 md:p-12 border transition-all duration-500 group cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[320px] md:min-h-[400px]
-        ${isHovered ? 'shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border-neutral-200 -translate-y-2' : 'border-transparent shadow-sm'}
-      `}>
-        {/* Subtle background gradient on hover */}
-        <div className={`
-          absolute inset-0 bg-gradient-to-br from-neutral-50 to-transparent opacity-0 transition-opacity duration-700 pointer-events-none
-          ${isHovered ? 'opacity-100' : ''}
-        `}></div>
-        
-        <div className={`
-          absolute right-4 md:right-8 top-8 md:top-10 text-6xl md:text-8xl transition-all duration-700 pointer-events-none rotate-12
-          ${isHovered ? 'opacity-[0.03] translate-y-4 -rotate-6 scale-125' : 'opacity-[0.01]'}
-        `}>
-          {icon}
-        </div>
-
-        <div className="space-y-6 md:space-y-10 relative z-10">
-          <div className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 text-3xl md:text-4xl opacity-50 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-110">
-            {icon}
-          </div>
-          
-          <div>
-            <div className="mb-3 md:mb-4">
-              <span className="font-sans text-[8px] md:text-[9px] font-bold text-primary-600 tracking-[0.3em] uppercase opacity-80">
-                {product.category}
-              </span>
-            </div>
-            <h4 className="font-serif text-2xl md:text-3xl text-dark-deep leading-[1.1] transition-colors duration-500 group-hover:text-primary-700">
-              {product.name}
-            </h4>
-          </div>
-        </div>
-
-        <div className="pt-6 md:pt-10 border-t border-neutral-100 flex items-center justify-between mt-8 relative z-10">
-          <div className="flex flex-col">
-            <span className="font-sans text-[8px] md:text-[9px] font-bold text-neutral-400 uppercase tracking-[0.2em] mb-1">Precio base</span>
-            <span className="font-serif text-sm md:text-base italic text-dark-deep tracking-wide">{product.price}</span>
-          </div>
-          <div className={`
-            w-8 h-8 md:w-10 md:h-10 rounded-full border flex items-center justify-center transition-all duration-500
-            ${isHovered ? 'bg-primary-600 border-primary-600 text-white translate-x-1' : 'bg-transparent border-neutral-200 text-neutral-400'}
-          `}>
-            <CornerDownRight size={16} className={`transition-transform duration-500 ${isHovered ? 'rotate-0' : '-rotate-45'}`} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const ProductCarousel = () => {
-  const itemsToShow = 4;
-  const extendedProducts = [
-    ...products.slice(-itemsToShow),
-    ...products,
-    ...products.slice(0, itemsToShow),
-  ];
-
-  const [currentIndex, setCurrentIndex] = useState(itemsToShow);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const [direction, setDirection] = useState(null);
-  const [hoveredCardId, setHoveredCardId] = useState(null);
-  const containerRef = useRef(null);
-
-  const handleNext = () => {
-    if (direction) return;
-    setDirection('next');
-    setCurrentIndex(prev => prev + 1);
-  };
-
-  const handlePrev = () => {
-    if (direction) return;
-    setDirection('prev');
-    setCurrentIndex(prev => prev - 1);
-  };
-
-  useEffect(() => {
-    if (currentIndex === extendedProducts.length - itemsToShow) {
-      setTimeout(() => {
-        setIsTransitioning(false);
-        setCurrentIndex(itemsToShow);
-      }, 700);
-    } else if (currentIndex === 0) {
-      setTimeout(() => {
-        setIsTransitioning(false);
-        setCurrentIndex(products.length);
-      }, 700);
-    }
-  }, [currentIndex, extendedProducts.length, itemsToShow, products.length]);
-
-  useEffect(() => {
-    if (!isTransitioning) {
-      setTimeout(() => {
-        setIsTransitioning(true);
-        setDirection(null);
-      }, 50);
-    }
-  }, [isTransitioning]);
-
-  useEffect(() => {
-    if (direction) {
-      const timer = setTimeout(() => setDirection(null), 700);
-      return () => clearTimeout(timer);
-    }
-  }, [direction]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section id="servicios" className="relative bg-neutral-warm pb-24 md:pb-40 overflow-hidden">
-      <div className="bg-grain"></div>
-      
-      {/* CREATIVE TRANSITION DIVIDER */}
-      <div className="relative h-20 md:h-28 bg-dark-rich overflow-hidden">
-        <div className="absolute inset-0 opacity-10 flex items-center justify-around whitespace-nowrap select-none pointer-events-none">
-          {Array(10).fill('RESTAURACIÓN TÉCNICA · PRECISIÓN ARTESANAL · ').map((text, i) => (
-            <span key={i} className="font-sans text-white text-[10px] font-bold uppercase tracking-[0.6em]">{text}</span>
-          ))}
-        </div>
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary-700/50 to-transparent"></div>
-      </div>
+    <section id="servicios" className="relative bg-neutral-beige pt-10 lg:pt-14 pb-16 lg:pb-20">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
+        
+        {/* TABBED HEADER */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 lg:mb-8 gap-12 border-b border-dark-deep/5 pb-4">
+          <div className="flex flex-col gap-2">
+            <h2 className="font-serif text-5xl md:text-7xl italic text-dark-deep tracking-wide leading-none">
+              Servicios
+            </h2>
+            <span className="font-sans text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 ml-1">
+              Atelier Archive // 2026
+            </span>
+          </div>
 
-      <div className="boutique-container relative mt-24 md:mt-32">
-        <div className="text-center mb-20 md:mb-32 flex flex-col items-center">
-          <span className="font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-primary-600 mb-6 block">
-            El Catálogo
-          </span>
-          <h2 className="font-serif text-5xl md:text-7xl italic text-dark-deep tracking-wide leading-none mb-8">
-            Servicios
-          </h2>
-          <div className="w-[1px] h-16 bg-dark-deep/20 mx-auto"></div>
+          {/* Navigation Tabs (Mini-titles) */}
+          <nav className="flex flex-wrap items-center gap-2">
+            {services.map((service, index) => (
+              <button
+                key={service.id}
+                onMouseEnter={() => setActiveIndex(index)}
+                onClick={() => setActiveIndex(index)}
+                className={`group relative px-6 py-3 rounded-full transition-all duration-500 flex items-center gap-3
+                  ${activeIndex === index 
+                    ? 'bg-dark-deep text-white' 
+                    : 'bg-transparent text-dark-deep/50 hover:text-dark-deep hover:bg-dark-deep/5'}
+                `}
+              >
+                <span className="font-serif italic text-xs text-primary-600 group-hover:text-primary-400">
+                  {service.id}
+                </span>
+                <span className="font-sans text-[10px] font-bold uppercase tracking-widest">
+                  {service.shortTitle}
+                </span>
+                {activeIndex === index && (
+                  <div className="w-1.5 h-1.5 bg-primary-600 rounded-full animate-pulse"></div>
+                )}
+              </button>
+            ))}
+          </nav>
         </div>
 
-        {/* MOBILE GRID LAYOUT (2 Columns) */}
-        <div className="md:hidden grid grid-cols-2 gap-4 px-2">
-          {products.map((product) => (
-            <div key={product.id} className="h-full">
-              <ProductCard 
-                product={product}
-                isHovered={hoveredCardId === product.id}
-                onHover={() => setHoveredCardId(product.id)}
-                onLeave={() => setHoveredCardId(null)}
-                anyCardHovered={hoveredCardId !== null}
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* DESKTOP CAROUSEL LAYOUT */}
-        <div className="hidden md:block relative group mx-auto max-w-[1400px]">
-          <button 
-            onClick={handlePrev}
-            disabled={!!direction}
-            className="absolute -left-12 top-1/2 -translate-y-1/2 z-30 w-16 h-16 bg-white border border-neutral-200 rounded-full flex items-center justify-center text-dark-deep hover:bg-dark-deep hover:text-white transition-all shadow-xl active:scale-95 disabled:opacity-50"
-          >
-            <ChevronLeft size={28} />
-          </button>
+        {/* SHOWCASE AREA */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch min-h-[500px] lg:min-h-[600px]">
           
-          <button 
-            onClick={handleNext}
-            disabled={!!direction}
-            className="absolute -right-12 top-1/2 -translate-y-1/2 z-30 w-16 h-16 bg-white border border-neutral-200 rounded-full flex items-center justify-center text-dark-deep hover:bg-dark-deep hover:text-white transition-all shadow-xl active:scale-95 disabled:opacity-50"
-          >
-            <ChevronRight size={28} />
-          </button>
-
-          <div className="overflow-hidden p-6 -m-6">
-            <div 
-              ref={containerRef}
-              className={`flex ${isTransitioning ? 'transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]' : ''}`}
-              style={{ 
-                transform: `translateX(-${currentIndex * 25}%)`,
-              }}
-            >
-              {extendedProducts.map((product, idx) => {
-                const id = `${product.id}-${idx}`;
-                const isLeaving = (direction === 'next' && idx === currentIndex - 1) || (direction === 'prev' && idx === currentIndex + itemsToShow);
-                const isEntering = (direction === 'next' && idx === currentIndex + itemsToShow - 1) || (direction === 'prev' && idx === currentIndex);
+          {/* Left: Interactive Details */}
+          <div className="lg:col-span-4 flex flex-col justify-center">
+            {services.map((service, index) => (
+              <div 
+                key={`details-${service.id}`}
+                className={`transition-all duration-700 ease-in-out
+                  ${activeIndex === index 
+                    ? 'opacity-100 translate-x-0 relative' 
+                    : 'opacity-0 -translate-x-8 absolute pointer-events-none'}
+                `}
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <Tag className="w-4 h-4 text-primary-600" />
+                  <span className="font-sans text-[9px] font-black uppercase tracking-widest text-neutral-400">
+                    {service.category}
+                  </span>
+                </div>
                 
-                return (
-                  <div key={id} className="min-w-[25%] px-4 py-8">
-                    <ProductCard 
-                      product={product}
-                      isHovered={hoveredCardId === id}
-                      onHover={() => setHoveredCardId(id)}
-                      onLeave={() => setHoveredCardId(null)}
-                      anyCardHovered={hoveredCardId !== null}
-                      isEntering={isEntering}
-                      isLeaving={isLeaving}
-                    />
+                <h3 className="font-serif text-4xl md:text-6xl text-dark-deep leading-tight mb-8">
+                  {service.title}
+                </h3>
+                
+                <p className="font-sans text-neutral-600 text-base md:text-lg leading-relaxed mb-10 max-w-sm">
+                  {service.description}
+                </p>
+
+                <div className="grid grid-cols-2 gap-8 pt-8 border-t border-dark-deep/5 max-w-sm">
+                  <div>
+                    <span className="block font-sans text-[9px] font-black uppercase tracking-widest text-neutral-400 mb-2">Precio Base</span>
+                    <span className="font-serif text-2xl text-dark-deep italic">{service.price}</span>
                   </div>
-                );
-              })}
+                  <div className="flex flex-col justify-end">
+                    <button className="flex items-center gap-2 group/btn font-sans text-[10px] font-bold uppercase tracking-widest text-primary-600 hover:text-dark-deep transition-colors">
+                      Personalizar <CornerDownRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right: Large Illustration */}
+          <div className="lg:col-span-8 relative rounded-sm overflow-hidden shadow-2xl bg-dark-deep/5">
+            {services.map((service, index) => (
+              <div
+                key={`img-showcase-${service.id}`}
+                className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out
+                  ${activeIndex === index ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'}
+                `}
+              >
+                <img 
+                  src={service.image} 
+                  alt={service.title}
+                  className="w-full h-full object-cover grayscale-[20%] brightness-[0.85] contrast-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-neutral-beige/20 via-transparent to-transparent"></div>
+              </div>
+            ))}
+            
+            {/* Corner Accent */}
+            <div className="absolute top-8 right-8 z-20 flex items-center gap-4">
+               <div className="h-[1px] w-12 bg-white/30"></div>
+               <span className="font-sans text-[8px] font-black uppercase tracking-[0.4em] text-white/50">
+                 Gilbert Workshop Detail
+               </span>
+            </div>
+
+            {/* Floating Technical Tag */}
+            <div className="absolute bottom-8 left-8 z-20">
+               <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-sm flex items-center gap-4">
+                  <Zap className="w-4 h-4 text-primary-600" />
+                  <span className="font-sans text-[9px] font-black uppercase tracking-widest text-white leading-none">
+                    Procesado en 48hs
+                  </span>
+               </div>
             </div>
           </div>
         </div>
+
+        {/* Unified Call-to-Action */}
+        <div className="mt-12 lg:mt-16 flex justify-center">
+          <a 
+            href="https://wa.me/542211234567"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center gap-10 px-12 py-10 bg-dark-deep text-white rounded-full overflow-hidden hover:pr-20 transition-all duration-500"
+          >
+            <div className="relative z-10 flex flex-col items-start gap-1">
+              <span className="font-serif text-3xl italic leading-none">Consultar Presupuesto</span>
+              <span className="font-sans text-[9px] font-black uppercase tracking-[0.4em] text-primary-600">Atención Personalizada en La Plata</span>
+            </div>
+            <div className="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-primary-600 group-hover:border-primary-600 transition-all duration-500">
+               <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+            </div>
+          </a>
+        </div>
+
       </div>
     </section>
   );
