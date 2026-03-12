@@ -19,15 +19,33 @@ const Navbar = () => {
 
     // Load dynamic data for Mega-menu
     const loadMegaMenu = async () => {
-      const allProducts = await fetchProducts();
-      const dynamicData = CATEGORIES.filter(cat => cat !== 'Todos').slice(0, 4).map(cat => ({
-        title: cat,
-        items: allProducts
-          .filter(p => p.category === cat)
-          .slice(0, 4)
-          .map(p => p.name)
-      }));
-      setMegaMenuData(dynamicData);
+      try {
+        const allProducts = await fetchProducts();
+        const mainCategories = CATEGORIES.filter(c => c !== 'Todos').slice(0, 3);
+        
+        const structuredData = [
+          {
+            title: 'Explorar',
+            isSidebar: true,
+            items: [
+              { name: 'Ver Todos los Productos', href: '/productos', bold: true },
+              { name: 'Lo Más Vendido', href: '/productos', bold: false },
+              { name: 'Nuevos Ingresos', href: '/productos', bold: false },
+              { name: 'Servicios de Taller', href: '#servicios', isAnchor: true },
+            ]
+          },
+          ...mainCategories.map(cat => ({
+            title: cat,
+            items: allProducts
+              .filter(p => p.category === cat)
+              .slice(0, 5)
+              .map(p => ({ name: p.name, href: '/productos' }))
+          }))
+        ];
+        setMegaMenuData(structuredData);
+      } catch (error) {
+        console.error("Error loading mega menu:", error);
+      }
     };
     loadMegaMenu();
 
@@ -39,6 +57,10 @@ const Navbar = () => {
     { name: 'Servicios', href: '#servicios', type: 'anchor' },
     { name: 'Contacto', href: '#ubicacion', type: 'anchor' },
   ];
+
+  const visibleNavLinks = navLinks.filter(link => 
+    !(link.href === '/productos' && location.pathname === '/productos')
+  );
 
   const handleNavigation = (e, link) => {
     e.preventDefault();
@@ -86,7 +108,7 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-16">
             <div className="flex items-center gap-10">
-              {navLinks.map((link) => (
+              {visibleNavLinks.map((link) => (
                 <div 
                   key={link.name}
                   className="relative py-2"
@@ -106,18 +128,6 @@ const Navbar = () => {
                 </div>
               ))}
             </div>
-
-            {/* Action Bar - Desktop (Hidden based on user request) */}
-            <div className={`hidden flex items-center gap-6 pl-10 border-l transition-colors duration-500 ${shouldBeSolid ? 'border-dark-deep/10' : 'border-white/20'}`}>
-              <button 
-                onClick={() => setIsOpen(!isOpen)}
-                className={`w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-500
-                  ${shouldBeSolid ? 'bg-dark-deep text-white hover:bg-primary-600' : 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white hover:text-dark-deep'}
-                `}
-              >
-                {isOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-            </div>
           </div>
 
           {/* Mobile Menu Trigger */}
@@ -131,41 +141,59 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* ADIDAS-STYLE MEGAMENU */}
+        {/* MEGAMENU */}
         <div 
           className={`
             absolute top-full left-0 w-full bg-white border-t border-dark-deep/5 shadow-2xl overflow-hidden transition-all duration-500 ease-in-out
-            ${showMegaMenu ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}
+            ${showMegaMenu ? 'max-h-[600px] opacity-100 py-12' : 'max-h-0 opacity-0 pointer-events-none py-0'}
           `}
           style={{ top: 'calc(100% - 1px)' }}
           onMouseEnter={() => setShowMegaMenu(true)}
         >
-          <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 py-12">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20">
               {megaMenuData.map((section, idx) => (
-                <div key={idx} className="space-y-6">
-                  <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 pb-2 border-b border-dark-deep/5">
+                <div key={idx} className={`space-y-6 ${section.isSidebar ? 'pr-12 lg:border-r border-dark-deep/5' : ''}`}>
+                  <h3 className={`text-[10px] font-black uppercase tracking-[0.3em] pb-2 border-b border-dark-deep/5 ${section.isSidebar ? 'text-dark-deep' : 'text-primary-600'}`}>
                     {section.title}
                   </h3>
                   <ul className="space-y-4">
                     {section.items.map((item, i) => (
                       <li key={i}>
                         <a 
-                          href="/productos" 
-                          onClick={(e) => { e.preventDefault(); navigate('/productos'); setShowMegaMenu(false); }}
-                          className="group flex items-center justify-between text-sm font-sans font-bold text-dark-deep/60 hover:text-dark-deep transition-colors"
+                          href={item.href} 
+                          onClick={(e) => { 
+                            if (item.isAnchor) {
+                              handleNavigation(e, { href: item.href, type: 'anchor' });
+                            } else {
+                              e.preventDefault(); 
+                              navigate(item.href); 
+                              setShowMegaMenu(false); 
+                            }
+                          }}
+                          className={`group flex items-center justify-between text-xs font-sans transition-colors
+                            ${item.bold ? 'font-black text-dark-deep tracking-wider' : 'font-bold text-dark-deep/60 hover:text-dark-deep'}
+                          `}
                         >
-                          {item}
-                          <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-600" />
+                          {item.name}
+                          {!section.isSidebar && <ArrowRight size={12} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary-600" />}
                         </a>
                       </li>
                     ))}
                   </ul>
+                  {section.isSidebar && (
+                    <div className="pt-4">
+                      <div className="bg-primary-600/5 p-6 rounded-sm border border-primary-600/10">
+                        <p className="text-[10px] font-bold text-primary-600 uppercase tracking-widest leading-relaxed">
+                          Sorteos Mensuales <br/> 
+                          <span className="text-dark-deep/40 text-[8px] font-medium tracking-normal mt-1 block">Para clientes del taller</span>
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
-            
-            {/* Featured Promo Removed based on user request */}
           </div>
         </div>
 
@@ -178,7 +206,7 @@ const Navbar = () => {
           ${isOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
         `}>
           <div className="p-6 space-y-4">
-            {navLinks.map((link) => (
+            {visibleNavLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
