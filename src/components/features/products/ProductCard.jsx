@@ -26,7 +26,7 @@ const ProductImage = ({ product }) => {
 const ProductCard = ({ product }) => {
   return (
     <div className="group flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="aspect-[3/4] bg-dark-deep/5 rounded-sm overflow-hidden relative border border-dark-deep/5">
+      <div className="aspect-square bg-dark-deep/5 rounded-sm overflow-hidden relative border border-dark-deep/5">
         <ProductImage product={product} />
         
         <div className="absolute inset-0 bg-dark-deep/0 transition-all duration-500 group-hover:bg-dark-deep/40 flex items-center justify-center">
