@@ -160,12 +160,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        <MegaMenu 
-          showMegaMenu={showMegaMenu} 
-          megaMenuData={megaMenuData} 
-          setShowMegaMenu={setShowMegaMenu} 
-          handleNavigation={handleNavigation} 
-        />
+
 
         {/* MOBILE MENU */}
         <div className={`
@@ -192,6 +187,13 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      <MegaMenu 
+        showMegaMenu={showMegaMenu} 
+        megaMenuData={megaMenuData} 
+        setShowMegaMenu={setShowMegaMenu} 
+        handleNavigation={handleNavigation} 
+      />
     </nav>
   );
 };
