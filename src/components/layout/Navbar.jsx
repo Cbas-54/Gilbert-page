@@ -18,35 +18,47 @@ const Navbar = () => {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Load dynamic data for Mega-menu
-    const loadMegaMenu = async () => {
-      try {
-        const allProducts = await fetchProducts();
-        const mainCategories = CATEGORIES.filter(c => c !== 'Todos').slice(0, 3);
-        
-        const structuredData = [
-          {
-            title: 'Explorar',
-            isSidebar: true,
-            items: [
-              { name: 'Ver Todos los Productos', href: '/productos', bold: true },
-              { name: 'Lo Más Vendido', href: '/productos', bold: false },
-              { name: 'Nuevos Ingresos', href: '/productos', bold: false },
-              { name: 'Servicios de Taller', href: '#servicios', isAnchor: true },
-            ]
-          },
-          ...mainCategories.map(cat => ({
-            title: cat,
-            items: allProducts
-              .filter(p => p.category === cat)
-              .slice(0, 5)
-              .map(p => ({ name: p.name, href: '/productos' }))
-          }))
-        ];
-        setMegaMenuData(structuredData);
-      } catch (error) {
-        console.error("Error loading mega menu:", error);
-      }
+    // Load static data for Mega-menu with subcategories
+    const loadMegaMenu = () => {
+      const structuredData = [
+        {
+          title: 'Explorar',
+          isSidebar: true,
+          items: [
+            { name: 'Ver Todos los Productos', href: '/productos', bold: true },
+            { name: 'Lo Más Vendido', href: '/productos', bold: false },
+            { name: 'Nuevos Ingresos', href: '/productos', bold: false },
+          ]
+        },
+        {
+          title: 'Calzado',
+          items: [
+            { name: 'Mujer', href: '/productos?categoria=calzado&sub=mujer' },
+            { name: 'Hombre', href: '/productos?categoria=calzado&sub=hombre' },
+            { name: 'Niño', href: '/productos?categoria=calzado&sub=nino' },
+            { name: 'Deportes', href: '/productos?categoria=calzado&sub=deportes' },
+            { name: 'Vestir', href: '/productos?categoria=calzado&sub=vestir' },
+          ]
+        },
+        {
+          title: 'Mochilas',
+          items: [
+            { name: 'Deportes', href: '/productos?categoria=mochilas&sub=deportes' },
+            { name: 'Escolares', href: '/productos?categoria=mochilas&sub=escolares' },
+            { name: 'Urbanas', href: '/productos?categoria=mochilas&sub=urbanas' },
+          ]
+        },
+        {
+          title: 'Deportes',
+          items: [
+            { name: 'Pelotas', href: '/productos?categoria=deportes&sub=pelotas' },
+            { name: 'Guantes', href: '/productos?categoria=deportes&sub=guantes' },
+            { name: 'Peras', href: '/productos?categoria=deportes&sub=peras' },
+            { name: 'Accesorios', href: '/productos?categoria=deportes&sub=accesorios' },
+          ]
+        }
+      ];
+      setMegaMenuData(structuredData);
     };
     loadMegaMenu();
 
