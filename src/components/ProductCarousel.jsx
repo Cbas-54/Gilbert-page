@@ -136,7 +136,7 @@ const ProductCarousel = () => {
           </div>
 
           {/* Right: Large Illustration */}
-          <div className="lg:col-span-8 relative rounded-sm overflow-hidden shadow-2xl bg-dark-deep/5">
+          <div className="lg:col-span-8 relative rounded-sm overflow-hidden shadow-2xl bg-dark-deep/5 h-[350px] md:h-[450px] lg:h-auto">
             {services.map((service, index) => (
               <div
                 key={`img-showcase-${service.id}`}
@@ -147,15 +147,15 @@ const ProductCarousel = () => {
                 <img 
                   src={service.image} 
                   alt={service.title}
-                  className="w-full h-full object-cover grayscale-[20%] brightness-[0.85] contrast-105"
+                  className="w-full h-full object-cover grayscale-[20%] brightness-[0.85] contrast-105 aspect-square lg:aspect-auto"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-neutral-beige/20 via-transparent to-transparent"></div>
               </div>
             ))}
             
             {/* Corner Accent */}
-            <div className="absolute top-8 right-8 z-20 flex items-center gap-4">
-               <div className="h-[1px] w-12 bg-white/30"></div>
+            <div className="absolute top-8 right-8 z-20 flex flex-col items-end sm:flex-row sm:items-center gap-4">
+               <div className="hidden sm:block h-[1px] w-12 bg-white/30"></div>
                <span className="font-sans text-[8px] font-black uppercase tracking-[0.4em] text-white/50">
                  Gilbert Workshop Detail
                </span>
@@ -163,11 +163,13 @@ const ProductCarousel = () => {
 
             {/* Floating Technical Tag */}
             <div className="absolute bottom-8 left-8 z-20">
-               <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-sm flex items-center gap-4">
-                  <Zap className="w-4 h-4 text-primary-600" />
-                  <span className="font-sans text-[9px] font-black uppercase tracking-widest text-white leading-none">
-                    Procesado en 48hs
-                  </span>
+               <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-sm flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-primary-600" />
+                    <span className="font-sans text-[9px] font-black uppercase tracking-widest text-white leading-none">
+                      Procesado en 48hs
+                    </span>
+                  </div>
                </div>
             </div>
           </div>
@@ -179,14 +181,16 @@ const ProductCarousel = () => {
             href="https://wa.me/542211234567"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center gap-10 px-12 py-10 bg-dark-deep text-white rounded-full overflow-hidden hover:pr-20 transition-all duration-500"
+            className="group relative flex items-center gap-8 md:gap-12 px-8 md:px-12 py-8 md:py-10 bg-dark-deep text-white rounded-full overflow-hidden hover:pr-24 transition-all duration-500 max-w-full"
           >
             <div className="relative z-10 flex flex-col items-start gap-1">
-              <span className="font-serif text-3xl italic leading-none">Consultar Presupuesto</span>
-              <span className="font-sans text-[9px] font-black uppercase tracking-[0.4em] text-primary-600">Atención Personalizada en La Plata</span>
+              <span className="font-serif text-2xl md:text-3xl italic leading-none">Consultar Presupuesto</span>
+              <span className="font-sans text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-primary-600 pr-10 md:pr-16">
+                Atención Personalizada en La Plata
+              </span>
             </div>
-            <div className="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-primary-600 group-hover:border-primary-600 transition-all duration-500">
-               <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+            <div className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-primary-600 group-hover:border-primary-600 transition-all duration-500">
+               <ArrowRight className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-1" />
             </div>
           </a>
         </div>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, ChevronRight, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
+import { fetchProducts, CATEGORIES } from '../services/productService';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [megaMenuData, setMegaMenuData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -14,6 +16,21 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Load dynamic data for Mega-menu
+    const loadMegaMenu = async () => {
+      const allProducts = await fetchProducts();
+      const dynamicData = CATEGORIES.filter(cat => cat !== 'Todos').slice(0, 4).map(cat => ({
+        title: cat,
+        items: allProducts
+          .filter(p => p.category === cat)
+          .slice(0, 4)
+          .map(p => p.name)
+      }));
+      setMegaMenuData(dynamicData);
+    };
+    loadMegaMenu();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -21,25 +38,6 @@ const Navbar = () => {
     { name: 'Productos', href: '/productos', type: 'route' },
     { name: 'Servicios', href: '#servicios', type: 'anchor' },
     { name: 'Contacto', href: '#ubicacion', type: 'anchor' },
-  ];
-
-  const megaMenuData = [
-    {
-      title: "Todo Deportes",
-      items: ["Ver Catálogo", "Ofertas Barrio", "Novedades", "Remanentes"]
-    },
-    {
-      title: "Calzado Deportivo",
-      items: ["Zapatillas", "Botines de Fútbol", "Zapatos de Lona", "Ojotas"]
-    },
-    {
-      title: "Mochilas y Bolsos",
-      items: ["Mochilas Escolares", "Bolsos de Deporte", "Carteras", "Billeteras"]
-    },
-    {
-      title: "Pelotas y Otros",
-      items: ["Pelotas de Fútbol", "Guantes de Boxeo", "Peras de Entrenamiento", "Infladores"]
-    }
   ];
 
   const handleNavigation = (e, link) => {
@@ -139,10 +137,11 @@ const Navbar = () => {
             absolute top-full left-0 w-full bg-white border-t border-dark-deep/5 shadow-2xl overflow-hidden transition-all duration-500 ease-in-out
             ${showMegaMenu ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}
           `}
+          style={{ top: 'calc(100% - 1px)' }}
           onMouseEnter={() => setShowMegaMenu(true)}
         >
-          <div className="max-w-[1400px] mx-auto py-12">
-            <div className="grid grid-cols-4 gap-12">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 py-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
               {megaMenuData.map((section, idx) => (
                 <div key={idx} className="space-y-6">
                   <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 pb-2 border-b border-dark-deep/5">
