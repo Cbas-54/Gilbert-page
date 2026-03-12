@@ -1,29 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Search, Filter, ChevronRight, Loader2 } from 'lucide-react';
-import { CATEGORIES, fetchProducts } from '../services/productService';
-
-const ProductImage = ({ product }) => {
-  const [hasError, setHasError] = useState(false);
-
-  if (!product.image || hasError) {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.3em] text-dark-deep/10 p-6 text-center">
-        {product.name}
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full p-6 flex items-center justify-center">
-      <img 
-        src={product.image} 
-        alt={product.name}
-        onError={() => setHasError(true)}
-        className="max-w-full max-h-full object-contain grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-      />
-    </div>
-  );
-};
+import { Search, Loader2 } from 'lucide-react';
+import { fetchProducts } from '../services/productService';
+import ProductCard from '../components/features/products/ProductCard';
+import ProductSidebar from '../components/features/products/ProductSidebar';
 
 const ProductsPage = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -81,32 +60,10 @@ const ProductsPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           
-          {/* Sidebar Filter - Left (3 Columns) */}
-          <aside className="lg:col-span-3 space-y-12">
-            <div className="bg-white/50 backdrop-blur-sm border border-dark-deep/5 p-8 rounded-sm space-y-10 sticky top-32">
-              
-              {/* Category Filter */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-dark-deep/5">
-                  <Filter size={14} className="text-primary-600" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-dark-deep">Categorías</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {CATEGORIES.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={`flex items-center justify-between group py-2 text-left transition-all duration-300
-                        ${activeCategory === cat ? 'text-primary-600 pl-2' : 'text-dark-deep/50 hover:text-dark-deep'}`}
-                    >
-                      <span className="text-sm font-sans font-bold uppercase tracking-widest">{cat}</span>
-                      <ChevronRight size={14} className={`transition-all duration-300 ${activeCategory === cat ? 'opacity-100' : 'opacity-0 -translate-x-2'}`} />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </aside>
+          <ProductSidebar 
+            activeCategory={activeCategory} 
+            setActiveCategory={setActiveCategory} 
+          />
 
           {/* Product Grid - Right (9 Columns) */}
           <main className="lg:col-span-9">
@@ -118,22 +75,7 @@ const ProductsPage = () => {
             ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {filteredProducts.map((product) => (
-                  <div key={product.id} className="group flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="aspect-[3/4] bg-dark-deep/5 rounded-sm overflow-hidden relative border border-dark-deep/5">
-                      <ProductImage product={product} />
-                      
-                      <div className="absolute inset-0 bg-dark-deep/0 transition-all duration-500 group-hover:bg-dark-deep/40 flex items-center justify-center">
-                        <button className="opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 bg-white text-dark-deep px-6 py-3 text-[9px] font-black uppercase tracking-widest transition-all duration-500 hover:bg-primary-600 hover:text-white">
-                          Ver Detalle
-                        </button>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[8px] font-sans font-black uppercase tracking-widest text-primary-600">{product.tag || 'Calidad Gilbert'}</span>
-                      <h3 className="font-serif text-xl text-dark-deep">{product.name}</h3>
-                      <p className="font-serif text-lg italic text-dark-deep/60">${product.price.toLocaleString('es-AR')}</p>
-                    </div>
-                  </div>
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             ) : (

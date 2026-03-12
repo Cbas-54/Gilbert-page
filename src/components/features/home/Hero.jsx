@@ -10,7 +10,7 @@ const Hero = () => {
         <img 
           src={heroImage} 
           alt="Taller artesanal de reparación de calzado" 
-          fetchpriority="high"
+          fetchPriority="high"
           width="1920"
           height="1080"
           className="w-full h-full object-cover object-center grayscale-[20%] brightness-[0.7] contrast-125 transition-transform duration-[20s] ease-out hover:scale-105"

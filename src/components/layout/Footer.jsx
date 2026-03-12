@@ -33,13 +33,13 @@ const Footer = () => {
 
             <div className="flex items-center gap-6">
               {[
-                { icon: <Instagram size={20} />, label: 'Instagram' },
-                { icon: <Facebook size={20} />, label: 'Facebook' },
-                { icon: <Twitter size={20} />, label: 'Twitter' }
-              ].map((social, idx) => (
+                { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://instagram.com' },
+                { icon: <Facebook size={20} />, label: 'Facebook', href: 'https://facebook.com' },
+                { icon: <Twitter size={20} />, label: 'Twitter', href: 'https://twitter.com' }
+              ].map((social) => (
                 <a 
-                  key={idx} 
-                  href="#" 
+                  key={social.label} 
+                  href={social.href} 
                   aria-label={social.label}
                   className="text-white/40 hover:text-primary-600 transition-colors duration-500"
                 >
@@ -112,8 +112,8 @@ const Footer = () => {
           </div>
           
           <div className="flex gap-8 text-[8px] font-sans font-bold uppercase tracking-[0.4em] text-white/10">
-            <a href="#" className="hover:text-white transition-colors">Privacidad</a>
-            <a href="#" className="hover:text-white transition-colors">Legal</a>
+            <a href="#privacidad" className="hover:text-white transition-colors">Privacidad</a>
+            <a href="#legal" className="hover:text-white transition-colors">Legal</a>
           </div>
         </div>
       </div>
