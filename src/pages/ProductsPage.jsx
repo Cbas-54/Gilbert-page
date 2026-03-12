@@ -6,20 +6,48 @@ import ProductCard from '../components/features/products/ProductCard';
 import ProductSidebar from '../components/features/products/ProductSidebar';
 
 const ProductsPage = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const urlCategory = searchParams.get('categoria');
+  const urlSub = searchParams.get('sub');
   
   const [allProducts, setAllProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Todos');
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Sync internal state when URL changes
   useEffect(() => {
     if (urlCategory) {
       const match = CATEGORIES.find(c => c.toLowerCase() === urlCategory.toLowerCase());
       if (match) setActiveCategory(match);
+    } else {
+      setActiveCategory('Todos');
     }
-  }, [urlCategory]);
+    
+    if (urlSub) {
+      setActiveSubcategory(urlSub.charAt(0).toUpperCase() + urlSub.slice(1).toLowerCase());
+    } else {
+      setActiveSubcategory(null);
+    }
+  }, [urlCategory, urlSub]);
+
+  // Helper function to update URL and State
+  const handleCategoryChange = (cat, sub = null) => {
+    const params = new URLSearchParams(searchParams);
+    if (cat === 'Todos') {
+      params.delete('categoria');
+      params.delete('sub');
+    } else {
+      params.set('categoria', cat.toLowerCase());
+      if (sub) {
+        params.set('sub', sub.toLowerCase());
+      } else {
+        params.delete('sub');
+      }
+    }
+    setSearchParams(params, { replace: true });
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,10 +62,12 @@ const ProductsPage = () => {
   const filteredProducts = useMemo(() => {
     return allProducts.filter(product => {
       const matchCategory = activeCategory === 'Todos' || product.category === activeCategory;
+      const matchSub = !activeSubcategory || (product.subcategory && product.subcategory.toLowerCase() === activeSubcategory.toLowerCase());
       const matchSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchCategory && matchSearch;
+      
+      return matchCategory && matchSub && matchSearch;
     });
-  }, [allProducts, activeCategory, searchQuery]);
+  }, [allProducts, activeCategory, activeSubcategory, searchQuery]);
 
   return (
     <div className="pt-32 pb-20 bg-neutral-beige min-h-screen">
@@ -73,7 +103,8 @@ const ProductsPage = () => {
           
           <ProductSidebar 
             activeCategory={activeCategory} 
-            setActiveCategory={setActiveCategory} 
+            activeSubcategory={activeSubcategory}
+            onSelectCategory={handleCategoryChange} 
           />
 
           {/* Product Grid - Right (9 Columns) */}
