@@ -22,7 +22,7 @@ const Footer = () => {
                 G.
               </div>
               <div className="flex flex-col">
-                <span className="text-2xl font-serif tracking-tight text-white/90">Gilbert</span>
+                <span className="text-2xl font-serif tracking-tight text-white/90">Guilberth</span>
                 <span className="text-[8px] font-sans font-black uppercase tracking-[0.4em] text-primary-600">Establecimiento</span>
               </div>
             </div>
@@ -62,7 +62,7 @@ const Footer = () => {
                 </a>
                 <a href="mailto:info@gilbert.com" className="group block">
                   <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">Email</span>
-                  <span className="font-serif text-lg italic text-white/80 group-hover:text-primary-600 transition-colors">info@gilbert.com</span>
+                  <span className="font-serif text-lg italic text-white/80 group-hover:text-primary-600 transition-colors">info@guilberth.com</span>
                 </a>
               </div>
             </div>
@@ -100,7 +100,7 @@ const Footer = () => {
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <p className="text-[8px] font-sans font-bold tracking-[0.4em] uppercase text-white/20">
-              © {new Date().getFullYear()} GILBERT ARTESANAL
+              © {new Date().getFullYear()} GUILBERTH ARTESANAL
             </p>
             <div className="hidden md:block w-px h-4 bg-white/5"></div>
             <button 

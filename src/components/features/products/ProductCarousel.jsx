@@ -157,7 +157,7 @@ const ProductCarousel = () => {
             <div className="absolute top-8 right-8 z-20 flex flex-col items-end sm:flex-row sm:items-center gap-4">
                <div className="hidden sm:block h-[1px] w-12 bg-white/30"></div>
                <span className="font-sans text-[8px] font-black uppercase tracking-[0.4em] text-white/50">
-                 Gilbert Workshop Detail
+                 Guilberth Workshop Detail
                </span>
             </div>
 

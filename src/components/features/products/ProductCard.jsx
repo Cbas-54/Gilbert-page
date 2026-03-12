@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <div className="space-y-1">
-        <span className="text-[8px] font-sans font-black uppercase tracking-widest text-primary-600">{product.tag || 'Calidad Gilbert'}</span>
+        <span className="text-[8px] font-sans font-black uppercase tracking-widest text-primary-600">{product.tag || 'Calidad Guilberth'}</span>
         <h3 className="font-serif text-xl text-dark-deep">{product.name}</h3>
         <p className="font-serif text-lg italic text-dark-deep/60">${product.price.toLocaleString('es-AR')}</p>
       </div>

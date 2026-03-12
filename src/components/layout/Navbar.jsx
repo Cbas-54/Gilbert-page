@@ -107,7 +107,7 @@ const Navbar = () => {
               G.
             </div>
             <div className="flex flex-col -space-y-0.5 mt-1">
-              <span className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-500 ${shouldBeSolid ? 'text-dark-deep' : 'text-white'}`}>Gilbert</span>
+              <span className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-500 ${shouldBeSolid ? 'text-dark-deep' : 'text-white'}`}>Guilberth</span>
               <span className={`text-[8px] font-sans font-bold uppercase tracking-[0.3em] leading-none transition-colors duration-500 ${shouldBeSolid ? 'text-primary-600' : 'text-white/70'}`}>Composturas</span>
             </div>
           </div>
