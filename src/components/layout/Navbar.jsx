@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { fetchProducts, CATEGORIES } from '../../services/productService';
 import MegaMenu from './MegaMenu';
+import { AnimatedThemeToggler } from '../ui/animated-theme-toggler';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,7 +100,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out ${shouldBeSolid ? 'bg-neutral-beige/95 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8 md:py-10'}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out ${shouldBeSolid ? 'bg-background/95 backdrop-blur-md py-4 shadow-sm border-b border-border' : 'bg-transparent py-8 md:py-10'}`}
       onMouseLeave={() => setShowMegaMenu(false)}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative">
@@ -113,11 +114,11 @@ const Navbar = () => {
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && navigate('/')}
           >
-            <div className={`w-10 h-10 flex items-center justify-center font-serif text-2xl italic transition-colors duration-500 ${shouldBeSolid ? 'text-dark-deep' : 'text-white'}`}>
+            <div className={`w-10 h-10 flex items-center justify-center font-serif text-2xl italic transition-colors duration-500 ${shouldBeSolid ? 'text-foreground' : 'text-white'}`}>
               G.
             </div>
             <div className="flex flex-col -space-y-0.5 mt-1">
-              <span className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-500 ${shouldBeSolid ? 'text-dark-deep' : 'text-white'}`}>Guilberth</span>
+              <span className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-500 ${shouldBeSolid ? 'text-foreground' : 'text-white'}`}>Guilberth</span>
               <span className={`text-[8px] font-sans font-bold uppercase tracking-[0.3em] leading-none transition-colors duration-500 ${shouldBeSolid ? 'text-primary-600' : 'text-white/70'}`}>Composturas</span>
             </div>
           </div>
@@ -136,7 +137,7 @@ const Navbar = () => {
                     onClick={(e) => handleNavigation(e, link)}
                     className={`text-[10px] font-sans font-bold uppercase tracking-[0.2em] transition-colors duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:transition-all after:duration-300 hover:after:w-full
                       ${shouldBeSolid
-                        ? 'text-dark-deep/80 hover:text-dark-deep after:bg-primary-600' 
+                        ? 'text-foreground/80 hover:text-foreground after:bg-primary-600' 
                         : 'text-white/80 hover:text-white after:bg-white'}
                     `}
                   >
@@ -145,17 +146,35 @@ const Navbar = () => {
                 </div>
               ))}
             </div>
+
+            {/* Theme Toggler Desktop */}
+            <AnimatedThemeToggler 
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-95
+                ${shouldBeSolid 
+                  ? 'text-foreground hover:bg-muted' 
+                  : 'text-white hover:bg-white/10'}
+              `}
+            />
           </div>
 
-          {/* Mobile Menu Trigger */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-500
-              ${shouldBeSolid ? 'bg-dark-deep text-white' : 'bg-white/10 backdrop-blur-sm text-white border border-white/20'}
-            `}
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-3 lg:hidden">
+            <AnimatedThemeToggler 
+              className={`w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-500
+                ${shouldBeSolid 
+                  ? 'text-foreground hover:bg-muted' 
+                  : 'text-white hover:bg-white/10'}
+              `}
+            />
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className={`w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-500
+                ${shouldBeSolid ? 'bg-foreground text-background shadow-md' : 'bg-white/10 backdrop-blur-sm text-white border border-white/20'}
+              `}
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
 
@@ -164,7 +183,7 @@ const Navbar = () => {
         <div className={`
           absolute right-0 mt-4 
           w-[280px] md:w-[320px]
-          bg-white rounded-[2rem] border border-neutral-200 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] 
+          bg-background rounded-[2rem] border border-border shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] 
           transition-all duration-500 origin-top-right
           ${isOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
         `}>
@@ -174,9 +193,9 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavigation(e, link)}
-                className="group flex items-center justify-between p-4 rounded-2xl bg-neutral-50 hover:bg-primary-50 transition-all"
+                className="group flex items-center justify-between p-4 rounded-2xl bg-muted/50 hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20"
               >
-                <span className="text-[10px] font-black uppercase tracking-widest text-dark-deep">
+                <span className="text-[10px] font-black uppercase tracking-widest text-foreground">
                   {link.name}
                 </span>
                 <ChevronRight size={14} className="text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />

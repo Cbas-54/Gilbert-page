@@ -21,7 +21,7 @@ const WhatsAppButton = () => {
       </div>
       
       {/* Label tooltip */}
-      <div className="absolute right-20 top-1/2 -translate-y-1/2 bg-white text-dark-deep px-4 py-2 rounded-xl border border-neutral-200 shadow-xl opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all font-black text-[10px] uppercase tracking-widest whitespace-nowrap">
+      <div className="absolute right-20 top-1/2 -translate-y-1/2 bg-card text-card-foreground px-4 py-2 rounded-xl border border-border shadow-xl opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all font-black text-[10px] uppercase tracking-widest whitespace-nowrap">
         Escribinos por WhatsApp
       </div>
     </a>

@@ -70,7 +70,7 @@ const ProductsPage = () => {
   }, [allProducts, activeCategory, activeSubcategory, searchQuery]);
 
   return (
-    <div className="pt-32 pb-20 bg-neutral-beige min-h-screen">
+    <div className="pt-32 pb-20 bg-card min-h-screen transition-colors duration-500">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* Header Section */}
@@ -80,7 +80,7 @@ const ProductsPage = () => {
               <div className="w-8 h-px bg-primary-600"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Tienda Multi-rubro & Deportes</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif italic text-dark-deep leading-[0.9]">
+            <h1 className="text-5xl md:text-7xl font-serif italic text-foreground leading-[0.9] transition-colors duration-500">
               Nuestra Tienda
             </h1>
           </div>
@@ -92,9 +92,9 @@ const ProductsPage = () => {
                 placeholder="Buscar producto..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-dark-deep/5 border-none rounded-full py-4 px-8 pl-14 text-xs font-sans text-dark-deep w-full md:w-[250px] focus:ring-2 focus:ring-primary-600 transition-all outline-none"
+                className="bg-muted border-none rounded-full py-4 px-8 pl-14 text-xs font-sans text-foreground w-full md:w-[250px] focus:ring-2 focus:ring-primary-600 transition-all outline-none"
               />
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-deep/30 group-focus-within:text-primary-600 transition-colors" />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary-600 transition-colors" />
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ const ProductsPage = () => {
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-40 gap-4">
                 <Loader2 className="w-10 h-10 text-primary-600 animate-spin" />
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-dark-deep/40">Sincronizando Stock...</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground transition-colors duration-500">Sincronizando Stock...</span>
               </div>
             ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -121,16 +121,16 @@ const ProductsPage = () => {
                 ))}
               </div>
             ) : (
-              <div className="py-20 text-center border-t border-dark-deep/5 space-y-6">
-                <h2 className="font-serif text-3xl italic text-dark-deep/30">No encontramos lo que buscás</h2>
-                <p className="text-sm font-sans text-dark-deep/40 uppercase tracking-[0.3em]">Intentá con otra categoría o palabra clave</p>
+              <div className="py-20 text-center border-t border-border space-y-6 transition-colors duration-500">
+                <h2 className="font-serif text-3xl italic text-muted-foreground transition-colors duration-500">No encontramos lo que buscás</h2>
+                <p className="text-sm font-sans text-muted-foreground uppercase tracking-[0.3em] transition-colors duration-500">Intentá con otra categoría o palabra clave</p>
               </div>
             )}
             
             {!isLoading && (
-              <div className="mt-20 py-20 border-t border-dark-deep/5 text-center space-y-6">
-                <h2 className="font-serif text-3xl italic text-dark-deep/30">Nuevas piezas próximamente</h2>
-                <p className="text-sm font-sans text-dark-deep/40 uppercase tracking-[0.3em]">Cargando catálogo completo de 2026</p>
+              <div className="mt-20 py-20 border-t border-border text-center space-y-6 transition-colors duration-500">
+                <h2 className="font-serif text-3xl italic text-muted-foreground transition-colors duration-500">Nuevas piezas próximamente</h2>
+                <p className="text-sm font-sans text-muted-foreground uppercase tracking-[0.3em] transition-colors duration-500">Cargando catálogo completo de 2026</p>
               </div>
             )}
           </main>
