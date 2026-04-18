@@ -68,39 +68,20 @@ const parseCSV = (csv) => {
 
 export const fetchProducts = async (includeSuspended = false) => {
   try {
-    // 1. Intentamos obtener datos en tiempo real vía API (Sin delay de 10 min)
-    if (SCRIPT_API_URL) {
-      try {
-        const apiRes = await fetch(SCRIPT_API_URL);
-        const data = await apiRes.json();
-        
-        if (data.success && data.products) {
-          const mapped = data.products.map(p => ({
-            id: p.id || Math.random().toString(36).substr(2, 9),
-            name: p.nombre,
-            category: p.categoria,
-            subcategory: p.subcategoria,
-            price: parseFloat(p.precio) || 0,
-            tag: p.tag,
-            image: p.imagenurl,
-            status: p.estado || 'Activo'
-          }));
-          
-          return includeSuspended ? mapped : mapped.filter(p => p.status === 'Activo');
-        }
-      } catch (apiErr) {
-        console.warn('API fetch failed, falling back to CSV:', apiErr);
-      }
-    }
-
-    // 2. Fallback: Leer del CSV público (puede tener hasta 10 min de delay)
-    const response = await fetch(PUBLIC_CSV_URL);
-    const csvContent = await response.text();
-    const products = parseCSV(csvContent);
+    // Agregamos un número aleatorio al final para evitar que Google nos de datos viejos (cache)
+    const cacheBuster = `&cb=${Date.now()}`;
+    const response = await fetch(PUBLIC_CSV_URL + cacheBuster);
     
-    return includeSuspended ? products : products.filter(p => p.status === 'Activo');
+    if (!response.ok) throw new Error('Error al cargar la planilla');
+    
+    const csvData = await response.text();
+    const allProducts = parseCSV(csvData);
+    
+    return includeSuspended 
+      ? allProducts 
+      : allProducts.filter(p => p.status === 'Activo');
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Fetch error:', error);
     return getBackupProducts();
   }
 };
