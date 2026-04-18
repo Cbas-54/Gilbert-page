@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Package, Eye, EyeOff, Trash2, Search, ArrowLeft } from 'lucide-react';
+import { Plus, Package, Eye, EyeOff, Trash2, Search, ArrowLeft, Pencil } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts, updateProduct, deleteProduct } from '../../services/productService';
 import ProductForm from './ProductForm';
@@ -168,9 +168,10 @@ const AdminDashboard = () => {
                         </button>
                         <button 
                           onClick={() => { setEditingProduct(p); setShowForm(true); }}
+                          title="Editar producto"
                           className="p-3 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                         >
-                          <Plus size={16} className="rotate-45" /> {/* Use Plus as edit for now */}
+                          <Pencil size={16} />
                         </button>
                         <button 
                           onClick={() => handleDelete(p.id)}

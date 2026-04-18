@@ -3,7 +3,16 @@ import { X, Upload, Check, AlertCircle } from 'lucide-react';
 import { CATEGORIES, SUBCATEGORIES, uploadImage, addProduct, updateProduct } from '../../services/productService';
 
 const ProductForm = ({ onClose, onSuccess, initialData }) => {
-  const [formData, setFormData] = useState(initialData || {
+  // Map internal product structure to form structure when editing
+  const [formData, setFormData] = useState(initialData ? {
+    nombre: initialData.name,
+    categoria: initialData.category,
+    subcategoria: initialData.subcategory,
+    precio: initialData.price,
+    tag: initialData.tag,
+    imagenurl: initialData.image,
+    estado: initialData.status
+  } : {
     nombre: '',
     categoria: 'Calzado',
     subcategoria: '',
