@@ -3,8 +3,8 @@ const SHEET_ID = '1IPPkiUonp5FkcpBfyxC6m9FLGAQvglCgFvrB6n4HUx4';
 const CLOUDINARY_NAME = 'drzg7bo8d';
 const CLOUDINARY_PRESET = 'gilbert_uploads';
 
-// The Apps Script Web App URL will be set once deployed
-const PUBLIC_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv`;
+// Use GVIZ endpoint for better CORS and reliability
+const PUBLIC_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 const SCRIPT_API_URL = 'https://script.google.com/macros/s/AKfycbxcJFKaoF7A-053ImfSdKGg8cEWDg3ABYvQ498nFfsTuy2yQDKdi2Hm5VmAuwLUPfio/exec';
 
 export const CATEGORIES = [
@@ -26,7 +26,8 @@ const parseCSV = (csv) => {
   const lines = csv.split('\n');
   if (lines.length < 2) return [];
 
-  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+  // Get raw headers and normalize them
+  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
   const csvRegex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
 
   return lines.slice(1).filter(line => line.trim() !== '').map(line => {
@@ -40,12 +41,15 @@ const parseCSV = (csv) => {
       }
       val = val.replace(/""/g, '"');
 
-      if (header === 'precio') {
-        entry[header] = parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
-      } else if (header === 'categoria' || header === 'subcategoria' || header === 'estado') {
-        entry[header] = val ? val.charAt(0).toUpperCase() + val.slice(1).toLowerCase().trim() : '';
+      // Map headers to normalized internal names
+      const key = header === 'columna 1' ? 'estado' : header;
+      
+      if (key === 'precio') {
+        entry[key] = parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+      } else if (key === 'categoria' || key === 'subcategoria' || key === 'estado') {
+        entry[key] = val ? val.charAt(0).toUpperCase() + val.slice(1).toLowerCase().trim() : '';
       } else {
-        entry[header] = val;
+        entry[key] = val;
       }
     });
 
