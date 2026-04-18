@@ -96,15 +96,22 @@ const callApi = async (action, data = {}) => {
   }
 
   try {
-    const response = await fetch(SCRIPT_API_URL, {
+    // Enviamos los datos como texto plano para evitar bloqueos de seguridad (CORS)
+    await fetch(SCRIPT_API_URL, {
       method: 'POST',
       mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
       body: JSON.stringify({
         action,
         token: localStorage.getItem('admin_token'),
         ...data
       })
     });
+    
+    // Con no-cors no podemos leer la respuesta real de Google, 
+    // pero si llegamos aquí es porque la red aceptó la petición.
     return { success: true };
   } catch (error) {
     console.error(`API Error (${action}):`, error);
