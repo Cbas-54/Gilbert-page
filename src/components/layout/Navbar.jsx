@@ -55,6 +55,14 @@ const Navbar = () => {
             { name: 'Peras', href: '/productos?categoria=deportes&sub=peras' },
             { name: 'Accesorios', href: '/productos?categoria=deportes&sub=accesorios' },
           ]
+        },
+        {
+          title: 'Cuero',
+          items: [
+            { name: 'Limpieza', href: '/productos?categoria=productos para cuero&sub=limpieza' },
+            { name: 'Renovación', href: '/productos?categoria=productos para cuero&sub=renovacion' },
+            { name: 'Tintas', href: '/productos?categoria=productos para cuero&sub=tintas' },
+          ]
         }
       ];
       setMegaMenuData(structuredData);
