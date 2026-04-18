@@ -42,7 +42,9 @@ const parseCSV = (csv) => {
       val = val.replace(/""/g, '"');
 
       // Map headers to normalized internal names
-      const key = header === 'columna 1' ? 'estado' : header;
+      // Clean up symbols like # from headers (Google Tables addition)
+      const cleanHeader = header.replace('#', '').trim();
+      const key = cleanHeader === 'columna 1' ? 'estado' : cleanHeader;
       
       if (key === 'precio') {
         entry[key] = parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
