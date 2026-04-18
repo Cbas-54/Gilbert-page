@@ -1,16 +1,35 @@
-# React + Vite
+# Gilbert - Catálogo Digital & Panel de Administración
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una plataforma de catálogo digital para la marca **Gilbert**, que permite visualizar productos de cuero y deportes de manera dinámica, con una integración fluida con Google Sheets para la gestión de inventario.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Catálogo Dinámico:** Renderizado en tiempo real de productos desde Google Sheets.
+- **Panel de Administración:** Interfaz protegida para gestionar el catálogo (Agregar, Editar, Suspender, Eliminar).
+- **Subida de Imágenes:** Integración con Cloudinary para gestión de multimedia.
+- **Sincronización Instantánea:** Sistema de cache-busting para visualizar cambios de Google Sheets sin esperas.
+- **Diseño Premium:** Estética minimalista y moderna con animaciones suaves.
 
-## React Compiler
+## 🛠️ Tecnologías
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React + Vite
+- **Estilo:** Tailwind CSS + Framer Motion
+- **Backend:** Google Apps Script (Servicio API)
+- **Base de Datos:** Google Sheets (Hoja de cálculo)
+- **Multimedia:** Cloudinary
 
-## Expanding the ESLint configuration
+## 📂 Estructura del Proyecto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `/src/components`: Componentes reutilizables (UI, Layout, Features).
+- `/src/pages`: Páginas principales (Inicio, Productos, Admin).
+- `/src/services`: Lógica de conexión con APIs (Google Sheets, Cloudinary).
+
+## ⚙️ Configuración del Panel de Admin
+
+Para que el panel de administración funcione correctamente, se requiere:
+1. Un script de Google Apps Script vinculado a la hoja de cálculo.
+2. La columna 'ID' en Google Sheets configurada como **Texto sin formato**.
+3. Un Upload Preset en Cloudinary configurado como **Unsigned**.
+
+---
+Desarrollado con ❤️ para Gilbert.
