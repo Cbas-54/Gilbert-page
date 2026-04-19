@@ -178,7 +178,7 @@ const ProductCarousel = () => {
         {/* Unified Call-to-Action */}
         <div className="mt-12 lg:mt-16 flex justify-center">
           <a 
-            href="https://wa.me/542211234567"
+            href="https://wa.me/5492215547353"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center gap-8 md:gap-12 px-8 md:px-12 py-8 md:py-10 bg-foreground text-background rounded-full overflow-hidden hover:pr-24 transition-all duration-500 max-w-full"

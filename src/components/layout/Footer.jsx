@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, Phone, Mail, Clock, MapPin, ArrowUp } from 'lucide-react';
+import { Facebook, Instagram, Music2, Phone, Mail, Clock, MapPin, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -33,9 +33,9 @@ const Footer = () => {
 
             <div className="flex items-center gap-6">
               {[
-                { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://instagram.com' },
-                { icon: <Facebook size={20} />, label: 'Facebook', href: 'https://facebook.com' },
-                { icon: <Twitter size={20} />, label: 'Twitter', href: 'https://twitter.com' }
+                { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://www.instagram.com/guilberthflores/' },
+                { icon: <Facebook size={20} />, label: 'Facebook', href: 'https://www.facebook.com/search/top?q=guilberth%20flores%20terceros' },
+                { icon: <Music2 size={20} />, label: 'TikTok', href: 'https://www.tiktok.com/@guilberthflores_oficial' }
               ].map((social) => (
                 <a 
                   key={social.label} 
@@ -56,9 +56,9 @@ const Footer = () => {
             <div className="space-y-8">
               <span className="block font-sans text-[9px] font-black uppercase tracking-[0.3em] text-primary-600">Atención</span>
               <div className="space-y-6">
-                <a href="tel:+542211234567" className="group block">
+                <a href="https://wa.me/5492215547353" className="group block">
                   <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">WhatsApp</span>
-                  <span className="font-serif text-lg italic text-white/80 group-hover:text-primary-600 transition-colors">+54 221 123-4567</span>
+                  <span className="font-serif text-lg italic text-white/80 group-hover:text-primary-600 transition-colors">+54 9 221 554-7353</span>
                 </a>
                 <a href="mailto:info@gilbert.com" className="group block">
                   <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">Email</span>

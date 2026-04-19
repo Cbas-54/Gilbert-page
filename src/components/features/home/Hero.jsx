@@ -31,17 +31,17 @@ const Hero = () => {
 
         {/* Serif Typography for Editorial Feel */}
         <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground mb-6 transition-colors duration-500">
-          Revive tu <br className="hidden sm:block" />
-          <span className="italic text-primary-600 font-medium">pasión</span>
+          Transformamos <br className="hidden sm:block" />
+          cada <span className="italic text-primary-600 font-medium">paso que das</span>
         </h1>
 
         <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed mb-12 max-w-sm tracking-wide transition-colors duration-500">
-          Transformamos el desgaste del tiempo en durabilidad eterna. Especialistas en reparación técnica de calzado y artículos de cuero.
+          Convertimos el desgaste del tiempo en durabilidad eterna. Especialistas en reparación técnica de calzado y artículos de cuero.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
           <a 
-            href="https://wa.me/542211234567" 
+            href="https://wa.me/5492215547353" 
             target="_blank" 
             rel="noopener noreferrer"
             className="group inline-flex items-center justify-center gap-4 bg-primary text-primary-foreground px-8 py-5 rounded-sm font-sans text-[10px] md:text-xs font-black uppercase tracking-[0.25em] transition-all duration-500 hover:bg-foreground w-full sm:w-auto"
