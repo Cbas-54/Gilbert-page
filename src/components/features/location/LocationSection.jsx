@@ -1,8 +1,8 @@
 import { MapPin, Navigation, Compass } from 'lucide-react';
 
 const LocationSection = () => {
-  const address = "AGP, C. 46 392, B1900 La Plata, Provincia de Buenos Aires";
-  const officialEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.74507025883!2d-57.95475148421071!3d-34.92215288220038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bd8e08d6c7c00f%3A0x6b82b9e1e0a2d3b2!2sAGP%20C.%2046%20392%2C%20B1900%20La%20Plata%2C%20Provincia%20de%20Buenos%20Aires%2C%20Argentina!5e0!3m2!1sen!2sus!4v1678886400000!5m2!1sen!2sus";
+  const address = "C. 49 894, B1902CKF La Plata, Provincia de Buenos Aires";
+  const officialEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.46731000715!2d-57.956228499999995!3d-34.91981529999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a2e6321e88afc5%3A0x1b340291caff8402!2sC.%2049%20894%2C%20B1902CKF%20La%20Plata%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1776571325945!5m2!1ses-419!2sar";
 
   return (
     <section id="ubicacion" className="bg-card relative overflow-hidden flex flex-col lg:flex-row min-h-[600px] border-y border-border transition-colors duration-500">
@@ -38,7 +38,7 @@ const LocationSection = () => {
               <div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-1 transition-colors duration-500">Dirección Técnica</span>
                 <p className="text-lg font-serif text-foreground italic leading-tight transition-colors duration-500">
-                  Calle 46 392, B1900 <br/>
+                  Calle 49 894 (e/ 12 y 13) <br/>
                   La Plata, Buenos Aires.
                 </p>
               </div>

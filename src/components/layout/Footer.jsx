@@ -87,7 +87,7 @@ const Footer = () => {
               <div>
                 <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 block mb-1">Ubicación</span>
                 <p className="font-serif text-lg italic text-white/80 leading-relaxed">
-                  Calle 46 392 <br/>
+                  Calle 49 894 (e/ 12 y 13) <br/>
                   La Plata, Arg.
                 </p>
               </div>
