@@ -116,11 +116,12 @@ const Navbar = () => {
           
           {/* Brand Logo */}
           <div 
-            className="flex items-center gap-4 cursor-pointer group" 
+            className="flex items-center gap-4 cursor-pointer group notranslate" 
             onClick={() => navigate('/')}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && navigate('/')}
+            translate="no"
           >
             <div className={`w-10 h-10 flex items-center justify-center font-serif text-2xl italic transition-colors duration-500 ${shouldBeSolid ? 'text-foreground' : 'text-white'}`}>
               G.

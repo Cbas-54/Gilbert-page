@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer id="contacto" className="relative bg-[#1A0F0D] text-parchment pt-24 pb-12 overflow-hidden">
       {/* Decorative Branding */}
-      <div className="absolute top-0 right-0 p-20 opacity-[0.02] pointer-events-none select-none">
+      <div className="absolute top-0 right-0 p-20 opacity-[0.02] pointer-events-none select-none notranslate" translate="no">
         <span className="font-serif italic text-[30vw] leading-none">G.</span>
       </div>
 
@@ -17,7 +17,7 @@ const Footer = () => {
           
           {/* Brand Identity - 5 Columns */}
           <div className="lg:col-span-5 space-y-12">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 notranslate" translate="no">
               <div className="w-12 h-12 border border-primary-600/30 flex items-center justify-center font-serif text-2xl italic text-primary-600">
                 G.
               </div>
