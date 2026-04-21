@@ -6,7 +6,6 @@ import MegaMenu from './MegaMenu';
 import { AnimatedThemeToggler } from '../ui/animated-theme-toggler';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
   const [megaMenuData, setMegaMenuData] = useState([]);
@@ -130,9 +129,9 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-16">
-            <div className="flex items-center gap-10">
+          {/* Main Navigation & Actions */}
+          <div className="flex items-center gap-6 md:gap-16">
+            <div className="flex items-center gap-6 md:gap-10">
               {visibleNavLinks.map((link) => (
                 <div 
                   key={link.name}
@@ -149,13 +148,13 @@ const Navbar = () => {
                     `}
                   >
                     {link.icon && <link.icon size={14} className={shouldBeSolid ? 'text-primary-600' : 'text-white'} />}
-                    {link.name}
+                    <span className="hidden sm:inline">{link.name}</span>
+                    <span className="sm:hidden text-[9px]">Ir a Tienda</span>
                   </a>
                 </div>
               ))}
             </div>
 
-            {/* Theme Toggler Desktop */}
             <AnimatedThemeToggler 
               className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-95
                 ${shouldBeSolid 
@@ -164,56 +163,11 @@ const Navbar = () => {
               `}
             />
           </div>
-
-          {/* Mobile Actions */}
-          <div className="flex items-center gap-3 lg:hidden">
-            <AnimatedThemeToggler 
-              className={`w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-500
-                ${shouldBeSolid 
-                  ? 'text-foreground hover:bg-muted' 
-                  : 'text-white hover:bg-white/10'}
-              `}
-            />
-            <button 
-              onClick={() => setIsOpen(!isOpen)}
-              className={`w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-500
-                ${shouldBeSolid ? 'bg-foreground text-background shadow-md' : 'bg-white/10 backdrop-blur-sm text-white border border-white/20'}
-              `}
-            >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
         </div>
 
 
 
-        {/* MOBILE MENU */}
-        <div className={`
-          absolute right-0 mt-4 
-          w-[280px] md:w-[320px]
-          bg-background rounded-[2rem] border border-border shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] 
-          transition-all duration-500 origin-top-right
-          ${isOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-4 invisible pointer-events-none'}
-        `}>
-          <div className="p-6 space-y-4">
-            {visibleNavLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavigation(e, link)}
-                className="group flex items-center justify-between p-4 rounded-2xl bg-muted/50 hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20"
-              >
-                <div className="flex items-center gap-3">
-                  {link.icon && <link.icon size={16} className="text-primary-600" />}
-                  <span className="text-[10px] font-black uppercase tracking-widest text-foreground">
-                    {link.name}
-                  </span>
-                </div>
-                <ChevronRight size={14} className="text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
-              </a>
-            ))}
-          </div>
-        </div>
+
       </div>
 
       <MegaMenu 

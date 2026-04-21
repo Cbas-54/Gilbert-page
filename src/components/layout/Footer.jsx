@@ -7,26 +7,13 @@ const Footer = () => {
 
   return (
     <footer id="contacto" className="relative bg-[#1A0F0D] text-parchment pt-24 pb-12 overflow-hidden">
-      {/* Decorative Branding */}
-      <div className="absolute top-0 right-0 p-20 opacity-[0.03] pointer-events-none select-none notranslate" translate="no">
-        <img src="/favicon.png" alt="" className="w-[20vw] h-[20vw] object-cover grayscale brightness-0 invert" />
-      </div>
+
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-24">
           
           {/* Brand Identity - 5 Columns */}
-          <div className="lg:col-span-5 space-y-12">
-            <div className="flex items-center gap-4 notranslate" translate="no">
-              <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-white/10">
-                <img src="/favicon.png" alt="Guilberth Logo" className="w-full h-full object-cover" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-serif tracking-tight text-white/90">Guilberth</span>
-                <span className="text-[8px] font-sans font-black uppercase tracking-[0.4em] text-primary-600">Establecimiento</span>
-              </div>
-            </div>
-            
+          <div className="lg:col-span-5 space-y-10">
             <h2 className="font-serif text-4xl md:text-5xl italic text-white/80 leading-tight max-w-md">
               Donde cada puntada es un compromiso con la <span className="text-primary-600">perdurabilidad</span>.
             </h2>
