@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, Phone } from 'lucide-react';
 
 const WhatsAppButton = () => {
   const phoneNumber = "5492215547353"; // Replace with real number
@@ -17,7 +17,14 @@ const WhatsAppButton = () => {
       <div className="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-20 group-hover:opacity-40"></div>
       
       <div className="relative w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 border-4 border-white/20">
-        <MessageCircle size={32} />
+        <div className="relative">
+          <MessageCircle size={36} strokeWidth={1.5} />
+          <Phone 
+            size={16} 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fill-current" 
+            strokeWidth={2.5} 
+          />
+        </div>
       </div>
       
       {/* Label tooltip */}

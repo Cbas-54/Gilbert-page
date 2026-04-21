@@ -11,15 +11,13 @@ export const CATEGORIES = [
   'Todos',
   'Calzado',
   'Mochilas',
-  'Deportes',
-  'Productos para cuero'
+  'Deportes'
 ];
 
 export const SUBCATEGORIES = {
   'Calzado': ['Mujer', 'Hombre', 'Niño', 'Deportivas', 'Botines', 'Vestir'],
   'Mochilas': ['Niños', 'Urbanas'],
-  'Deportes': ['Pelotas', 'Guantes', 'Peras', 'Accesorios'],
-  'Productos para cuero': ['Limpieza', 'Renovación', 'Tintas', 'Otros']
+  'Deportes': ['Pelotas', 'Guantes', 'Peras', 'Accesorios']
 };
 
 const parseCSV = (csv) => {

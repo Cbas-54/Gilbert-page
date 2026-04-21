@@ -60,7 +60,7 @@ const ProductCarousel = () => {
               Servicios
             </h2>
             <span className="font-sans text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 ml-1">
-              Atelier Archive // 2026
+              Trabajos Seleccionados
             </span>
           </div>
 
@@ -120,15 +120,10 @@ const ProductCarousel = () => {
                   {service.description}
                 </p>
 
-                <div className="grid grid-cols-2 gap-8 pt-8 border-t border-border max-w-sm transition-colors duration-500">
+                <div className="pt-8 border-t border-border max-w-sm transition-colors duration-500">
                   <div>
-                    <span className="block font-sans text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-2 transition-colors duration-500">Precio Base</span>
-                    <span className="font-serif text-2xl text-foreground italic transition-colors duration-500">{service.price}</span>
-                  </div>
-                  <div className="flex flex-col justify-end">
-                    <button className="flex items-center gap-2 group/btn font-sans text-[10px] font-bold uppercase tracking-widest text-primary-600 hover:text-foreground transition-colors">
-                      Personalizar <CornerDownRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
+                    <span className="block font-sans text-[10px] font-black uppercase tracking-widest text-primary-600 mb-2 transition-colors duration-500">Precio Base</span>
+                    <span className="font-serif text-3xl md:text-4xl text-foreground italic transition-colors duration-500">{service.price}</span>
                   </div>
                 </div>
               </div>
@@ -157,7 +152,7 @@ const ProductCarousel = () => {
             <div className="absolute top-8 right-8 z-20 flex flex-col items-end sm:flex-row sm:items-center gap-4">
                <div className="hidden sm:block h-[1px] w-12 bg-white/30"></div>
                <span className="font-sans text-[8px] font-black uppercase tracking-[0.4em] text-white/50">
-                 Guilberth Workshop Detail
+                 Precisión en cada puntada
                </span>
             </div>
 

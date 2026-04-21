@@ -64,7 +64,7 @@ const Hero = () => {
           className="font-sans text-[8px] font-bold text-white/40 tracking-[0.5em] uppercase" 
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
-          Artisanal Trace // 01
+          El arte de restaurar
         </span>
       </div>
     </div>

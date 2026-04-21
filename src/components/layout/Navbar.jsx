@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ShoppingBag } from 'lucide-react';
 import { fetchProducts, CATEGORIES } from '../../services/productService';
 import MegaMenu from './MegaMenu';
 import { AnimatedThemeToggler } from '../ui/animated-theme-toggler';
@@ -55,14 +55,6 @@ const Navbar = () => {
             { name: 'Peras', href: '/productos?categoria=deportes&sub=peras' },
             { name: 'Accesorios', href: '/productos?categoria=deportes&sub=accesorios' },
           ]
-        },
-        {
-          title: 'Cuero',
-          items: [
-            { name: 'Limpieza', href: '/productos?categoria=productos para cuero&sub=limpieza' },
-            { name: 'Renovación', href: '/productos?categoria=productos para cuero&sub=renovacion' },
-            { name: 'Tintas', href: '/productos?categoria=productos para cuero&sub=tintas' },
-          ]
         }
       ];
       setMegaMenuData(structuredData);
@@ -73,9 +65,7 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Productos', href: '/productos', type: 'route' },
-    { name: 'Servicios', href: '#servicios', type: 'anchor' },
-    { name: 'Contacto', href: '#ubicacion', type: 'anchor' },
+    { name: 'Tienda', href: '/productos', type: 'route', icon: ShoppingBag },
   ];
 
   const visibleNavLinks = navLinks.filter(link => 
@@ -139,17 +129,18 @@ const Navbar = () => {
                 <div 
                   key={link.name}
                   className="relative py-2"
-                  onMouseEnter={() => link.name === 'Productos' ? setShowMegaMenu(true) : setShowMegaMenu(false)}
+                  onMouseEnter={() => link.name === 'Tienda' ? setShowMegaMenu(true) : setShowMegaMenu(false)}
                 >
                   <a
                     href={link.href}
                     onClick={(e) => handleNavigation(e, link)}
-                    className={`text-[10px] font-sans font-bold uppercase tracking-[0.2em] transition-colors duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:transition-all after:duration-300 hover:after:w-full
+                    className={`text-[10px] font-sans font-bold uppercase tracking-[0.2em] transition-colors duration-300 relative flex items-center gap-2 after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:transition-all after:duration-300 hover:after:w-full
                       ${shouldBeSolid
                         ? 'text-foreground/80 hover:text-foreground after:bg-primary-600' 
                         : 'text-white/80 hover:text-white after:bg-white'}
                     `}
                   >
+                    {link.icon && <link.icon size={14} className={shouldBeSolid ? 'text-primary-600' : 'text-white'} />}
                     {link.name}
                   </a>
                 </div>
@@ -204,9 +195,12 @@ const Navbar = () => {
                 onClick={(e) => handleNavigation(e, link)}
                 className="group flex items-center justify-between p-4 rounded-2xl bg-muted/50 hover:bg-primary/10 transition-all border border-transparent hover:border-primary/20"
               >
-                <span className="text-[10px] font-black uppercase tracking-widest text-foreground">
-                  {link.name}
-                </span>
+                <div className="flex items-center gap-3">
+                  {link.icon && <link.icon size={16} className="text-primary-600" />}
+                  <span className="text-[10px] font-black uppercase tracking-widest text-foreground">
+                    {link.name}
+                  </span>
+                </div>
                 <ChevronRight size={14} className="text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
               </a>
             ))}
