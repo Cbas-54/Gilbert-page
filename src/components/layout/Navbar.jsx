@@ -22,6 +22,14 @@ const Navbar = () => {
     const loadMegaMenu = () => {
       const structuredData = [
         {
+          title: 'Cuero',
+          items: [
+            { name: 'Limpieza', href: '/productos?categoria=productos para cuero&sub=limpieza' },
+            { name: 'Renovación', href: '/productos?categoria=productos para cuero&sub=renovacion' },
+            { name: 'Tintas', href: '/productos?categoria=productos para cuero&sub=tintas' },
+          ]
+        },
+        {
           title: 'Explorar',
           isSidebar: true,
           items: [
@@ -53,14 +61,6 @@ const Navbar = () => {
             { name: 'Guantes', href: '/productos?categoria=deportes&sub=guantes' },
             { name: 'Peras', href: '/productos?categoria=deportes&sub=peras' },
             { name: 'Accesorios', href: '/productos?categoria=deportes&sub=accesorios' },
-          ]
-        },
-        {
-          title: 'Cuero',
-          items: [
-            { name: 'Limpieza', href: '/productos?categoria=productos para cuero&sub=limpieza' },
-            { name: 'Renovación', href: '/productos?categoria=productos para cuero&sub=renovacion' },
-            { name: 'Tintas', href: '/productos?categoria=productos para cuero&sub=tintas' },
           ]
         }
       ];
@@ -155,7 +155,7 @@ const Navbar = () => {
                   >
                     {link.icon && <link.icon size={14} className={shouldBeSolid ? 'text-primary-600' : 'text-white'} />}
                     <span className="hidden sm:inline">{link.name}</span>
-                    <span className="sm:hidden text-[9px]">Ir a Tienda</span>
+                    <span className="sm:hidden text-[9px]">{link.name}</span>
                   </a>
                 </div>
               ))}

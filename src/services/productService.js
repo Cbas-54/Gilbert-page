@@ -9,10 +9,10 @@ const SCRIPT_API_URL = 'https://script.google.com/macros/s/AKfycbxcJFKaoF7A-053I
 
 export const CATEGORIES = [
   'Todos',
+  'Productos para cuero',
   'Calzado',
   'Mochilas',
-  'Deportes',
-  'Productos para cuero'
+  'Deportes'
 ];
 
 export const SUBCATEGORIES = {
