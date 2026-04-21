@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
           </span>
         )}
         <h3 className="font-serif text-xl text-foreground transition-colors duration-500">{product.name}</h3>
-        <p className="font-serif text-2xl italic text-muted-foreground transition-colors duration-500">
+        <p className="font-serif text-3xl italic text-foreground transition-colors duration-500">
           <span className="text-primary-600 not-italic mr-1">$</span>
           {product.price.toLocaleString('es-AR')}
         </p>

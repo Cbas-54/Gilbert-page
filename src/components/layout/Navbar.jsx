@@ -121,8 +121,8 @@ const Navbar = () => {
             onKeyDown={(e) => e.key === 'Enter' && navigate('/')}
             translate="no"
           >
-            <div className={`w-10 h-10 flex items-center justify-center font-serif text-2xl italic transition-colors duration-500 ${shouldBeSolid ? 'text-foreground' : 'text-white'}`}>
-              G.
+            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-sm transition-transform duration-500 group-hover:scale-110">
+              <img src="/favicon.png" alt="Guilberth Logo" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col -space-y-0.5 mt-1">
               <span className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-500 ${shouldBeSolid ? 'text-foreground' : 'text-white'}`}>Guilberth</span>

@@ -127,12 +127,7 @@ const ProductsPage = () => {
               </div>
             )}
             
-            {!isLoading && (
-              <div className="mt-20 py-20 border-t border-border text-center space-y-6 transition-colors duration-500">
-                <h2 className="font-serif text-3xl italic text-muted-foreground transition-colors duration-500">Nuevas piezas próximamente</h2>
-                <p className="text-sm font-sans text-muted-foreground uppercase tracking-[0.3em] transition-colors duration-500">Cargando catálogo completo de 2026</p>
-              </div>
-            )}
+
           </main>
 
         </div>
