@@ -81,6 +81,13 @@ const Navbar = () => {
 
   const handleNavigation = (e, link) => {
     e.preventDefault();
+    
+    // Toggle mega menu on mobile instead of immediate navigation
+    if (window.innerWidth < 1024 && link.name === 'Tienda') {
+      setShowMegaMenu(!showMegaMenu);
+      return;
+    }
+
     if (link.type === 'anchor') {
       if (location.pathname !== '/') {
         navigate('/' + link.href);
@@ -96,7 +103,6 @@ const Navbar = () => {
     } else {
       navigate(link.href);
     }
-    setIsOpen(false);
     setShowMegaMenu(false);
   };
 
