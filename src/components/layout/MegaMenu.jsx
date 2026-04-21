@@ -14,9 +14,9 @@ const MegaMenu = ({ showMegaMenu, megaMenuData, setShowMegaMenu, handleNavigatio
       onMouseEnter={() => setShowMegaMenu(true)}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {megaMenuData.map((section) => (
-            <div key={section.title} className={`space-y-6 ${section.isSidebar ? 'pr-12 lg:border-r border-border' : ''}`}>
+            <div key={section.title} className={`space-y-6 ${section.isSidebar ? 'pr-8 lg:border-r border-border' : ''}`}>
               {section.title === 'Explorar' ? (
                 <h3 className={`text-[10px] font-black uppercase tracking-[0.3em] pb-2 border-b border-border ${section.isSidebar ? 'text-foreground' : 'text-primary-600'}`}>
                   {section.title}

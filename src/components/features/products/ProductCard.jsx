@@ -28,17 +28,18 @@ const ProductCard = ({ product }) => {
     <div className="group flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="aspect-square bg-dark-deep/5 rounded-sm overflow-hidden relative border border-dark-deep/5">
         <ProductImage product={product} />
-        
-        <div className="absolute inset-0 bg-background/0 transition-all duration-500 group-hover:bg-background/40 flex items-center justify-center">
-          <button className="opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 bg-foreground text-background px-6 py-3 text-[9px] font-black uppercase tracking-widest transition-all duration-500 hover:bg-primary hover:text-primary-foreground">
-            Ver Detalle
-          </button>
-        </div>
       </div>
       <div className="space-y-1">
-        <span className="text-[8px] font-sans font-black uppercase tracking-widest text-primary-600">{product.tag || 'Calidad Guilberth'}</span>
+        {product.tag && (
+          <span className="text-[8px] font-sans font-black uppercase tracking-widest text-primary-600">
+            {product.tag}
+          </span>
+        )}
         <h3 className="font-serif text-xl text-foreground transition-colors duration-500">{product.name}</h3>
-        <p className="font-serif text-lg italic text-muted-foreground transition-colors duration-500">${product.price.toLocaleString('es-AR')}</p>
+        <p className="font-serif text-2xl italic text-muted-foreground transition-colors duration-500">
+          <span className="text-primary-600 not-italic mr-1">$</span>
+          {product.price.toLocaleString('es-AR')}
+        </p>
       </div>
     </div>
   );

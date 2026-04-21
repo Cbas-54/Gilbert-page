@@ -78,7 +78,7 @@ const ProductsPage = () => {
           <div className="space-y-4">
             <div className="inline-flex items-center gap-3">
               <div className="w-8 h-px bg-primary-600"></div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Tienda Multi-rubro & Deportes</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Cuidado Artesanal & Equipamiento de Calidad</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-serif italic text-foreground leading-[0.9] transition-colors duration-500">
               Nuestra Tienda
