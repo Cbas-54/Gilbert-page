@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Package, Eye, EyeOff, Trash2, Search, ArrowLeft, Pencil } from 'lucide-react';
+import { Plus, Package, Eye, EyeOff, Trash2, Search, ArrowLeft, Pencil, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts, updateProduct, deleteProduct, CATEGORIES, SUBCATEGORIES } from '../../services/productService';
 import ProductForm from './ProductForm';
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => { setEditingProduct(null); setShowForm(true); }}
-              className="group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-sm font-sans text-[10px] font-black uppercase tracking McNatt-widest transition-all hover:bg-primary"
+              className="group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary"
             >
               <Plus size={16} /> Nuevo Producto
             </button>
