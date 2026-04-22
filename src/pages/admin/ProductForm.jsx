@@ -22,14 +22,13 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
     estado: 'Activo'
   });
   
+  const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
+  const processImage = async (file) => {
     if (!file) return;
-
     setUploading(true);
     setError(null);
     try {
@@ -40,6 +39,28 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
     } finally {
       setUploading(false);
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    processImage(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    processImage(file);
   };
 
   const handleSubmit = async (e) => {
@@ -83,28 +104,44 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
           {/* Image Upload Area */}
           <div className="space-y-3">
             <label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Fotografía del Producto</label>
-            <div className={`relative aspect-video rounded-sm border-2 border-dashed transition-all flex flex-col items-center justify-center gap-4 bg-muted/20
-              ${formData.imagenurl ? 'border-primary/50' : 'border-border hover:border-primary/30'}
-            `}>
+            <div 
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`relative aspect-video rounded-sm border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center gap-4 bg-muted/20 overflow-hidden
+                ${formData.imagenurl ? 'border-primary/50' : 'border-border'}
+                ${isDragging ? 'border-primary bg-primary/5 scale-[1.02] shadow-xl' : 'hover:border-primary/30'}
+              `}
+            >
+              {isDragging && (
+                <div className="absolute inset-0 bg-primary/10 backdrop-blur-[2px] flex items-center justify-center animate-in fade-in zoom-in duration-300 z-10">
+                  <div className="flex flex-col items-center gap-2">
+                    <Upload className="w-10 h-10 text-primary-600 animate-bounce" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary-600">Soltar para subir</span>
+                  </div>
+                </div>
+              )}
+
               {formData.imagenurl ? (
-                <div className="absolute inset-0 p-2">
-                   <img src={formData.imagenurl} alt="Preview" className="w-full h-full object-contain grayscale-[20%]" />
+                <div className="absolute inset-0 p-2 group">
+                   <img src={formData.imagenurl} alt="Preview" className="w-full h-full object-contain grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" />
                    <button 
                     type="button"
                     onClick={() => setFormData({...formData, imagenurl: ''})}
-                    className="absolute top-4 right-4 bg-background/80 hover:bg-background p-2 rounded-full text-red-500 shadow-sm"
+                    className="absolute top-4 right-4 bg-background/80 hover:bg-background p-2 rounded-full text-red-500 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                    >
                      <X size={14} />
                    </button>
+                   <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 </div>
               ) : (
                 <>
-                  <Upload className={`w-8 h-8 ${uploading ? 'animate-bounce' : 'text-muted-foreground'}`} />
+                  <Upload className={`w-8 h-8 transition-all duration-500 ${uploading ? 'animate-bounce text-primary-600' : 'text-muted-foreground'}`} />
                   <div className="text-center">
                     <p className="text-xs font-bold uppercase tracking-widest text-foreground">
                       {uploading ? 'Subiendo...' : 'Soltar imagen o clic para subir'}
                     </p>
-                    <p className="text-[10px] text-muted-foreground mt-1">PNG, JPG o WebP</p>
+                    <p className="text-[10px] text-muted-foreground mt-1 tracking-wider">PNG, JPG o WebP</p>
                   </div>
                   <input 
                     type="file" 

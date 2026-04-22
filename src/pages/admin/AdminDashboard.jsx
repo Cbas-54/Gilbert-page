@@ -13,6 +13,7 @@ const AdminDashboard = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('Todos'); // 'Todos', 'Activo', 'Suspendido'
   const navigate = useNavigate();
 
   const loadData = async () => {
@@ -52,8 +53,9 @@ const AdminDashboard = () => {
                        p.category.toLowerCase().includes(searchQuery.toLowerCase());
     const matchCategory = activeCategory === 'Todos' || p.category === activeCategory;
     const matchSubcategory = !activeSubcategory || (p.subcategory && p.subcategory.toLowerCase() === activeSubcategory.toLowerCase());
+    const matchStatus = statusFilter === 'Todos' || p.status === statusFilter;
     
-    return matchSearch && matchCategory && matchSubcategory;
+    return matchSearch && matchCategory && matchSubcategory && matchStatus;
   });
 
   const stats = {
@@ -74,14 +76,14 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-card pt-32 pb-20 transition-colors duration-500">
+    <div className="min-h-screen bg-card pt-20 pb-20 transition-colors duration-500">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
           <div className="space-y-2">
             <h1 className="font-serif text-5xl italic text-foreground leading-none">Administración</h1>
-            <p className="font-sans text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Gestión de Catálogo Gilbert</p>
+            <p className="font-sans text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Gestión de Catálogo</p>
           </div>
           
           <div className="flex items-center gap-4">
@@ -92,10 +94,11 @@ const AdminDashboard = () => {
               <Plus size={16} /> Nuevo Producto
             </button>
             <button 
-              onClick={() => navigate('/')}
-              className="p-4 rounded-sm border border-border hover:bg-muted transition-colors text-muted-foreground"
+              onClick={() => navigate('/productos')}
+              className="group flex items-center gap-3 px-6 py-4 rounded-sm border border-border hover:bg-muted transition-all text-muted-foreground hover:text-foreground"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+              <span className="text-[10px] font-black uppercase tracking-widest">Ir a la tienda</span>
             </button>
           </div>
         </div>
@@ -104,7 +107,7 @@ const AdminDashboard = () => {
           
           {/* Sidebar Filters */}
           <aside className="lg:col-span-3 space-y-10">
-            <div className="bg-background border border-border p-8 rounded-sm space-y-8 sticky top-32 transition-colors duration-500">
+            <div className="bg-background border border-border p-8 rounded-sm space-y-8 sticky top-24 transition-colors duration-500">
               <div className="flex items-center gap-3 pb-4 border-b border-border transition-colors duration-500">
                 <Filter size={14} className="text-primary-600" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-foreground transition-colors duration-500">Filtrar por</span>
@@ -160,17 +163,31 @@ const AdminDashboard = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
-                { label: 'Total Productos', val: stats.total, icon: Package },
-                { label: 'En Venta', val: stats.active, icon: Eye, color: 'text-primary-600' },
-                { label: 'Suspendidos', val: stats.suspended, icon: EyeOff, color: 'text-muted-foreground' }
+                { label: 'Total Productos', val: stats.total, icon: Package, id: 'Todos' },
+                { label: 'En Venta', val: stats.active, icon: Eye, color: 'text-primary-600', id: 'Activo' },
+                { label: 'Suspendidos', val: stats.suspended, icon: EyeOff, color: 'text-muted-foreground', id: 'Suspendido' }
               ].map((s, i) => (
-                <div key={i} className="bg-background p-8 border border-border flex items-center justify-between group hover:border-primary/50 transition-colors">
+                <button 
+                  key={i} 
+                  onClick={() => setStatusFilter(s.id)}
+                  className={`bg-background p-8 border transition-all duration-300 text-left flex items-center justify-between group hover:border-primary/50 relative overflow-hidden
+                    ${statusFilter === s.id ? 'border-primary shadow-lg ring-1 ring-primary/20 bg-primary/[0.02]' : 'border-border'}
+                  `}
+                >
+                  {statusFilter === s.id && (
+                    <div className="absolute top-0 right-0 w-8 h-8 bg-primary/10 rounded-bl-full animate-in slide-in-from-top-2 slide-in-from-right-2 duration-300">
+                       <Check size={10} className="text-primary-600 absolute top-2 right-2" />
+                    </div>
+                  )}
                   <div>
                     <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">{s.label}</p>
                     <p className={`text-4xl font-serif italic ${s.color || 'text-foreground'}`}>{s.val}</p>
                   </div>
-                  <s.icon className={`w-8 h-8 opacity-20 group-hover:opacity-100 transition-opacity ${s.color || 'text-foreground'}`} />
-                </div>
+                  <s.icon className={`w-8 h-8 transition-all duration-500 
+                    ${statusFilter === s.id ? 'opacity-100 scale-110' : 'opacity-20 group-hover:opacity-100'} 
+                    ${s.color || 'text-foreground'}`} 
+                  />
+                </button>
               ))}
             </div>
 
@@ -185,9 +202,9 @@ const AdminDashboard = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-background border border-border px-14 py-5 rounded-sm font-sans text-sm focus:outline-none focus:border-primary transition-colors"
                 />
-                {(activeCategory !== 'Todos' || activeSubcategory) && (
+                {(activeCategory !== 'Todos' || activeSubcategory || statusFilter !== 'Todos') && (
                   <button 
-                    onClick={() => { setActiveCategory('Todos'); setActiveSubcategory(null); }}
+                    onClick={() => { setActiveCategory('Todos'); setActiveSubcategory(null); setStatusFilter('Todos'); }}
                     className="absolute right-6 top-1/2 -translate-y-1/2 text-[9px] font-black uppercase tracking-widest text-primary-600 hover:underline"
                   >
                     Limpiar Filtros
