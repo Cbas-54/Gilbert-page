@@ -76,7 +76,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-card pt-20 pb-20 transition-colors duration-500">
+    <div className="min-h-screen bg-background pt-20 pb-20 transition-colors duration-500">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* Header */}
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
           
           {/* Sidebar Filters */}
           <aside className="lg:col-span-3 space-y-10">
-            <div className="bg-background border border-border p-8 rounded-sm space-y-8 sticky top-24 transition-colors duration-500">
+            <div className="bg-card border border-border p-8 rounded-sm space-y-8 sticky top-24 transition-colors duration-500 shadow-sm">
               <div className="flex items-center gap-3 pb-4 border-b border-border transition-colors duration-500">
                 <Filter size={14} className="text-primary-600" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-foreground transition-colors duration-500">Filtrar por</span>
@@ -170,8 +170,8 @@ const AdminDashboard = () => {
                 <button 
                   key={i} 
                   onClick={() => setStatusFilter(s.id)}
-                  className={`bg-background p-8 border transition-all duration-300 text-left flex items-center justify-between group hover:border-primary/50 relative overflow-hidden
-                    ${statusFilter === s.id ? 'border-primary shadow-lg ring-1 ring-primary/20 bg-primary/[0.02]' : 'border-border'}
+                  className={`bg-card p-8 border transition-all duration-300 text-left flex items-center justify-between group hover:border-primary/50 relative overflow-hidden shadow-sm
+                    ${statusFilter === s.id ? 'border-primary shadow-lg ring-1 ring-primary/20 bg-primary/[0.03]' : 'border-border'}
                   `}
                 >
                   {statusFilter === s.id && (
@@ -200,7 +200,7 @@ const AdminDashboard = () => {
                   placeholder="Buscar por nombre..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-background border border-border px-14 py-5 rounded-sm font-sans text-sm focus:outline-none focus:border-primary transition-colors"
+                  className="w-full bg-card border border-border px-14 py-5 rounded-sm font-sans text-sm focus:outline-none focus:border-primary transition-colors shadow-sm"
                 />
                 {(activeCategory !== 'Todos' || activeSubcategory || statusFilter !== 'Todos') && (
                   <button 
@@ -212,7 +212,7 @@ const AdminDashboard = () => {
                 )}
               </div>
 
-              <div className="bg-background border border-border overflow-hidden">
+              <div className="bg-card border border-border overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse">
                     <thead>
