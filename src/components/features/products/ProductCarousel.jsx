@@ -32,7 +32,7 @@ const services = [
     title: 'Guantes & Detalles',
     category: 'Cuidado Especializado',
     price: '$8.200',
-    image: imgRestoration,
+    image: imgAccessories,
     description: 'Costura invisible y nutrición de cueros finos para accesorios de alta gama.'
   },
   {
@@ -41,7 +41,7 @@ const services = [
     title: 'Mochilas & Bolsos',
     category: 'Mantenimiento Industrial',
     price: '$18.500',
-    image: imgAccessories,
+    image: imgRestoration,
     description: 'Reparación de herrajes, cierres y refuerzos estructurales en piezas de viaje.'
   }
 ];

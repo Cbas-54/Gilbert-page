@@ -126,10 +126,7 @@ const ProductsPage = () => {
                 <p className="text-sm font-sans text-muted-foreground uppercase tracking-[0.3em] transition-colors duration-500">Intentá con otra categoría o palabra clave</p>
               </div>
             )}
-            
-
           </main>
-
         </div>
       </div>
     </div>

@@ -84,14 +84,9 @@ export const fetchProducts = async (includeSuspended = false) => {
       : allProducts.filter(p => p.status === 'Activo');
   } catch (error) {
     console.error('Fetch error:', error);
-    return getBackupProducts();
+    return []; // Retornar vacío en lugar de productos de prueba
   }
 };
-
-const getBackupProducts = () => [
-  { id: 1, name: 'Zapatillas Running Pro', category: 'Calzado', subcategory: 'Deportes', price: 18500, tag: 'Nueva Temporada', image: null, status: 'Activo' },
-  { id: 2, name: 'Botines Fútbol 5', category: 'Calzado', subcategory: 'Deportes', price: 15200, tag: 'Más Vendido', image: null, status: 'Activo' }
-];
 
 // --- CRUD Operations via Google Apps Script ---
 

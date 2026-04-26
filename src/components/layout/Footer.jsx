@@ -7,8 +7,6 @@ const Footer = () => {
 
   return (
     <footer id="contacto" className="relative bg-[#1A0F0D] text-parchment pt-24 pb-12 overflow-hidden">
-
-
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-24">
           
