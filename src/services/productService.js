@@ -1,11 +1,11 @@
-// Configuration from User
-const SHEET_ID = '1IPPkiUonp5FkcpBfyxC6m9FLGAQvglCgFvrB6n4HUx4';
-const CLOUDINARY_NAME = 'drzg7bo8d';
-const CLOUDINARY_PRESET = 'gilbert_uploads';
+// Configuration from Environment Variables (Vite)
+const SHEET_ID = import.meta.env.VITE_SHEET_ID;
+const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
+const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
+const SCRIPT_API_URL = import.meta.env.VITE_SCRIPT_API_URL;
 
 // Use GVIZ endpoint for better CORS and reliability
 const PUBLIC_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
-const SCRIPT_API_URL = 'https://script.google.com/macros/s/AKfycbxcJFKaoF7A-053ImfSdKGg8cEWDg3ABYvQ498nFfsTuy2yQDKdi2Hm5VmAuwLUPfio/exec';
 
 export const CATEGORIES = [
   'Todos',
