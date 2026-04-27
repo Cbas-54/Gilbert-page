@@ -38,7 +38,12 @@ export const AnimatedThemeToggler = ({
     }
 
     const transition = document.startViewTransition(() => {
+      document.documentElement.classList.add('switching-theme')
       flushSync(applyTheme)
+    })
+
+    transition.finished.finally(() => {
+      document.documentElement.classList.remove('switching-theme')
     })
 
     transition.ready.then(() => {

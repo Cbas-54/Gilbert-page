@@ -70,7 +70,7 @@ const ProductsPage = () => {
   }, [allProducts, activeCategory, activeSubcategory, searchQuery]);
 
   return (
-    <div className="pt-32 pb-20 bg-card min-h-screen transition-colors duration-500">
+    <div className="pt-32 pb-20 bg-card min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* Header Section */}
@@ -80,7 +80,7 @@ const ProductsPage = () => {
               <div className="w-8 h-px bg-primary-600"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Cuidado Artesanal & Equipamiento de Calidad</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif italic text-foreground leading-[0.9] transition-colors duration-500">
+            <h1 className="text-5xl md:text-7xl font-serif italic text-foreground leading-[0.9]">
               Nuestra Tienda
             </h1>
           </div>
@@ -112,7 +112,7 @@ const ProductsPage = () => {
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-40 gap-4">
                 <Loader2 className="w-10 h-10 text-primary-600 animate-spin" />
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground transition-colors duration-500">Sincronizando Stock...</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground">Sincronizando Stock...</span>
               </div>
             ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -121,9 +121,9 @@ const ProductsPage = () => {
                 ))}
               </div>
             ) : (
-              <div className="py-20 text-center border-t border-border space-y-6 transition-colors duration-500">
-                <h2 className="font-serif text-3xl italic text-muted-foreground transition-colors duration-500">No encontramos lo que buscás</h2>
-                <p className="text-sm font-sans text-muted-foreground uppercase tracking-[0.3em] transition-colors duration-500">Intentá con otra categoría o palabra clave</p>
+              <div className="py-20 text-center border-t border-border space-y-6">
+                <h2 className="font-serif text-3xl italic text-muted-foreground">No encontramos lo que buscás</h2>
+                <p className="text-sm font-sans text-muted-foreground uppercase tracking-[0.3em]">Intentá con otra categoría o palabra clave</p>
               </div>
             )}
           </main>

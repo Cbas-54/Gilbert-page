@@ -24,7 +24,7 @@ const Hero = () => {
       </div>
 
       {/* Floating Editorial Card (Floom Inspired) */}
-      <div className="relative z-20 w-[95%] sm:w-[90%] max-w-lg lg:max-w-xl bg-card p-8 sm:p-10 md:p-14 lg:mt-0 shadow-2xl border border-border/50 animate-in fade-in slide-in-from-bottom-12 duration-1000 ease-[cubic-bezier(0.2,1,0.3,1)] will-change-[transform,opacity] transition-colors duration-500">
+      <div className="relative z-20 w-[95%] sm:w-[90%] max-w-lg lg:max-w-xl bg-card p-8 sm:p-10 md:p-14 lg:mt-0 shadow-2xl border border-border/50 animate-in fade-in slide-in-from-bottom-12 duration-1000 ease-[cubic-bezier(0.2,1,0.3,1)] will-change-[transform,opacity]">
         
         <div className="inline-flex items-center gap-4 mb-8">
           <div className="w-12 h-[1px] bg-primary-600"></div>
@@ -34,12 +34,12 @@ const Hero = () => {
         </div>
 
         {/* Serif Typography for Editorial Feel */}
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground mb-6 transition-colors duration-500">
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground mb-6">
           Transformamos <br className="hidden sm:block" />
           cada <span className="italic text-primary-600 font-medium">paso que das</span>
         </h1>
 
-        <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed mb-12 max-w-sm tracking-wide transition-colors duration-500">
+        <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed mb-12 max-w-sm tracking-wide">
           Convertimos el desgaste del tiempo en durabilidad eterna. Especialistas en reparación técnica de calzado y artículos de cuero.
         </p>
         
@@ -55,8 +55,8 @@ const Hero = () => {
           </a>
           
           <div className="hidden sm:flex flex-col items-start px-2">
-            <span className="font-sans text-[9px] font-black uppercase tracking-widest text-muted-foreground transition-colors duration-500">Desde</span>
-            <span className="font-serif text-lg italic text-foreground leading-none transition-colors duration-500">2026</span>
+            <span className="font-sans text-[9px] font-black uppercase tracking-widest text-muted-foreground">Desde</span>
+            <span className="font-serif text-lg italic text-foreground leading-none">2026</span>
           </div>
         </div>
       </div>

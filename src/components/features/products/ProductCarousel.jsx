@@ -50,13 +50,13 @@ const ProductCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section id="servicios" className="relative bg-card pt-10 lg:pt-14 pb-16 lg:pb-20 transition-colors duration-500">
+    <section id="servicios" className="relative bg-card pt-10 lg:pt-14 pb-16 lg:pb-20">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* TABBED HEADER */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 lg:mb-8 gap-12 border-b border-border pb-4 transition-colors duration-500">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 lg:mb-8 gap-12 border-b border-border pb-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-serif text-5xl md:text-7xl italic text-foreground tracking-wide leading-none transition-colors duration-500">
+            <h2 className="font-serif text-5xl md:text-7xl italic text-foreground tracking-wide leading-none">
               Servicios
             </h2>
             <span className="font-sans text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 ml-1">
@@ -112,18 +112,18 @@ const ProductCarousel = () => {
                   </span>
                 </div>
                 
-                <h3 className="font-serif text-4xl md:text-6xl text-foreground leading-tight mb-8 transition-colors duration-500">
+                <h3 className="font-serif text-4xl md:text-6xl text-foreground leading-tight mb-8">
                   {service.title}
                 </h3>
                 
-                <p className="font-sans text-muted-foreground text-base md:text-lg leading-relaxed mb-10 max-w-sm transition-colors duration-500">
+                <p className="font-sans text-muted-foreground text-base md:text-lg leading-relaxed mb-10 max-w-sm">
                   {service.description}
                 </p>
 
-                <div className="pt-8 border-t border-border max-w-sm transition-colors duration-500">
+                <div className="pt-8 border-t border-border max-w-sm">
                   <div>
-                    <span className="block font-sans text-[10px] font-black uppercase tracking-widest text-primary-600 mb-2 transition-colors duration-500">Precio Base</span>
-                    <span className="font-serif text-3xl md:text-4xl text-foreground italic transition-colors duration-500">{service.price}</span>
+                    <span className="block font-sans text-[10px] font-black uppercase tracking-widest text-primary-600 mb-2">Precio Base</span>
+                    <span className="font-serif text-3xl md:text-4xl text-foreground italic">{service.price}</span>
                   </div>
                 </div>
               </div>
@@ -131,7 +131,7 @@ const ProductCarousel = () => {
           </div>
 
           {/* Right: Large Illustration */}
-          <div className="lg:col-span-8 relative rounded-sm overflow-hidden shadow-2xl bg-muted/50 h-[350px] md:h-[450px] lg:h-auto transition-colors duration-500">
+          <div className="lg:col-span-8 relative rounded-sm overflow-hidden shadow-2xl bg-muted/50 h-[350px] md:h-[450px] lg:h-auto">
             {services.map((service, index) => (
               <div
                 key={`img-showcase-${service.id}`}

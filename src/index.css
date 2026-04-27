@@ -199,6 +199,13 @@ html {
   view-transition-name: root;
 }
 
+/* Disable all transitions during theme switch to prevent flickering/stuttering */
+.switching-theme *,
+.switching-theme {
+  transition: none !important;
+  animation-duration: 0s !important;
+}
+
 ::view-transition-old(root), ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
