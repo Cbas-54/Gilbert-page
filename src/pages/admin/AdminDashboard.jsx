@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Plus, Package, Eye, EyeOff, Trash2, Search, ArrowLeft, Pencil, Check } from 'lucide-react';
+import { Plus, Package, Eye, EyeOff, Trash2, Search, ArrowLeft, Pencil, Check, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts, updateProduct, deleteProduct, CATEGORIES, SUBCATEGORIES } from '../../services/productService';
 import ProductForm from './ProductForm';
 import { ChevronRight, Filter } from 'lucide-react';
+import { AnimatedThemeToggler } from '../../components/ui/animated-theme-toggler';
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
@@ -14,13 +15,14 @@ const AdminDashboard = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [statusFilter, setStatusFilter] = useState('Todos'); // 'Todos', 'Activo', 'Suspendido'
+  const [processingIds, setProcessingIds] = useState(new Set());
   const navigate = useNavigate();
 
-  const loadData = async () => {
-    setLoading(true);
+  const loadData = async (isInitial = false) => {
+    if (isInitial) setLoading(true);
     const data = await fetchProducts(true); // Include suspended
     setProducts(data);
-    setLoading(false);
+    if (isInitial) setLoading(false);
   };
 
   useEffect(() => {
@@ -28,14 +30,34 @@ const AdminDashboard = () => {
     if (token !== 'gilberth2026') {
       navigate('/admin/login');
     }
-    loadData();
+    loadData(true);
   }, [navigate]);
 
   const handleToggleStatus = async (product) => {
     const newStatus = product.status === 'Activo' ? 'Suspendido' : 'Activo';
-    const res = await updateProduct(product.id, { estado: newStatus });
-    if (res.success) {
-      setProducts(products.map(p => p.id === product.id ? { ...p, status: newStatus } : p));
+    
+    // Track processing
+    setProcessingIds(prev => new Set(prev).add(product.id));
+
+    // Optimistic Update
+    const previousProducts = [...products];
+    setProducts(products.map(p => p.id === product.id ? { ...p, status: newStatus } : p));
+
+    try {
+      const res = await updateProduct(product.id, { estado: newStatus });
+      if (!res.success) {
+        setProducts(previousProducts);
+        alert('Error al actualizar el estado: ' + (res.message || 'Error desconocido'));
+      }
+    } catch (err) {
+      setProducts(previousProducts);
+      alert('Error de conexión al actualizar el estado');
+    } finally {
+      setProcessingIds(prev => {
+        const next = new Set(prev);
+        next.delete(product.id);
+        return next;
+      });
     }
   };
 
@@ -80,26 +102,36 @@ const AdminDashboard = () => {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-          <div className="space-y-2">
-            <h1 className="font-serif text-5xl italic text-foreground leading-none">Administración</h1>
-            <p className="font-sans text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Gestión de Catálogo</p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 relative">
+          <div className="flex items-start justify-between md:block">
+            <div className="space-y-2">
+              <h1 className="font-serif text-5xl italic text-foreground leading-none">Administración</h1>
+              <p className="font-sans text-[10px] font-black uppercase tracking-[0.4em] text-primary-600">Gestión de Catálogo</p>
+            </div>
+            {/* Mobile Toggler */}
+            <div className="md:hidden">
+              <AnimatedThemeToggler />
+            </div>
           </div>
           
           <div className="flex items-center gap-4">
             <button 
               onClick={() => { setEditingProduct(null); setShowForm(true); }}
-              className="group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary"
+              className="group flex-1 md:flex-none flex items-center justify-center gap-3 bg-foreground text-background px-8 py-4 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest transition-all hover:bg-primary"
             >
               <Plus size={16} /> Nuevo Producto
             </button>
             <button 
               onClick={() => navigate('/productos')}
-              className="group flex items-center gap-3 px-6 py-4 rounded-sm border border-border hover:bg-muted transition-all text-muted-foreground hover:text-foreground"
+              className="group flex-1 md:flex-none flex items-center justify-center gap-3 px-6 py-4 rounded-sm border border-border hover:bg-muted transition-all text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Ir a la tienda</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">Tienda</span>
             </button>
+            {/* Desktop Toggler */}
+            <div className="hidden md:block">
+              <AnimatedThemeToggler />
+            </div>
           </div>
         </div>
 
@@ -107,7 +139,7 @@ const AdminDashboard = () => {
           
           {/* Sidebar Filters */}
           <aside className="lg:col-span-3 space-y-10">
-            <div className="bg-card border border-border p-8 rounded-sm space-y-8 sticky top-24 transition-colors duration-500 shadow-sm">
+            <div className="bg-muted border border-border p-8 rounded-sm space-y-8 sticky top-24 transition-colors duration-500 shadow-sm">
               <div className="flex items-center gap-3 pb-4 border-b border-border transition-colors duration-500">
                 <Filter size={14} className="text-primary-600" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-foreground transition-colors duration-500">Filtrar por</span>
@@ -170,8 +202,8 @@ const AdminDashboard = () => {
                 <button 
                   key={i} 
                   onClick={() => setStatusFilter(s.id)}
-                  className={`bg-card p-8 border transition-all duration-300 text-left flex items-center justify-between group hover:border-primary/50 relative overflow-hidden shadow-sm
-                    ${statusFilter === s.id ? 'border-primary shadow-lg ring-1 ring-primary/20 bg-primary/[0.03]' : 'border-border'}
+                  className={`bg-muted p-8 border transition-all duration-300 text-left flex items-center justify-between group hover:border-primary/50 relative overflow-hidden shadow-sm
+                    ${statusFilter === s.id ? 'border-primary shadow-lg ring-1 ring-primary/20 bg-background/50' : 'border-border'}
                   `}
                 >
                   {statusFilter === s.id && (
@@ -200,7 +232,7 @@ const AdminDashboard = () => {
                   placeholder="Buscar por nombre..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-card border border-border px-14 py-5 rounded-sm font-sans text-sm focus:outline-none focus:border-primary transition-colors shadow-sm"
+                  className="w-full bg-muted border border-border px-14 py-5 rounded-sm font-sans text-sm focus:outline-none focus:border-primary transition-colors shadow-sm"
                 />
                 {(activeCategory !== 'Todos' || activeSubcategory || statusFilter !== 'Todos') && (
                   <button 
@@ -212,51 +244,61 @@ const AdminDashboard = () => {
                 )}
               </div>
 
-              <div className="bg-card border border-border overflow-hidden shadow-sm">
+              <div className="bg-muted border border-border overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className="border-b border-border bg-muted/30">
                         <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Producto ({filteredProducts.length})</th>
-                        <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Categoría</th>
+                        <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground hidden md:table-cell">Categoría</th>
                         <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Precio</th>
                         <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Estado</th>
-                        <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-right">Acciones</th>
+                        <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-right hidden md:table-cell">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredProducts.map((p) => (
-                        <tr key={p.id} className="border-b border-border/50 hover:bg-muted/10 transition-colors group">
+                        <tr 
+                          key={p.id} 
+                          onClick={() => { setEditingProduct(p); setShowForm(true); }}
+                          className="border-b border-border/50 hover:bg-background/40 transition-colors group cursor-pointer"
+                        >
                           <td className="px-6 py-5">
                             <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 bg-muted/50 rounded-sm overflow-hidden border border-border">
+                              <div className="w-10 h-10 md:w-12 md:h-12 bg-muted/50 rounded-sm overflow-hidden border border-border shrink-0">
                                 {p.image ? (
                                   <img src={p.image} alt="" className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all" />
                                 ) : (
                                   <div className="w-full h-full flex items-center justify-center text-[8px] font-black opacity-20">NO IMG</div>
                                 )}
                               </div>
-                              <div className="flex flex-col">
-                                <span className="font-serif text-lg text-foreground">{p.name}</span>
-                                {p.subcategory && <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">{p.subcategory}</span>}
+                              <div className="flex flex-col min-w-0">
+                                <span className="font-serif text-base md:text-lg text-foreground truncate max-w-[120px] md:max-w-none">{p.name}</span>
+                                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/60 md:hidden">{p.category}</span>
+                                {p.subcategory && <span className="text-[9px] font-black uppercase tracking-widest text-primary-600/40 hidden md:block">{p.subcategory}</span>}
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-5 font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{p.category}</td>
-                          <td className="px-6 py-5 font-serif text-lg italic text-foreground">${p.price.toLocaleString('es-AR')}</td>
+                          <td className="px-6 py-5 font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground hidden md:table-cell">{p.category}</td>
+                          <td className="px-6 py-5 font-serif text-base md:text-lg italic text-foreground shrink-0">${p.price.toLocaleString('es-AR')}</td>
                           <td className="px-6 py-5">
                             <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${p.status === 'Activo' ? 'bg-primary/20 text-primary-600' : 'bg-muted text-muted-foreground'}`}>
                               {p.status}
                             </span>
                           </td>
-                          <td className="px-6 py-5">
-                            <div className="flex items-center justify-end gap-3">
+                          <td className="px-6 py-5 hidden md:table-cell">
+                            <div className="flex items-center justify-end gap-3" onClick={(e) => e.stopPropagation()}>
                               <button 
                                 onClick={() => handleToggleStatus(p)}
+                                disabled={processingIds.has(p.id)}
                                 title={p.status === 'Activo' ? 'Suspender' : 'Activar'}
-                                className="p-3 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-primary-600"
+                                className="p-3 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-primary-600 disabled:opacity-50"
                               >
-                                {p.status === 'Activo' ? <EyeOff size={16} /> : <Eye size={16} />}
+                                {processingIds.has(p.id) ? (
+                                  <Loader2 size={16} className="animate-spin text-primary-600" />
+                                ) : (
+                                  p.status === 'Activo' ? <EyeOff size={16} /> : <Eye size={16} />
+                                )}
                               </button>
                               <button 
                                 onClick={() => { setEditingProduct(p); setShowForm(true); }}
@@ -292,7 +334,7 @@ const AdminDashboard = () => {
       {showForm && (
         <ProductForm 
           onClose={() => { setShowForm(false); setEditingProduct(null); }} 
-          onSuccess={() => { setShowForm(false); loadData(); }}
+          onSuccess={() => { setShowForm(false); loadData(false); }}
           initialData={editingProduct}
         />
       )}

@@ -95,14 +95,14 @@ const ProductCarousel = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-stretch min-h-[500px] lg:min-h-[600px]">
           
           {/* Left: Interactive Details */}
-          <div className="lg:col-span-4 flex flex-col justify-center">
+          <div className="lg:col-span-4 grid grid-cols-1 items-center">
             {services.map((service, index) => (
               <div 
                 key={`details-${service.id}`}
-                className={`transition-all duration-700 ease-in-out
+                className={`col-start-1 row-start-1 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]
                   ${activeIndex === index 
-                    ? 'opacity-100 translate-x-0 relative' 
-                    : 'opacity-0 -translate-x-8 absolute pointer-events-none'}
+                    ? 'opacity-100 translate-x-0 z-10' 
+                    : 'opacity-0 -translate-x-8 z-0 pointer-events-none'}
                 `}
               >
                 <div className="flex items-center gap-3 mb-6">
@@ -112,7 +112,7 @@ const ProductCarousel = () => {
                   </span>
                 </div>
                 
-                <h3 className="font-serif text-4xl md:text-6xl text-foreground leading-tight mb-8">
+                <h3 className="font-serif text-4xl md:text-5xl xl:text-6xl text-foreground leading-[1.1] mb-8 max-w-[300px] md:max-w-none">
                   {service.title}
                 </h3>
                 

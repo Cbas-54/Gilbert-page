@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { X, Upload, Check, AlertCircle } from 'lucide-react';
-import { CATEGORIES, SUBCATEGORIES, uploadImage, addProduct, updateProduct } from '../../services/productService';
+import { X, Upload, Check, AlertCircle, Trash2, Eye, EyeOff } from 'lucide-react';
+import { CATEGORIES, SUBCATEGORIES, uploadImage, addProduct, updateProduct, deleteProduct } from '../../services/productService';
 
 const ProductForm = ({ onClose, onSuccess, initialData }) => {
   // Map internal product structure to form structure when editing
@@ -89,14 +89,61 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
       <div className="absolute inset-0 bg-dark-rich/80 backdrop-blur-md" onClick={onClose}></div>
       
-      <div className="relative w-full max-w-2xl bg-background border border-border shadow-2xl p-8 md:p-12 overflow-y-auto max-h-[90vh]">
+      <div className="relative w-full max-w-2xl bg-muted border border-border shadow-2xl p-8 md:p-12 overflow-y-auto max-h-[90vh]">
         <button onClick={onClose} className="absolute top-8 right-8 text-muted-foreground hover:text-foreground">
           <X size={24} />
         </button>
 
-        <div className="mb-10">
-          <h2 className="font-serif text-3xl italic">{initialData ? 'Editar Producto' : 'Nuevo Producto'}</h2>
-          <p className="font-sans text-[9px] font-black uppercase tracking-widest text-primary-600 mt-2">Detalles del Catálogo</p>
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h2 className="font-serif text-3xl italic">{initialData ? 'Editar Producto' : 'Nuevo Producto'}</h2>
+            <p className="font-sans text-[9px] font-black uppercase tracking-widest text-primary-600 mt-2">Detalles del Catálogo</p>
+          </div>
+
+          {initialData && (
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={async () => {
+                  const newStatus = formData.estado === 'Activo' ? 'Suspendido' : 'Activo';
+                  const previousStatus = formData.estado;
+                  
+                  // Optimistic Update
+                  setFormData({ ...formData, estado: newStatus });
+
+                  try {
+                    const res = await updateProduct(initialData.id, { estado: newStatus });
+                    if (!res.success) {
+                      setFormData({ ...formData, estado: previousStatus });
+                      setError('Error al actualizar el estado');
+                    }
+                  } catch (err) {
+                    setFormData({ ...formData, estado: previousStatus });
+                    setError('Error de conexión');
+                  }
+                }}
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border transition-all text-[9px] font-black uppercase tracking-widest
+                  ${formData.estado === 'Activo' 
+                    ? 'border-border text-muted-foreground hover:bg-muted' 
+                    : 'border-primary/30 bg-primary/5 text-primary-600 hover:bg-primary/10'}
+                `}
+              >
+                {formData.estado === 'Activo' ? <><EyeOff size={14} /> Suspender</> : <><Eye size={14} /> Activar</>}
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (window.confirm('¿Eliminar este producto permanentemente?')) {
+                    const res = await deleteProduct(initialData.id);
+                    if (res.success) onSuccess();
+                  }
+                }}
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border border-red-500/20 text-red-500 hover:bg-red-500/5 transition-all text-[9px] font-black uppercase tracking-widest"
+              >
+                <Trash2 size={14} /> Eliminar
+              </button>
+            </div>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -164,7 +211,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
                 placeholder="Nombre del modelo"
                 value={formData.nombre}
                 onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-                className="w-full bg-background border-b border-border py-2 text-lg focus:outline-none focus:border-primary transition-colors"
+                className="w-full bg-transparent border-b border-border py-2 text-lg focus:outline-none focus:border-primary transition-colors"
               />
             </div>
             
@@ -176,7 +223,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
                 placeholder="0"
                 value={formData.precio}
                 onChange={(e) => setFormData({...formData, precio: e.target.value})}
-                className="w-full bg-background border-b border-border py-2 text-lg focus:outline-none focus:border-primary transition-colors font-serif italic"
+                className="w-full bg-transparent border-b border-border py-2 text-lg focus:outline-none focus:border-primary transition-colors font-serif italic"
               />
             </div>
 
@@ -185,7 +232,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
               <select 
                 value={formData.categoria}
                 onChange={(e) => setFormData({...formData, categoria: e.target.value, subcategoria: ''})}
-                className="w-full bg-background border-b border-border py-2 text-sm focus:outline-none focus:border-primary transition-colors uppercase font-bold tracking-widest"
+                className="w-full bg-transparent border-b border-border py-2 text-sm focus:outline-none focus:border-primary transition-colors uppercase font-bold tracking-widest"
               >
                 {CATEGORIES.filter(c => c !== 'Todos').map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -198,7 +245,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
               <select 
                 value={formData.subcategoria}
                 onChange={(e) => setFormData({...formData, subcategoria: e.target.value})}
-                className="w-full bg-background border-b border-border py-2 text-sm focus:outline-none focus:border-primary transition-colors uppercase font-bold tracking-widest"
+                className="w-full bg-transparent border-b border-border py-2 text-sm focus:outline-none focus:border-primary transition-colors uppercase font-bold tracking-widest"
               >
                 <option value="">Sin subcategoría</option>
                 {SUBCATEGORIES[formData.categoria]?.map(s => (
@@ -215,7 +262,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
               placeholder="Ej: Nueva Temporada, Más Vendido"
               value={formData.tag}
               onChange={(e) => setFormData({...formData, tag: e.target.value})}
-              className="w-full bg-background border-b border-border py-2 text-sm focus:outline-none focus:border-primary transition-colors"
+              className="w-full bg-transparent border-b border-border py-2 text-sm focus:outline-none focus:border-primary transition-colors"
             />
           </div>
 
