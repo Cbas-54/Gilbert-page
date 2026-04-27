@@ -1,22 +1,26 @@
 import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 import heroImage from '../../../assets/hero-workshop.png';
 
 const Hero = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
-    <div id="home" className="relative w-full min-h-screen flex flex-col items-center lg:items-start justify-center pt-32 sm:pt-40 lg:pt-28 lg:pb-8 lg:pl-[10%] xl:pl-[15%] overflow-hidden bg-dark-rich">
+    <div id="home" className="relative w-full min-h-screen flex flex-col items-center lg:items-start justify-center pt-32 sm:pt-40 lg:pt-28 lg:pb-8 lg:pl-[10%] xl:pl-[15%] overflow-hidden bg-[#1a0f0d]">
       
       {/* Full Background Image */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full bg-[#1a0f0d]">
         <img 
           src={heroImage} 
           alt="Taller artesanal de reparación de calzado" 
           fetchPriority="high"
-          width="1920"
-          height="1080"
-          className="w-full h-full object-cover object-center grayscale-[20%] brightness-[0.7] contrast-125 transition-transform duration-[20s] ease-out hover:scale-105"
+          onLoad={() => setIsLoaded(true)}
+          className={`w-full h-full object-cover object-center grayscale-[20%] brightness-[0.7] contrast-125 transition-all duration-[2000ms] ease-out hover:scale-105
+            ${isLoaded ? 'opacity-100' : 'opacity-0'}
+          `}
         />
-        {/* Subtle overlay to ensure text legibility if card was transparent, and add mood */}
-        <div className="absolute inset-0 bg-dark-deep/20 mix-blend-multiply"></div>
+        {/* Subtle overlay */}
+        <div className={`absolute inset-0 bg-dark-deep/20 mix-blend-multiply transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}></div>
       </div>
 
       {/* Floating Editorial Card (Floom Inspired) */}
