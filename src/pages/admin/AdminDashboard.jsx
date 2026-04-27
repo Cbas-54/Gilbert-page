@@ -17,6 +17,7 @@ const AdminDashboard = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const [statusFilter, setStatusFilter] = useState('Todos');
   const [processingIds, setProcessingIds] = useState(new Set());
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -121,6 +122,8 @@ const AdminDashboard = () => {
         setActiveCategory={setActiveCategory}
         activeSubcategory={activeSubcategory}
         setActiveSubcategory={setActiveSubcategory}
+        expandedCategory={expandedCategory}
+        setExpandedCategory={setExpandedCategory}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
         stats={stats}

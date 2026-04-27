@@ -91,7 +91,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
       <div className="absolute inset-0 bg-dark-rich/80 backdrop-blur-md" onClick={onClose}></div>
       
       <div className="relative w-full max-w-2xl bg-muted border border-border shadow-2xl p-8 md:p-12 overflow-y-auto max-h-[90vh]">
-        <button onClick={onClose} className="absolute top-8 right-8 text-muted-foreground hover:text-foreground">
+        <button onClick={onClose} className="absolute top-8 right-8 text-muted-foreground hover:text-foreground cursor-pointer">
           <X size={24} />
         </button>
 
@@ -127,7 +127,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
                     setIsToggling(false);
                   }
                 }}
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border transition-all text-[9px] font-black uppercase tracking-widest disabled:opacity-50
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border transition-all text-[9px] font-black uppercase tracking-widest disabled:opacity-50 cursor-pointer
                   ${formData.estado === 'Activo' 
                     ? 'border-border text-muted-foreground hover:bg-muted' 
                     : 'border-primary/30 bg-primary/5 text-primary-600 hover:bg-primary/10'}
@@ -147,7 +147,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
                     if (res.success) onSuccess();
                   }
                 }}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border border-red-500/20 text-red-500 hover:bg-red-500/5 transition-all text-[9px] font-black uppercase tracking-widest"
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border border-red-500/20 text-red-500 hover:bg-red-500/5 transition-all text-[9px] font-black uppercase tracking-widest cursor-pointer"
               >
                 <Trash2 size={14} /> Eliminar
               </button>
@@ -164,7 +164,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`relative aspect-video rounded-sm border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center gap-4 bg-muted/20 overflow-hidden
+              className={`relative aspect-video rounded-sm border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center gap-4 bg-muted/20 overflow-hidden cursor-pointer
                 ${formData.imagenurl ? 'border-primary/50' : 'border-border'}
                 ${isDragging ? 'border-primary bg-primary/5 scale-[1.02] shadow-xl' : 'hover:border-primary/30'}
               `}
@@ -232,7 +232,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
                 placeholder="0"
                 value={formData.precio}
                 onChange={(e) => setFormData({...formData, precio: e.target.value})}
-                className="w-full bg-transparent border-b border-border py-2 text-lg focus:outline-none focus:border-primary transition-colors font-serif italic"
+                className="w-full bg-transparent border-b border-border py-2 text-2xl md:text-3xl focus:outline-none focus:border-primary transition-colors font-serif italic text-foreground"
               />
             </div>
 
@@ -286,7 +286,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
             <button 
               type="submit" 
               disabled={loading || uploading}
-              className="flex-1 bg-foreground text-background py-5 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all flex items-center justify-center gap-4 disabled:opacity-50"
+              className="flex-1 bg-foreground text-background py-5 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all flex items-center justify-center gap-4 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
@@ -297,7 +297,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
             <button 
               type="button" 
               onClick={onClose}
-              className="md:px-12 py-5 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest border border-border hover:bg-muted transition-all"
+              className="md:px-12 py-5 rounded-sm font-sans text-[10px] font-black uppercase tracking-widest border border-border hover:bg-muted transition-all cursor-pointer"
             >
               Cancelar
             </button>

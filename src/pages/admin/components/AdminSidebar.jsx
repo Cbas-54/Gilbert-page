@@ -8,6 +8,8 @@ const AdminSidebar = ({
   setActiveCategory, 
   activeSubcategory, 
   setActiveSubcategory, 
+  expandedCategory,
+  setExpandedCategory,
   statusFilter, 
   setStatusFilter, 
   stats, 
@@ -32,15 +34,11 @@ const AdminSidebar = ({
             <div key={cat}>
               <button
                 onClick={() => { 
-                  if (activeCategory === cat) {
-                    setActiveCategory('Todos');
-                    setActiveSubcategory(null);
-                  } else {
-                    setActiveCategory(cat); 
-                    setActiveSubcategory(null); 
-                  }
+                  setActiveCategory(cat); 
+                  setActiveSubcategory(null); 
+                  setExpandedCategory(expandedCategory === cat ? null : cat);
                 }}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-r-full transition-all duration-200 group
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-r-full transition-all duration-200 group cursor-pointer
                   ${activeCategory === cat ? 'bg-primary/10 text-primary-600' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}
                 `}
               >
@@ -52,10 +50,10 @@ const AdminSidebar = ({
                   )}
                   <span className="text-xs font-bold uppercase tracking-widest">{cat}</span>
                 </div>
-                {activeCategory === cat && SUBCATEGORIES[cat] && <ChevronRight size={14} className="rotate-90 text-primary-600" />}
+                {expandedCategory === cat && SUBCATEGORIES[cat] && <ChevronRight size={14} className="rotate-90 text-primary-600" />}
               </button>
               
-              {activeCategory === cat && SUBCATEGORIES[cat] && (
+              {expandedCategory === cat && SUBCATEGORIES[cat] && (
                 <div className={`${isMobile ? 'ml-10' : 'ml-8'} mt-1 mb-2 space-y-1 border-l-2 border-primary/10 pl-2`}>
                   {SUBCATEGORIES[cat].map(sub => (
                     <button
@@ -63,8 +61,10 @@ const AdminSidebar = ({
                       onClick={() => {
                         setActiveSubcategory(sub);
                       }}
-                      className={`w-full text-left px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] transition-colors
-                        ${activeSubcategory === sub ? 'text-primary-600 bg-primary/5' : 'text-muted-foreground/60 hover:text-foreground hover:bg-muted/50'}
+                      className={`w-full text-left px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] transition-colors cursor-pointer
+                        ${activeSubcategory === sub 
+                          ? 'text-primary-700 bg-primary/10 font-bold' 
+                          : 'text-primary-600/70 hover:text-primary-700 hover:bg-primary/5'}
                       `}
                     >
                       {sub}
@@ -80,15 +80,15 @@ const AdminSidebar = ({
           <p className="px-4 text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-3">Vistas de Inventario</p>
           {[
             { id: 'Todos', label: 'Ver Todo', icon: LayoutGrid, count: stats.total },
-            { id: 'Activo', label: 'En Venta', icon: ShoppingBag, count: stats.active },
-            { id: 'Suspendido', label: 'Suspendidos', icon: EyeOff, count: stats.suspended }
+            { id: 'Activo', label: 'Activos', icon: ShoppingBag, count: stats.active },
+            { id: 'Suspendido', label: 'Pausados', icon: EyeOff, count: stats.suspended }
           ].map(item => (
             <button
               key={item.id}
               onClick={() => {
                 setStatusFilter(item.id);
               }}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-r-full transition-all duration-200 group
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-r-full transition-all duration-200 group cursor-pointer
                 ${statusFilter === item.id ? 'bg-muted text-foreground font-bold border-l-4 border-primary-600' : 'text-muted-foreground hover:bg-muted/50'}
               `}
             >
@@ -104,11 +104,11 @@ const AdminSidebar = ({
         </div>
       </nav>
 
-      <div className="pt-6 border-t border-border mt-auto">
+      <div className="pt-6 border-t border-[#F2E8DF] dark:border-white/5 mt-auto">
         <div className="flex items-center justify-between gap-3 px-2">
           <button 
             onClick={() => navigate('/productos')}
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FDF8F3] dark:bg-zinc-800/80 hover:bg-muted text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl transition-colors border border-primary-600/5 dark:border-white/5"
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FFFEFD] dark:bg-zinc-800/80 hover:bg-muted text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl transition-colors border border-[#F2E8DF] dark:border-white/5"
           >
             <ArrowLeft size={14} />
             Tienda

@@ -10,13 +10,13 @@ const MobileBottomNav = ({
       <div className="flex items-center justify-around max-w-md mx-auto">
         {[
           { id: 'Todos', label: 'Todos', icon: LayoutGrid, count: stats.total },
-          { id: 'Activo', label: 'Venta', icon: ShoppingBag, count: stats.active },
-          { id: 'Suspendido', label: 'Pausa', icon: EyeOff, count: stats.suspended }
+          { id: 'Activo', label: 'Activos', icon: ShoppingBag, count: stats.active },
+          { id: 'Suspendido', label: 'Pausados', icon: EyeOff, count: stats.suspended }
         ].map(item => (
           <button
             key={item.id}
             onClick={() => setStatusFilter(item.id)}
-            className="flex flex-col items-center gap-1 relative group"
+            className="flex flex-col items-center gap-1 relative group cursor-pointer"
           >
             <div className={`px-5 py-1 rounded-full transition-all duration-300 ${statusFilter === item.id ? 'bg-primary/20' : 'group-hover:bg-muted'}`}>
               <item.icon size={20} className={statusFilter === item.id ? 'text-primary-600' : 'text-muted-foreground'} />
