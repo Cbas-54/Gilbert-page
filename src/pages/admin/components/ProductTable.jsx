@@ -13,12 +13,12 @@ const ProductTable = ({
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse table-fixed">
           <thead>
-            <tr className="border-b border-[#F2E8DF] dark:border-white/5 bg-[#FDF8F3] dark:bg-zinc-800/80">
+            <tr className="border-b border-white dark:border-white/5 bg-white dark:bg-zinc-800/80">
               <th className="w-[55%] md:w-[45%] px-3 md:px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Producto ({filteredProducts.length})</th>
               <th className="w-0 md:w-[20%] px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground hidden md:table-cell">Categoría</th>
               <th className="w-[25%] md:w-[15%] px-3 md:px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-center">Precio</th>
               <th className="w-[20%] md:w-[10%] px-3 md:px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-center">Estado</th>
-              <th className="w-0 md:w-[10%] px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-right hidden md:table-cell">Acciones</th>
+              <th className="w-0 md:w-[10%] px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-right hidden md:table-cell"></th>
             </tr>
           </thead>
           <tbody>
@@ -26,7 +26,7 @@ const ProductTable = ({
               <tr 
                 key={p.id} 
                 onClick={() => { setEditingProduct(p); setShowForm(true); }}
-                className="border-b border-[#F2E8DF]/60 dark:border-white/5 hover:bg-muted/30 transition-colors group cursor-pointer"
+                className="border-b border-white dark:border-white/5 hover:bg-muted/30 transition-colors group cursor-pointer"
               >
                 <td className="px-3 md:px-4 py-5">
                   <div className="flex items-center gap-3">
@@ -63,7 +63,8 @@ const ProductTable = ({
                     <button 
                       onClick={() => handleToggleStatus(p)}
                       disabled={processingIds.has(p.id)}
-                      className="p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-primary-600 disabled:opacity-50"
+                      title={p.status === 'Activo' ? 'Pausar' : 'Activar'}
+                      className="p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-primary-600 disabled:opacity-50 cursor-pointer"
                     >
                       {processingIds.has(p.id) ? (
                         <Loader2 size={14} className="animate-spin text-primary-600" />
@@ -73,7 +74,8 @@ const ProductTable = ({
                     </button>
                     <button 
                       onClick={() => handleDelete(p.id)}
-                      className="p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-red-500"
+                      title="Borrar"
+                      className="p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-red-500 cursor-pointer"
                     >
                       <Trash2 size={14} />
                     </button>

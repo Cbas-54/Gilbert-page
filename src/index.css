@@ -85,16 +85,21 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #fdfdfd; 
+  background: transparent; 
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300 rounded-full;
+  background: #71717a; /* Zinc-500 (Darker for Light Mode) */
+  border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* Zinc-700 (Subtle for Dark Mode) */
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary-500; 
+  background: #52525b; 
 }
 
 :root {

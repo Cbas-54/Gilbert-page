@@ -10,8 +10,8 @@ const AdminHeader = ({
   return (
     <>
       {/* Mobile Header */}
-      <div className="md:hidden sticky top-0 z-40 px-4 py-4 bg-background border-b border-border">
-        <div className="bg-[#FDF8F3] dark:bg-zinc-800/50 border border-primary-600/10 dark:border-white/10 rounded-full h-14 px-4 flex items-center gap-3 shadow-sm">
+      <div className="md:hidden sticky top-0 z-40 px-4 py-4 bg-background border-b border-[#F2E8DF] dark:border-white/5">
+        <div className="bg-white dark:bg-zinc-800/50 border border-white dark:border-white/10 rounded-full h-14 px-4 flex items-center gap-3 shadow-sm">
           <button 
             onClick={() => setIsSidebarOpen(true)}
             className="p-2 hover:bg-background/50 rounded-full transition-colors cursor-pointer"
@@ -39,7 +39,7 @@ const AdminHeader = ({
       </div>
 
       {/* PC Header */}
-      <header className="hidden md:flex items-center justify-between h-20 px-8 bg-background border-b border-[#F2E8DF] dark:border-white/5 transition-colors duration-500 shrink-0">
+      <header className="hidden md:flex items-center justify-between h-20 px-8 bg-background border-b border-white dark:border-white/5 transition-colors duration-500 shrink-0">
         <div className="flex-1 max-w-2xl">
           <div className="relative group">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-primary-600 transition-colors" />
@@ -48,7 +48,7 @@ const AdminHeader = ({
               placeholder="Buscar en el catálogo..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#FDF8F3] dark:bg-zinc-800/50 border border-primary-600/5 dark:border-white/10 px-14 py-3 rounded-2xl font-sans text-sm focus:outline-none focus:bg-background dark:focus:bg-zinc-800 focus:border-primary-600/20 shadow-sm focus:shadow-md transition-all placeholder:text-muted-foreground/30"
+              className="w-full bg-white dark:bg-zinc-800/50 border border-white dark:border-white/10 px-14 py-3 rounded-2xl font-sans text-sm focus:outline-none focus:bg-white dark:focus:bg-zinc-800 focus:border-primary-600/20 shadow-sm focus:shadow-md transition-all placeholder:text-muted-foreground/30"
             />
           </div>
         </div>
