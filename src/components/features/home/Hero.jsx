@@ -54,10 +54,6 @@ const Hero = () => {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
           
-          <div className="hidden sm:flex flex-col items-start px-2">
-            <span className="font-sans text-[9px] font-black uppercase tracking-widest text-muted-foreground">Desde</span>
-            <span className="font-serif text-lg italic text-foreground leading-none">2026</span>
-          </div>
         </div>
       </div>
 

@@ -25,8 +25,8 @@ const ProductImage = ({ product }) => {
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="group flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="aspect-square bg-dark-deep/5 rounded-sm overflow-hidden relative border border-dark-deep/5">
+    <div className="group flex flex-col gap-4 bg-muted p-4 rounded-xl animate-in fade-in slide-in-from-bottom-4 duration-500 hover:shadow-lg transition-all border-none">
+      <div className="aspect-square bg-background/30 rounded-lg overflow-hidden relative border-none">
         <ProductImage product={product} />
       </div>
       <div className="space-y-1">
@@ -35,8 +35,8 @@ const ProductCard = ({ product }) => {
             {product.tag}
           </span>
         )}
-        <h3 className="font-serif text-xl text-foreground transition-colors duration-500">{product.name}</h3>
-        <p className="font-serif text-3xl italic text-foreground transition-colors duration-500">
+        <h3 className="font-serif text-xl text-foreground">{product.name}</h3>
+        <p className="font-serif text-3xl italic text-foreground">
           <span className="text-primary-600 not-italic mr-1">$</span>
           {product.price.toLocaleString('es-AR')}
         </p>
