@@ -7,10 +7,12 @@ const MegaMenu = ({ showMegaMenu, megaMenuData, setShowMegaMenu, handleNavigatio
   return (
     <div 
       className={`
-        absolute top-full left-0 w-full bg-background border-t border-border shadow-2xl overflow-y-auto transition-all duration-500 ease-in-out z-50
-        ${showMegaMenu ? 'max-h-[calc(100vh-80px)] opacity-100 pt-10 md:pt-16 pb-12' : 'max-h-0 opacity-0 pointer-events-none py-0'}
+        absolute top-full left-0 w-full bg-background border-t border-border shadow-2xl overflow-y-auto z-50 pt-10 md:pt-16 pb-12
+        transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] will-change-[transform,opacity]
+        ${showMegaMenu 
+          ? 'opacity-100 translate-y-0 visible' 
+          : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
       `}
-      style={{ top: '100%' }}
       onMouseEnter={() => setShowMegaMenu(true)}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">

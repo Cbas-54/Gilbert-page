@@ -24,7 +24,7 @@ const Hero = () => {
       </div>
 
       {/* Floating Editorial Card (Floom Inspired) */}
-      <div className="relative z-20 w-[95%] sm:w-[90%] max-w-lg lg:max-w-xl bg-card p-8 sm:p-10 md:p-14 lg:mt-0 shadow-2xl border border-border/50 animate-in fade-in slide-in-from-bottom-8 duration-1000 transition-colors duration-500">
+      <div className="relative z-20 w-[95%] sm:w-[90%] max-w-lg lg:max-w-xl bg-card p-8 sm:p-10 md:p-14 lg:mt-0 shadow-2xl border border-border/50 animate-in fade-in slide-in-from-bottom-12 duration-1000 ease-[cubic-bezier(0.2,1,0.3,1)] will-change-[transform,opacity] transition-colors duration-500">
         
         <div className="inline-flex items-center gap-4 mb-8">
           <div className="w-12 h-[1px] bg-primary-600"></div>
