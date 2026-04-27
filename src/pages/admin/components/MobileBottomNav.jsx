@@ -6,7 +6,7 @@ const MobileBottomNav = ({
   stats 
 }) => {
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-xl border-t border-border z-50 px-6 py-3">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-white dark:border-white/5 z-50 px-6 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
       <div className="flex items-center justify-around max-w-md mx-auto">
         {[
           { id: 'Todos', label: 'Todos', icon: LayoutGrid, count: stats.total },

@@ -113,7 +113,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="h-screen bg-background transition-colors duration-500 overflow-hidden flex flex-col md:flex-row">
+    <div className="h-[100dvh] bg-background transition-colors duration-500 overflow-hidden flex flex-col md:flex-row">
       
       <AdminSidebar 
         isSidebarOpen={isSidebarOpen}

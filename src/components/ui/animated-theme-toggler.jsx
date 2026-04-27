@@ -16,13 +16,13 @@ export const AnimatedThemeToggler = ({
   // Avoid hydration mismatch
   useEffect(() => setMounted(true), [])
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = useCallback((event) => {
     const button = buttonRef.current
     if (!button || !mounted) return
 
-    const { top, left, width, height } = button.getBoundingClientRect()
-    const x = left + width / 2
-    const y = top + height / 2
+    // Use click coordinates if available, otherwise fallback to button center
+    const x = event?.clientX ?? 0
+    const y = event?.clientY ?? 0
     
     const viewportWidth = window.innerWidth
     const viewportHeight = window.innerHeight
