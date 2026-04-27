@@ -25,6 +25,7 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
   const [error, setError] = useState(null);
 
   const processImage = async (file) => {
@@ -104,10 +105,12 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
             <div className="flex items-center gap-3">
               <button
                 type="button"
+                disabled={isToggling}
                 onClick={async () => {
                   const newStatus = formData.estado === 'Activo' ? 'Suspendido' : 'Activo';
                   const previousStatus = formData.estado;
                   
+                  setIsToggling(true);
                   // Optimistic Update
                   setFormData({ ...formData, estado: newStatus });
 
@@ -120,15 +123,21 @@ const ProductForm = ({ onClose, onSuccess, initialData }) => {
                   } catch (err) {
                     setFormData({ ...formData, estado: previousStatus });
                     setError('Error de conexión');
+                  } finally {
+                    setIsToggling(false);
                   }
                 }}
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border transition-all text-[9px] font-black uppercase tracking-widest
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-sm border transition-all text-[9px] font-black uppercase tracking-widest disabled:opacity-50
                   ${formData.estado === 'Activo' 
                     ? 'border-border text-muted-foreground hover:bg-muted' 
                     : 'border-primary/30 bg-primary/5 text-primary-600 hover:bg-primary/10'}
                 `}
               >
-                {formData.estado === 'Activo' ? <><EyeOff size={14} /> Suspender</> : <><Eye size={14} /> Activar</>}
+                {isToggling ? (
+                  <><Loader2 size={14} className="animate-spin" /> Procesando...</>
+                ) : (
+                  formData.estado === 'Activo' ? <><EyeOff size={14} /> Suspender</> : <><Eye size={14} /> Activar</>
+                )}
               </button>
               <button
                 type="button"
