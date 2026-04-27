@@ -141,8 +141,8 @@ const AdminDashboard = () => {
         />
 
         {/* Scrollable List Container */}
-        <div className={`flex-1 overflow-y-auto px-4 md:px-8 py-6 md:py-8 pb-32 md:pb-8 ${isSidebarOpen ? 'overflow-hidden' : ''}`}>
-          <div className="max-w-[1400px] mx-auto">
+        <div className={`flex-1 overflow-y-auto pb-32 md:pb-0 ${isSidebarOpen ? 'overflow-hidden' : ''}`}>
+          <div className="w-full">
             <ProductTable 
               filteredProducts={filteredProducts}
               processingIds={processingIds}

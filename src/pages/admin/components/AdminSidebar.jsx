@@ -107,7 +107,7 @@ const AdminSidebar = ({
         <div className="flex items-center justify-between gap-3 px-2">
           <button 
             onClick={() => navigate('/productos')}
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-muted/50 hover:bg-muted text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl transition-colors border border-border/20"
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FDF8F3] dark:bg-muted/50 hover:bg-muted text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl transition-colors border border-primary-600/5"
           >
             <ArrowLeft size={14} />
             Tienda
