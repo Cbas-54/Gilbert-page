@@ -28,14 +28,17 @@ const AdminSidebar = ({
 
       <nav className="flex-1 space-y-1 overflow-y-auto -mx-2 px-2">
         <div className="space-y-1">
-          <p className="px-4 text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-3 mt-4">Navegar Categorías</p>
           {CATEGORIES.map(cat => (
             <div key={cat}>
               <button
                 onClick={() => { 
-                  setActiveCategory(cat); 
-                  setActiveSubcategory(null); 
-                  if (isMobile) setIsSidebarOpen(false);
+                  if (activeCategory === cat) {
+                    setActiveCategory('Todos');
+                    setActiveSubcategory(null);
+                  } else {
+                    setActiveCategory(cat); 
+                    setActiveSubcategory(null); 
+                  }
                 }}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-r-full transition-all duration-200 group
                   ${activeCategory === cat ? 'bg-primary/10 text-primary-600' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}
@@ -59,7 +62,6 @@ const AdminSidebar = ({
                       key={sub}
                       onClick={() => {
                         setActiveSubcategory(sub);
-                        if (isMobile) setIsSidebarOpen(false);
                       }}
                       className={`w-full text-left px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] transition-colors
                         ${activeSubcategory === sub ? 'text-primary-600 bg-primary/5' : 'text-muted-foreground/60 hover:text-foreground hover:bg-muted/50'}
@@ -85,7 +87,6 @@ const AdminSidebar = ({
               key={item.id}
               onClick={() => {
                 setStatusFilter(item.id);
-                if (isMobile) setIsSidebarOpen(false);
               }}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-r-full transition-all duration-200 group
                 ${statusFilter === item.id ? 'bg-muted text-foreground font-bold border-l-4 border-primary-600' : 'text-muted-foreground hover:bg-muted/50'}
@@ -107,7 +108,7 @@ const AdminSidebar = ({
         <div className="flex items-center justify-between gap-3 px-2">
           <button 
             onClick={() => navigate('/productos')}
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FDF8F3] dark:bg-muted/50 hover:bg-muted text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl transition-colors border border-primary-600/5"
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FDF8F3] dark:bg-zinc-800/80 hover:bg-muted text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl transition-colors border border-primary-600/5 dark:border-white/5"
           >
             <ArrowLeft size={14} />
             Tienda

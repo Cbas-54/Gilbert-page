@@ -13,7 +13,7 @@ const ProductTable = ({
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse table-fixed">
           <thead>
-            <tr className="border-b border-border bg-[#FDF8F3] dark:bg-muted/10">
+            <tr className="border-b border-border bg-[#FDF8F3] dark:bg-zinc-800/80">
               <th className="w-[55%] md:w-[45%] px-3 md:px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Producto ({filteredProducts.length})</th>
               <th className="w-0 md:w-[20%] px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground hidden md:table-cell">Categoría</th>
               <th className="w-[25%] md:w-[15%] px-3 md:px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-center">Precio</th>

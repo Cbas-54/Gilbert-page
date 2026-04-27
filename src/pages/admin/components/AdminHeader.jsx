@@ -11,7 +11,7 @@ const AdminHeader = ({
     <>
       {/* Mobile Header */}
       <div className="md:hidden sticky top-0 z-40 px-4 py-4 bg-background border-b border-border">
-        <div className="bg-[#FDF8F3] dark:bg-muted/20 border border-primary-600/10 rounded-full h-14 px-4 flex items-center gap-3 shadow-sm">
+        <div className="bg-[#FDF8F3] dark:bg-zinc-800/50 border border-primary-600/10 dark:border-white/10 rounded-full h-14 px-4 flex items-center gap-3 shadow-sm">
           <button 
             onClick={() => setIsSidebarOpen(true)}
             className="p-2 hover:bg-background/50 rounded-full transition-colors"
@@ -48,7 +48,7 @@ const AdminHeader = ({
               placeholder="Buscar en el catálogo..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#FDF8F3] dark:bg-muted/10 border border-primary-600/5 px-14 py-3 rounded-2xl font-sans text-sm focus:outline-none focus:bg-background focus:border-primary-600/20 focus:shadow-md transition-all placeholder:text-muted-foreground/30"
+              className="w-full bg-[#FDF8F3] dark:bg-zinc-800/50 border border-primary-600/5 dark:border-white/10 px-14 py-3 rounded-2xl font-sans text-sm focus:outline-none focus:bg-background dark:focus:bg-zinc-800 focus:border-primary-600/20 focus:shadow-md transition-all placeholder:text-muted-foreground/30"
             />
           </div>
         </div>
