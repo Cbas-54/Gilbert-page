@@ -11,8 +11,8 @@ const LocationSection = () => {
       {/* Information Block - Left/Top (40%) */}
       <div className="lg:w-[40%] p-12 md:p-20 flex flex-col justify-center relative">
         {/* Technical Watermark */}
-        <div className="absolute top-10 left-10 text-[80px] font-serif italic text-foreground/[0.03] select-none pointer-events-none uppercase tracking-tighter">
-          Taller
+        <div className="absolute top-10 left-10 text-[60px] md:text-[80px] font-serif italic text-foreground/[0.03] select-none pointer-events-none uppercase tracking-tighter leading-none">
+          Nuestro <br/> Taller
         </div>
 
         <div className="relative z-10 space-y-12">

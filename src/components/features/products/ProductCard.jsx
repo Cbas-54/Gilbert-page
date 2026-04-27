@@ -26,7 +26,7 @@ const ProductImage = ({ product }) => {
 const ProductCard = ({ product }) => {
   return (
     <div className="group flex flex-col gap-4 bg-muted p-4 rounded-xl animate-in fade-in slide-in-from-bottom-4 duration-500 hover:shadow-lg transition-all border-none">
-      <div className="aspect-square bg-background/30 rounded-lg overflow-hidden relative border-none">
+      <div className="aspect-square bg-muted rounded-lg overflow-hidden relative border-none">
         <ProductImage product={product} />
       </div>
       <div className="space-y-1">

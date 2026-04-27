@@ -5,12 +5,12 @@ import { CATEGORIES, SUBCATEGORIES } from '../../../services/productService';
 const ProductSidebar = ({ activeCategory, activeSubcategory, onSelectCategory }) => {
   return (
     <aside className="lg:col-span-3 space-y-12">
-      <div className="bg-card/50 backdrop-blur-sm border border-border p-8 rounded-sm space-y-10 sticky top-32 transition-colors duration-500">
+      <div className="bg-muted p-8 rounded-xl space-y-10 sticky top-32 border-none">
         {/* Category Filter */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3 pb-4 border-b border-border transition-colors duration-500">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
             <Filter size={14} className="text-primary-600" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-foreground transition-colors duration-500">Categorías</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-foreground">Categorías</span>
           </div>
           <div className="flex flex-col gap-2">
             {CATEGORIES.map((cat) => {
