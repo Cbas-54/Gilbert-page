@@ -34,6 +34,18 @@ const AdminDashboard = () => {
     loadData(true);
   }, [navigate]);
 
+  // Lock body scroll when sidebar or form is open
+  useEffect(() => {
+    if (isSidebarOpen || showForm) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isSidebarOpen, showForm]);
+
   const handleToggleStatus = async (product) => {
     const newStatus = product.status === 'Activo' ? 'Suspendido' : 'Activo';
     
@@ -104,14 +116,11 @@ const AdminDashboard = () => {
       {/* Desktop Sidebar (Gmail Style) */}
       <aside className="hidden md:flex w-72 flex-col border-r border-border bg-background p-6">
         <div className="mb-10 px-2 flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <Package className="text-primary-600" size={24} />
-            <h2 className="font-serif text-2xl italic text-foreground leading-none">Guilberth</h2>
+          <div className="flex items-center gap-3">
+            <img src="/favicon.png" alt="Logo" className="w-8 h-8 object-contain" />
+            <h2 className="font-serif text-2xl italic text-foreground leading-none">Administración</h2>
           </div>
-          <div className="mt-4">
-            <h1 className="font-sans text-[10px] font-black uppercase tracking-[0.3em] text-foreground/80 leading-none">Administración</h1>
-            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-primary-600/60 mt-1">Gestión de Catálogo</p>
-          </div>
+          <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-primary-600/60 mt-2 px-1">Gestión de Catálogo</p>
         </div>
 
         <button 
@@ -220,7 +229,7 @@ const AdminDashboard = () => {
                 placeholder="Buscar en el catálogo..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-muted/60 border border-transparent px-14 py-3 rounded-2xl font-sans text-sm focus:outline-none focus:bg-background focus:border-border/50 focus:shadow-md transition-all"
+                className="w-full bg-muted/30 border border-border/20 px-14 py-3 rounded-2xl font-sans text-sm focus:outline-none focus:bg-background focus:border-border/50 focus:shadow-md transition-all placeholder:text-muted-foreground/30"
               />
             </div>
           </div>
@@ -233,44 +242,19 @@ const AdminDashboard = () => {
         </header>
 
         {/* Scrollable List Container */}
-        <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6 md:py-8 pb-32 md:pb-8">
+        <div className={`flex-1 overflow-y-auto px-4 md:px-8 py-6 md:py-8 pb-32 md:pb-8 ${isSidebarOpen ? 'overflow-hidden' : ''}`}>
           <div className="max-w-[1400px] mx-auto">
-            {/* Desktop Stats Grid (Hidden on Mobile) */}
-            <div className="hidden md:grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-              {[
-                { label: 'Total Productos', val: stats.total, icon: Package, id: 'Todos' },
-                { label: 'En Venta', val: stats.active, icon: Eye, color: 'text-primary-600', id: 'Activo' },
-                { label: 'Suspendidos', val: stats.suspended, icon: EyeOff, color: 'text-muted-foreground', id: 'Suspendido' }
-              ].map((s, i) => (
-                <button 
-                  key={i} 
-                  onClick={() => setStatusFilter(s.id)}
-                  className={`bg-background p-6 border transition-all duration-300 text-left flex items-center justify-between group hover:border-primary/50 relative overflow-hidden shadow-sm rounded-xl
-                    ${statusFilter === s.id ? 'border-primary ring-1 ring-primary/20 bg-background' : 'border-border'}
-                  `}
-                >
-                  <div>
-                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">{s.label}</p>
-                    <p className={`text-2xl font-serif italic ${s.color || 'text-foreground'}`}>{s.val}</p>
-                  </div>
-                  <s.icon className={`w-6 h-6 transition-all duration-500 
-                    ${statusFilter === s.id ? 'opacity-100' : 'opacity-20 group-hover:opacity-100'} 
-                    ${s.color || 'text-foreground'}`} 
-                  />
-                </button>
-              ))}
-            </div>
 
             <div className="bg-background border border-border overflow-hidden shadow-sm rounded-sm md:rounded-xl">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-border bg-muted/30">
-                      <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Producto ({filteredProducts.length})</th>
-                      <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground hidden md:table-cell">Categoría</th>
-                      <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Precio</th>
-                      <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Estado</th>
-                      <th className="px-6 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-right hidden md:table-cell">Acciones</th>
+                      <th className="px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Producto ({filteredProducts.length})</th>
+                      <th className="px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground hidden md:table-cell">Categoría</th>
+                      <th className="px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Precio</th>
+                      <th className="px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground">Estado</th>
+                      <th className="px-4 py-5 text-[9px] font-black uppercase tracking-widest text-muted-foreground text-right hidden md:table-cell">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -280,7 +264,7 @@ const AdminDashboard = () => {
                         onClick={() => { setEditingProduct(p); setShowForm(true); }}
                         className="border-b border-border/50 hover:bg-muted/30 transition-colors group cursor-pointer"
                       >
-                        <td className="px-3 md:px-6 py-5">
+                        <td className="px-3 md:px-4 py-5">
                           <div className="flex items-center gap-4">
                             <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-lg overflow-hidden border border-border shrink-0">
                               {p.image ? (
@@ -296,14 +280,14 @@ const AdminDashboard = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="px-3 md:px-6 py-5 font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground hidden md:table-cell">{p.category}</td>
-                        <td className="px-3 md:px-6 py-5 font-serif italic text-base md:text-lg text-foreground">${p.price.toLocaleString('es-AR')}</td>
-                        <td className="px-3 md:px-6 py-5">
+                        <td className="px-3 md:px-4 py-5 font-sans text-[10px] font-bold uppercase tracking-widest text-muted-foreground hidden md:table-cell">{p.category}</td>
+                        <td className="px-3 md:px-4 py-5 font-serif italic text-base md:text-lg text-foreground">${p.price.toLocaleString('es-AR')}</td>
+                        <td className="px-3 md:px-4 py-5">
                           <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${p.status === 'Activo' ? 'bg-primary/20 text-primary-600' : 'bg-muted text-muted-foreground'}`}>
                             {p.status}
                           </span>
                         </td>
-                        <td className="px-6 py-5 hidden md:table-cell">
+                        <td className="px-4 py-5 hidden md:table-cell">
                           <div className="flex items-center justify-end gap-3" onClick={(e) => e.stopPropagation()}>
                             <button 
                               onClick={() => handleToggleStatus(p)}
@@ -375,12 +359,12 @@ const AdminDashboard = () => {
       </main>
 
       {/* Mobile Side Drawer Overlay */}
-      <div className={`md:hidden fixed inset-0 z-[100] transition-visibility ${isSidebarOpen ? 'visible' : 'invisible'}`}>
+      <div className={`md:hidden fixed inset-0 z-[100] ${isSidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
         <div 
           className={`absolute inset-0 bg-dark-rich/60 backdrop-blur-sm transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setIsSidebarOpen(false)}
         />
-        <div className={`absolute top-0 left-0 bottom-0 w-[80%] max-w-[300px] bg-background border-r border-border transition-transform duration-300 ease-out flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`absolute top-0 left-0 bottom-0 w-[85%] max-w-[300px] bg-background border-r border-border transition-transform duration-300 ease-in-out flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="p-6 border-b border-border">
             <h2 className="font-serif text-2xl italic text-foreground leading-none">Guilberth</h2>
             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-primary-600 mt-2">Catálogo Admin</p>
